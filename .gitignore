@@ -1,0 +1,13 @@
+bin/
+obj/
+debug/
+release/
+**/packages/*
+*.suo
+*.user
+*.exe
+*.vsix
+*.sdf
+desktop.ini
+*.zip
+.vs/

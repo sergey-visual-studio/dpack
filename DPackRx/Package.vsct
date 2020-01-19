@@ -1,0 +1,1336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable language="en-us" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- Package registration: devenv /RootSuffix Exp /setup -->
+
+	<Include href="KnownImageIds.vsct"/>
+
+	<!-- This is the file that defines the IDs for all the commands exposed by Visual Studio -->
+	<Extern href="stdidcmd.h"/>
+
+	<!-- This header contains the command ids for the menus provided by the shell -->
+	<Extern href="vsshlids.h"/>
+
+	<Commands package="ProductID">
+
+		<!-- Menus and toolbars -->
+		<Menus>
+			<Menu guid="ProductID" id="midDPack" priority="0x0001" type="Menu">
+				<Parent guid="guidDPackMenu" id="gidDPack" />
+				<Strings>
+					<ButtonText>DPac&amp;k</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midCodeBrowser" priority="0x0001" type="Menu">
+				<Parent guid="guidDPackMenu" id="gidBrowsers" />
+				<Strings>
+					<ButtonText>Code Bro&amp;wser</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midSupport" priority="0x0003" type="Menu">
+				<Parent guid="guidDPackMenu" id="gidSupport" />
+				<Strings>
+					<ButtonText>&amp;Help</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midBkmrk" priority="0x0001" type="Menu">
+				<Parent guid="guidEditMenu" id="gidEdit" />
+				<Strings>
+					<ButtonText>Boo&amp;kmarks</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midSurroundWith" priority="0x0003" type="Menu">
+				<Parent guid="guidEditMenu" id="gidEdit" />
+				<Strings>
+					<ButtonText>Surround &amp;With</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midBkmrkSet" priority="0x0001" type="Menu">
+				<Parent guid="guidEditMenu" id="gidEditBkmrkReg" />
+				<Strings>
+					<ButtonText>&amp;Toggle Bookmarks</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midBkmrkGet" priority="0x0002" type="Menu">
+				<Parent guid="guidEditMenu" id="gidEditBkmrkReg" />
+				<Strings>
+					<ButtonText>&amp;Go To Bookmarks</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midBkmrkSetGlb" priority="0x0001" type="Menu">
+				<Parent guid="guidEditMenu" id="gidEditBkmrkGlb" />
+				<Strings>
+					<ButtonText>Toggle G&amp;lobal Bookmarks</ButtonText>
+				</Strings>
+			</Menu>
+			<Menu guid="ProductID" id="midBkmrkGetGlb" priority="0x0002" type="Menu">
+				<Parent guid="guidEditMenu" id="gidEditBkmrkGlb" />
+				<Strings>
+					<ButtonText>Go To Global &amp;Bookmarks</ButtonText>
+				</Strings>
+			</Menu>
+		</Menus>
+
+		<!-- Menu groups: A menu group is a container for other menus or buttons (commands); 
+         The parent of a group must be a menu -->
+		<Groups>
+			<Group guid="guidDPackMenu" id="gidBrowsers" priority="0x0001">
+				<Parent guid="ProductID" id="midDPack" />
+			</Group>
+			<Group guid="guidDPackMenu" id="gidDPackMsc" priority="0x0002">
+				<Parent guid="ProductID" id="midDPack" />
+			</Group>
+			<Group guid="guidDPackMenu" id="gidSupport" priority="0x0003">
+				<Parent guid="ProductID" id="midDPack" />
+			</Group>
+			<Group guid="guidDPackMenu" id="gidDPackOpt" priority="0x0004">
+				<Parent guid="ProductID" id="midDPack" />
+			</Group>
+			<Group guid="guidToolsMenu" id="gidCodeBrowser" priority="0x0001">
+				<Parent guid="ProductID" id="midCodeBrowser" />
+			</Group>
+			<Group guid="guidToolsMenu" id="gidHelp" priority="0x0003">
+				<Parent guid="ProductID" id="midSupport" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBkmrkReg" priority="0x0001">
+				<Parent guid="ProductID" id="midBkmrk" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBkmrkGlb" priority="0x0002">
+				<Parent guid="ProductID" id="midBkmrk" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBMClr" priority="0x0003">
+				<Parent guid="ProductID" id="midBkmrk" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBMSet" priority="0x0001">
+				<Parent guid="ProductID" id="midBkmrkSet" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBMGet" priority="0x0001">
+				<Parent guid="ProductID" id="midBkmrkGet" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBMSetGlb" priority="0x0001">
+				<Parent guid="ProductID" id="midBkmrkSetGlb" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEditBMGetGlb" priority="0x0001">
+				<Parent guid="ProductID" id="midBkmrkGetGlb" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidSurroundWith1" priority="0x0001">
+				<Parent guid="ProductID" id="midSurroundWith" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidSurroundWith2" priority="0x0002">
+				<Parent guid="ProductID" id="midSurroundWith" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidSurroundWith3" priority="0x0003">
+				<Parent guid="ProductID" id="midSurroundWith" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidSurroundWith4" priority="0x0004">
+				<Parent guid="ProductID" id="midSurroundWith" />
+			</Group>
+			<Group guid="guidDPackMenu" id="gidDPack" priority="0x0205">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+			</Group>
+			<Group guid="guidEditMenu" id="gidEdit" priority="0x1000">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+			</Group>
+			<Group guid="guidSolutionExplorerMenu" id="gidMiscSolution" priority="0x0550">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
+			</Group>
+			<Group guid="guidSolutionExplorerMenu" id="gidMiscProject" priority="0x0700">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_REFERENCEROOT" />
+			</Group>
+			<Group guid="guidDPackMenu" id="gidDocument" priority="0x100">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_EZDOCWINTAB" />
+			</Group>
+			<Group guid="guidSolutionExplorerMenu" id="gidMiscCommandPromptItem" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+			</Group>
+			<Group guid="guidSolutionExplorerMenu" id="gidMiscCommandPromptRef" priority="0x0350">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_REFERENCE" />
+			</Group>
+		</Groups>
+
+		<Buttons>
+			<Button guid="CommandSet" id="cidProjectHome" priority="0x0001" type="Button">
+				<Parent guid="guidToolsMenu" id="gidHelp" />
+				<Icon guid="CommandSet" id="bmpDPack" />
+				<Strings>
+					<ButtonText>&amp;DPack Project Site</ButtonText>
+					<LocCanonicalName>DPackRx.Help.WebSite</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSupportEmail" priority="0x0002" type="Button">
+				<Parent guid="guidToolsMenu" id="gidHelp" />
+				<Strings>
+					<ButtonText>DPack Email Us</ButtonText>
+					<MenuText>&amp;Email Us</MenuText>
+					<LocCanonicalName>DPackRx.Help.EmailUs</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidFileBrowser" priority="0x0002" type="Button">
+				<Parent guid="guidDPackMenu" id="gidBrowsers" />
+				<Icon guid="CommandSet" id="bmpFileBr" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;File Browser...</ButtonText>
+					<LocCanonicalName>DPackRx.FileBrowser</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSolutionBrowser" priority="0x0003" type="Button">
+				<Parent guid="guidDPackMenu" id="gidBrowsers" />
+				<Icon guid="CommandSet" id="bmpSolBr" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Solution Browser...</ButtonText>
+					<LocCanonicalName>DPackRx.SolutionBrowser</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCodeStats" priority="0x0001" type="Button">
+				<Parent guid="guidDPackMenu" id="gidDPackMsc" />
+				<Icon guid="CommandSet" id="bmpStats" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Solution S&amp;tatistics...</ButtonText>
+					<LocCanonicalName>DPackRx.SolutionStatistics</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBackup" priority="0x0002" type="Button">
+				<Parent guid="guidDPackMenu" id="gidDPackMsc" />
+				<Icon guid="CommandSet" id="bmpBackup" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Solution Bac&amp;kup...</ButtonText>
+					<LocCanonicalName>DPackRx.SolutionBackup</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidOptions" priority="0x0001" type="Button">
+				<Parent guid="guidDPackMenu" id="gidDPackOpt" />
+				<Icon guid="ImageCatalogGuid" id="Settings" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
+				<Strings>
+					<ButtonText>DPack Options</ButtonText>
+					<MenuText>&amp;Options...</MenuText>
+					<LocCanonicalName>DPackRx.Options</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet1" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;1</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark1</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet2" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;2</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark2</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet3" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;3</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark3</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet4" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk4" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;4</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark4</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet5" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk5" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;5</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark5</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet6" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk6" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;6</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark6</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet7" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk7" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;7</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark7</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet8" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk8" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;8</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark8</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet9" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk9" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;9</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark9</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSet0" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk0" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Bookmark &amp;0</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleBookmark0</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet1" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;1</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark1</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet2" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;2</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark2</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet3" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;3</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark3</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet4" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk4" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;4</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark4</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet5" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk5" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;5</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark5</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet6" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk6" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;6</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark6</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet7" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk7" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;7</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark7</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet8" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk8" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;8</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark8</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet9" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk9" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;9</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark9</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGet0" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGet" />
+				<Icon guid="guidBkmrkBmp" id="bmpBkmrk0" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Bookmark &amp;0</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToBookmark0</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb1" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;1</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark1</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb2" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;2</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark2</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb3" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;3</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark3</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb4" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb4" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;4</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark4</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb5" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb5" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;5</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark5</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb6" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb6" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;6</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark6</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb7" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb7" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;7</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark7</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb8" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb8" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;8</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark8</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb9" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb9" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;9</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark9</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkSetGlb0" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMSetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb0" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Toggle Global Bookmark &amp;0</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ToggleGlobalBookmark0</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb1" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;1</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark1</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb2" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;2</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark2</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb3" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;3</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark3</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb4" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb4" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;4</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark4</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb5" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb5" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;5</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark5</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb6" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb6" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;6</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark6</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb7" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb7" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;7</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark7</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb8" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb8" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;8</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark8</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb9" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb9" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;9</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark9</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkGetGlb0" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMGetGlb" />
+				<Icon guid="guidBkmrkGlbBmp" id="bmpBkmrkGlb0" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Go To Global Bookmark &amp;0</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.GoToGlobalBookmark0</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkClearF" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMClr" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Clear All File Bookmarks</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ClearAllFileBookmarks</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidBkmrkClearS" priority="0x0002" type="Button">
+				<Parent guid="guidEditMenu" id="gidEditBMClr" />
+				<Icon guid="ImageCatalogGuid" id="ClearBookmark" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Clear &amp;All Solution Bookmarks</ButtonText>
+					<LocCanonicalName>DPackRx.Bookmarks.ClearAllSolutionBookmarks</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWTryCatch" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Try/Catch</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.TryCatch</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWTryFinally" priority="0x0002" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Try/Finally</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.TryFinally</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWTryCFinally" priority="0x0003" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Try/Catch/Finally</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.TryCatchFinally</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWUsing" priority="0x0004" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Using</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.Using</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWFor" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>For</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.For</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWForEach" priority="0x0002" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>For/Each</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.ForEach</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWWhile" priority="0x0003" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>While</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.While</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWDoWhile" priority="0x0004" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Do/While</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.DoWhile</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWIf" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>If</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.If</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWIfElse" priority="0x0002" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>If/Else</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.IfElse</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWSwitch" priority="0x0003" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith3" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Switch</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.Switch</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWProperty" priority="0x0001" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith4" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Property</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.Property</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidSWRegion" priority="0x0002" type="Button">
+				<Parent guid="guidEditMenu" id="gidSurroundWith4" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Region</ButtonText>
+					<LocCanonicalName>DPackRx.SurroundWith.Region</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCodeBrowser" priority="0x0001" type="Button">
+				<Parent guid="guidToolsMenu" id="gidCodeBrowser" />
+				<Icon guid="CommandSet" id="bmpCodeBr" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;All Members...</ButtonText>
+					<LocCanonicalName>DPackRx.CodeBrowser.AllMembers</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCodeBrowserI" priority="0x0002" type="Button">
+				<Parent guid="guidToolsMenu" id="gidCodeBrowser" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Classes/Interfaces Only...</ButtonText>
+					<LocCanonicalName>DPackRx.CodeBrowser.ClassesInterfaces</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCodeBrowserM" priority="0x0003" type="Button">
+				<Parent guid="guidToolsMenu" id="gidCodeBrowser" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Methods Only...</ButtonText>
+					<LocCanonicalName>DPackRx.CodeBrowser.Methods</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCodeBrowserP" priority="0x0004" type="Button">
+				<Parent guid="guidToolsMenu" id="gidCodeBrowser" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Properties Only...</ButtonText>
+					<LocCanonicalName>DPackRx.CodeBrowser.Properties</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCollapseSolCtxt" priority="0x0001" type="Button">
+				<Parent guid="guidSolutionExplorerMenu" id="gidMiscSolution" />
+				<Icon guid="guidMiscBmp" id="bmpMiscSolution" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Collaps&amp;e All Projects</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.CollapseAllProjects</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCopyReferencesCtxt" priority="0x0001" type="Button">
+				<Parent guid="guidSolutionExplorerMenu" id="gidMiscProject" />
+				<Icon guid="ImageCatalogGuid" id="Copy" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Copy</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.CopyReferences</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidPasteReferencesCtxt" priority="0x0002" type="Button">
+				<Parent guid="guidSolutionExplorerMenu" id="gidMiscProject" />
+				<Icon guid="ImageCatalogGuid" id="Paste" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Paste</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.PasteReferences</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCopyReferenceCtxt" priority="0x0001" type="Button">
+				<Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_DELETE" />
+				<Icon guid="ImageCatalogGuid" id="Copy" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Copy</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.CopyReference</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidLocateSolExpCtxt" priority="0x0001" type="Button">
+				<Parent guid="guidDPackMenu" id="gidDocument" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Locate In Solution Explorer</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.LocateInSolutionExplorer</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCommandPrompt" priority="0x0001" type="Button">
+				<Icon guid="guidMiscBmp" id="bmpMiscCommandPrompt" />
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>&amp;Open Command &amp;Prompt</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.CommandPrompt</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="CommandSet" id="cidCopyFullPath" priority="0x0001" type="Button">
+				<CommandFlag>DefaultInvisible</CommandFlag>
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Copy Full Path</ButtonText>
+					<LocCanonicalName>DPackRx.Misc.CopyFullPath</LocCanonicalName>
+				</Strings>
+			</Button>
+		</Buttons>
+
+		<!-- Bitmaps: Bitmaps that are used for the commands. -->
+		<Bitmaps>
+			<Bitmap guid="CommandSet" resID="IDB_MENU_IMAGES" usedList="bmpDPack,bmpCodeBr,bmpFileBr,bmpSolBr,bmpStats,bmpBackup" />
+			<Bitmap guid="guidBkmrkBmp" resID="IDB_BKMRK_MENU_IMAGES" usedList="bmpBkmrk0,bmpBkmrk1,bmpBkmrk2,bmpBkmrk3,bmpBkmrk4,bmpBkmrk5,bmpBkmrk6,bmpBkmrk7,bmpBkmrk8,bmpBkmrk9" />
+			<Bitmap guid="guidBkmrkGlbBmp" resID="IDB_BKMRK_G_MENU_IMAGES" usedList="bmpBkmrkGlb0,bmpBkmrkGlb1,bmpBkmrkGlb2,bmpBkmrkGlb3,bmpBkmrkGlb4,bmpBkmrkGlb5,bmpBkmrkGlb6,bmpBkmrkGlb7,bmpBkmrkGlb8,bmpBkmrkGlb9" />
+			<Bitmap guid="guidMiscBmp" resID="IDB_MISC_MENU_IMAGES" usedList="bmpMiscSolution,bmpMiscCommandPrompt" />
+		</Bitmaps>
+
+	</Commands>
+
+	<CommandPlacements>
+		<CommandPlacement guid="guidEditMenu" id="gidEdit" priority="0xA100">
+			<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_EDIT" />
+		</CommandPlacement>
+		<CommandPlacement guid="guidEditMenu" id="gidEdit" priority="0x1000">
+			<Parent guid="GUID_HtmEdGrp" id="IDMX_HTM_SOURCE_HTML" />
+		</CommandPlacement>
+		<CommandPlacement guid="guidEditMenu" id="gidEdit" priority="0x1000">
+			<Parent guid="GUID_HtmEdGrp" id="IDMX_HTM_SOURCE" />
+		</CommandPlacement>
+		<CommandPlacement guid="guidEditMenu" id="gidEdit" priority="0x0100">
+			<Parent guid="GUID_HtmEdGrp" id="IDMX_HTM_SOURCE_XML" />
+		</CommandPlacement>
+		<CommandPlacement guid="guidEditMenu" id="gidEdit" priority="0x1000">
+			<Parent guid="GUID_CSSGrp" id="IDM_CTX_SOURCE" />
+		</CommandPlacement>
+		<CommandPlacement guid="guidEditMenu" id="gidEdit" priority="0x1000">
+			<Parent guid="GUID_NewXamlEdGr" id="IDM_XAML_SOURCE" />
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCollapseSolCtxt" priority="0x0300">
+			<Parent guid="guidSharedMenuGroup" id="IDG_VS_PROJ_TOOLBAR2"/>
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCommandPrompt" priority="0x0150">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SOLUTION_EXPLORE"/>
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCommandPrompt" priority="0x0150">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_EXPLORE"/>
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCommandPrompt" priority="0x0150">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_FOLDER_EXPLORE"/>
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCommandPrompt" priority="0x0001">
+			<Parent guid="guidSolutionExplorerMenu" id="gidMiscCommandPromptItem"/>
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCommandPrompt" priority="0x0001">
+			<Parent guid="guidSolutionExplorerMenu" id="gidMiscCommandPromptRef"/>
+		</CommandPlacement>
+		<CommandPlacement guid="CommandSet" id="cidCopyFullPath" priority="0x0151">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_EXPLORE"/>
+		</CommandPlacement>
+	</CommandPlacements>
+
+	<!-- Visibility: Associate a command with a keyboard shortcut. This association is
+  valid within a specific UI context, that is when the shell is inside a specific mode, e.g. during
+  debugging, editing a file or when the user is using a specific designer -->
+	<VisibilityConstraints>
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowser" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowser" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowser" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserI" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserI" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserI" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserM" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserM" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserM" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserP" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserP" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCodeBrowserP" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidFileBrowser" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidFileBrowser" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidFileBrowser" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet1" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet1" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet2" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet2" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet3" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet3" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet4" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet4" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet5" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet5" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet6" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet6" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet7" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet7" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet8" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet8" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet9" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet9" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet0" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSet0" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet1" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet1" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet2" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet2" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet3" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet3" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet4" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet4" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet5" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet5" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet6" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet6" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet7" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet7" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet8" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet8" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet9" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet9" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet0" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGet0" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkClearF" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkClearF" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkClearS" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkClearS" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb1" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb1" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb2" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb2" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb3" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb3" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb4" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb4" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb5" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb5" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb6" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb6" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb7" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb7" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb8" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb8" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb9" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb9" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb0" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkSetGlb0" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb1" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb1" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb2" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb2" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb3" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb3" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb4" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb4" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb5" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb5" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb6" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb6" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb7" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb7" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb8" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb8" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb9" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb9" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb0" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb0" context="GUID_XamlLanguageService" />
+		<VisibilityItem guid="CommandSet" id="cidSWTryCatch" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWTryFinally" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWTryCFinally" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWUsing" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWFor" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWForEach" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWWhile" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWDoWhile" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWIf" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWIfElse" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWSwitch" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWProperty" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidSWRegion" context="GUID_TextEditorFactory" />
+		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidSolutionBrowser" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidSolutionBrowser" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidSolutionBrowser" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCopyReferencesCtxt" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCopyReferencesCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidPasteReferencesCtxt" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidPasteReferencesCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCopyReferenceCtxt" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCopyReferenceCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidLocateSolExpCtxt" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidLocateSolExpCtxt" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidLocateSolExpCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCommandPrompt" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCommandPrompt" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCommandPrompt" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidCopyFullPath" context="UICONTEXT_SolutionExists_" />
+		<VisibilityItem guid="CommandSet" id="cidCopyFullPath" context="UICONTEXT_SolutionHasSingleProject" />
+		<VisibilityItem guid="CommandSet" id="cidCopyFullPath" context="UICONTEXT_SolutionHasMultipleProjects" />
+	</VisibilityConstraints>
+
+	<!-- Keybindings: Specify the sequence of keys to press to activate the command (keystate) -->
+	<KeyBindings>
+		<KeyBinding guid="CommandSet" id="cidCodeBrowser" editor="guidVSStd97" key1="G" mod1="Alt" />
+		<KeyBinding guid="CommandSet" id="cidCodeBrowserI" editor="guidVSStd97" key1="C" mod1="Alt" />
+		<KeyBinding guid="CommandSet" id="cidCodeBrowserM" editor="guidVSStd97" key1="M" mod1="Alt" />
+		<KeyBinding guid="CommandSet" id="cidCodeBrowserP" editor="guidVSStd97" key1="P" mod1="Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidFileBrowser" editor="guidVSStd97" key1="U" mod1="Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet1" editor="guidVSStd97" key1="1" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet2" editor="guidVSStd97" key1="2" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet3" editor="guidVSStd97" key1="3" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet4" editor="guidVSStd97" key1="4" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet5" editor="guidVSStd97" key1="5" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet6" editor="guidVSStd97" key1="6" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet7" editor="guidVSStd97" key1="7" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet8" editor="guidVSStd97" key1="8" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet9" editor="guidVSStd97" key1="9" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSet0" editor="guidVSStd97" key1="0" mod1="Control Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet1" editor="guidVSStd97" key1="1" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet2" editor="guidVSStd97" key1="2" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet3" editor="guidVSStd97" key1="3" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet4" editor="guidVSStd97" key1="4" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet5" editor="guidVSStd97" key1="5" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet6" editor="guidVSStd97" key1="6" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet7" editor="guidVSStd97" key1="7" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet8" editor="guidVSStd97" key1="8" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet9" editor="guidVSStd97" key1="9" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGet0" editor="guidVSStd97" key1="0" mod1="Control" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkClearF" editor="guidVSStd97" key1="K" mod1="Control" key2="C" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkClearS" editor="guidVSStd97" key1="K" mod1="Control" key2="A" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb1" editor="guidVSStd97" key1="1" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb2" editor="guidVSStd97" key1="2" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb3" editor="guidVSStd97" key1="3" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb4" editor="guidVSStd97" key1="4" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb5" editor="guidVSStd97" key1="5" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb6" editor="guidVSStd97" key1="6" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb7" editor="guidVSStd97" key1="7" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb8" editor="guidVSStd97" key1="8" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb9" editor="guidVSStd97" key1="9" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkSetGlb0" editor="guidVSStd97" key1="0" mod1="Control Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb1" editor="guidVSStd97" key1="1" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb2" editor="guidVSStd97" key1="2" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb3" editor="guidVSStd97" key1="3" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb4" editor="guidVSStd97" key1="4" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb5" editor="guidVSStd97" key1="5" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb6" editor="guidVSStd97" key1="6" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb7" editor="guidVSStd97" key1="7" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb8" editor="guidVSStd97" key1="8" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb9" editor="guidVSStd97" key1="9" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb0" editor="guidVSStd97" key1="0" mod1="Control Alt" />
+		<KeyBinding guid="CommandSet" id="cidSWTryCatch" editor="guidVSStd97" key1="K" mod1="Control" key2="X" />
+		<KeyBinding guid="CommandSet" id="cidSWTryFinally" editor="guidVSStd97" key1="K" mod1="Control" key2="T" />
+		<KeyBinding guid="CommandSet" id="cidSWTryCFinally" editor="guidVSStd97" key1="K" mod1="Control" key2="Y" />
+		<KeyBinding guid="CommandSet" id="cidSWUsing" editor="guidVSStd97" key1="K" mod1="Control" key2="U" />
+		<KeyBinding guid="CommandSet" id="cidSWFor" editor="guidVSStd97" key1="K" mod1="Control" key2="F" />
+		<KeyBinding guid="CommandSet" id="cidSWForEach" editor="guidVSStd97" key1="K" mod1="Control" key2="E" />
+		<KeyBinding guid="CommandSet" id="cidSWWhile" editor="guidVSStd97" key1="K" mod1="Control" key2="W" />
+		<KeyBinding guid="CommandSet" id="cidSWDoWhile" editor="guidVSStd97" key1="K" mod1="Control" key2="D" />
+		<KeyBinding guid="CommandSet" id="cidSWIf" editor="guidVSStd97" key1="K" mod1="Control" key2="I" />
+		<KeyBinding guid="CommandSet" id="cidSWIfElse" editor="guidVSStd97" key1="K" mod1="Control" key2="L" />
+		<KeyBinding guid="CommandSet" id="cidSWSwitch" editor="guidVSStd97" key1="K" mod1="Control" key2="S" />
+		<KeyBinding guid="CommandSet" id="cidSWProperty" editor="guidVSStd97" key1="K" mod1="Control" key2="O" />
+		<KeyBinding guid="CommandSet" id="cidSWRegion" editor="guidVSStd97" key1="K" mod1="Control" key2="R" />
+		<KeyBinding guid="CommandSet" id="cidBackup" editor="guidVSStd97" key1="B" mod1="Alt Shift" />
+		<KeyBinding guid="CommandSet" id="cidSolutionBrowser" editor="guidVSStd97" key1="S" mod1="Alt" />
+		<KeyBinding guid="CommandSet" id="cidCollapseSolCtxt" editor="guidVSStd97" key1="C" mod1="Alt Shift" />
+	</KeyBindings>
+
+	<Symbols>
+		<GuidSymbol name="GUID_TextEditorFactory" value="{8B382828-6202-11D1-8870-0000F87579D2}" />
+		<GuidSymbol name="UICONTEXT_SolutionHasMultipleProjects" value="{93694FA0-0397-11D1-9F4E-00A0C911004F}" />
+		<GuidSymbol name="UICONTEXT_NoSolution" value="{ADFC4E64-0397-11D1-9F4E-00A0C911004F}" />
+		<GuidSymbol name="UICONTEXT_SolutionHasSingleProject" value="{ADFC4E66-0397-11D1-9F4E-00A0C911004F}" />
+		<GuidSymbol name="UICONTEXT_SolutionExists_" value="{F1536EF8-92EC-443C-9ED7-FDADF150DA82}" />
+		<GuidSymbol name="UICONTEXT_SolutionExistsAndFullyLoaded" value="{10534154-102D-46E2-ABA8-A6BFA25BA0BE}" />
+		<GuidSymbol name="GUID_XamlLanguageService" value="{C9164055-039B-4669-832D-F257BD5554D4}" />
+
+		<GuidSymbol name="ProductID" value="{EE57E48A-8422-4CEC-B415-3E3BA31F1199}">
+			<IDSymbol name="midBkmrk" value="0x0FA0" />
+			<IDSymbol name="midBkmrkGet" value="0x0FA3" />
+			<IDSymbol name="midBkmrkGetGlb" value="0x0FA5" />
+			<IDSymbol name="midBkmrkSet" value="0x0FA2" />
+			<IDSymbol name="midBkmrkSetGlb" value="0x0FA4" />
+			<IDSymbol name="midCodeBrowser" value="0x07D0" />
+			<IDSymbol name="midDPack" value="0x01F4" />
+			<IDSymbol name="midSupport" value="0x03E8" />
+			<IDSymbol name="midSurroundWith" value="0x1770" />
+		</GuidSymbol>
+		<GuidSymbol name="CommandSet" value="{BD0B0377-DC68-4C27-A9A3-D240F33367D4}">
+			<IDSymbol name="bmpDPack" value="0x0001" />
+			<IDSymbol name="bmpCodeBr" value="0x0002" />
+			<IDSymbol name="bmpFileBr" value="0x0003" />
+			<IDSymbol name="bmpSolBr" value="0x0004" />
+			<IDSymbol name="bmpStats" value="0x0005" />
+			<IDSymbol name="bmpBackup" value="0x0006" />
+			<IDSymbol name="IDB_MENU_IMAGES" value="450" />
+			<IDSymbol name="cidCodeBrowser" value="100" />
+			<IDSymbol name="cidCodeBrowserI" value="101" />
+			<IDSymbol name="cidCodeBrowserM" value="102" />
+			<IDSymbol name="cidCodeBrowserP" value="103" />
+			<IDSymbol name="cidFileBrowser" value="200" />
+			<IDSymbol name="cidBkmrkSet1" value="500" />
+			<IDSymbol name="cidBkmrkSet2" value="501" />
+			<IDSymbol name="cidBkmrkSet3" value="502" />
+			<IDSymbol name="cidBkmrkSet4" value="503" />
+			<IDSymbol name="cidBkmrkSet5" value="504" />
+			<IDSymbol name="cidBkmrkSet6" value="505" />
+			<IDSymbol name="cidBkmrkSet7" value="506" />
+			<IDSymbol name="cidBkmrkSet8" value="507" />
+			<IDSymbol name="cidBkmrkSet9" value="508" />
+			<IDSymbol name="cidBkmrkSet0" value="509" />
+			<IDSymbol name="cidBkmrkGet1" value="510" />
+			<IDSymbol name="cidBkmrkGet2" value="511" />
+			<IDSymbol name="cidBkmrkGet3" value="512" />
+			<IDSymbol name="cidBkmrkGet4" value="513" />
+			<IDSymbol name="cidBkmrkGet5" value="514" />
+			<IDSymbol name="cidBkmrkGet6" value="515" />
+			<IDSymbol name="cidBkmrkGet7" value="516" />
+			<IDSymbol name="cidBkmrkGet8" value="517" />
+			<IDSymbol name="cidBkmrkGet9" value="518" />
+			<IDSymbol name="cidBkmrkGet0" value="519" />
+			<IDSymbol name="cidBkmrkClearF" value="520" />
+			<IDSymbol name="cidBkmrkClearS" value="521" />
+			<IDSymbol name="cidBkmrkSetGlb1" value="530" />
+			<IDSymbol name="cidBkmrkSetGlb2" value="531" />
+			<IDSymbol name="cidBkmrkSetGlb3" value="532" />
+			<IDSymbol name="cidBkmrkSetGlb4" value="533" />
+			<IDSymbol name="cidBkmrkSetGlb5" value="534" />
+			<IDSymbol name="cidBkmrkSetGlb6" value="535" />
+			<IDSymbol name="cidBkmrkSetGlb7" value="536" />
+			<IDSymbol name="cidBkmrkSetGlb8" value="537" />
+			<IDSymbol name="cidBkmrkSetGlb9" value="538" />
+			<IDSymbol name="cidBkmrkSetGlb0" value="539" />
+			<IDSymbol name="cidBkmrkGetGlb1" value="540" />
+			<IDSymbol name="cidBkmrkGetGlb2" value="541" />
+			<IDSymbol name="cidBkmrkGetGlb3" value="542" />
+			<IDSymbol name="cidBkmrkGetGlb4" value="543" />
+			<IDSymbol name="cidBkmrkGetGlb5" value="544" />
+			<IDSymbol name="cidBkmrkGetGlb6" value="545" />
+			<IDSymbol name="cidBkmrkGetGlb7" value="546" />
+			<IDSymbol name="cidBkmrkGetGlb8" value="547" />
+			<IDSymbol name="cidBkmrkGetGlb9" value="548" />
+			<IDSymbol name="cidBkmrkGetGlb0" value="549" />
+			<IDSymbol name="cidSWTryCatch" value="600" />
+			<IDSymbol name="cidSWTryFinally" value="601" />
+			<IDSymbol name="cidSWTryCFinally" value="602" />
+			<IDSymbol name="cidSWUsing" value="603" />
+			<IDSymbol name="cidSWFor" value="604" />
+			<IDSymbol name="cidSWForEach" value="605" />
+			<IDSymbol name="cidSWWhile" value="606" />
+			<IDSymbol name="cidSWDoWhile" value="607" />
+			<IDSymbol name="cidSWIf" value="608" />
+			<IDSymbol name="cidSWIfElse" value="609" />
+			<IDSymbol name="cidSWSwitch" value="610" />
+			<IDSymbol name="cidSWProperty" value="611" />
+			<IDSymbol name="cidSWRegion" value="612" />
+			<IDSymbol name="cidProjectHome" value="700" />
+			<IDSymbol name="cidSupportEmail" value="701" />
+			<IDSymbol name="cidOptions" value="710" />
+			<IDSymbol name="cidCodeStats" value="800" />
+			<IDSymbol name="cidBackup" value="900" />
+			<IDSymbol name="cidSolutionBrowser" value="1000" />
+			<IDSymbol name="cidCollapseSolCtxt" value="1101" />
+			<IDSymbol name="cidCopyReferencesCtxt" value="1102" />
+			<IDSymbol name="cidPasteReferencesCtxt" value="1103" />
+			<IDSymbol name="cidCopyReferenceCtxt" value="1104" />
+			<IDSymbol name="cidLocateSolExpCtxt" value="1105" />
+			<IDSymbol name="cidCommandPrompt" value="1106" />
+			<IDSymbol name="cidCopyFullPath" value="1107" />
+		</GuidSymbol>
+		<GuidSymbol name="guidBkmrkBmp" value="{8B0E08A4-8C2C-4AFB-9A99-ADAD3DC0B921}">
+			<IDSymbol name="bmpBkmrk0" value="0x0001" />
+			<IDSymbol name="bmpBkmrk1" value="0x0002" />
+			<IDSymbol name="bmpBkmrk2" value="0x0003" />
+			<IDSymbol name="bmpBkmrk3" value="0x0004" />
+			<IDSymbol name="bmpBkmrk4" value="0x0005" />
+			<IDSymbol name="bmpBkmrk5" value="0x0006" />
+			<IDSymbol name="bmpBkmrk6" value="0x0007" />
+			<IDSymbol name="bmpBkmrk7" value="0x0008" />
+			<IDSymbol name="bmpBkmrk8" value="0x0009" />
+			<IDSymbol name="bmpBkmrk9" value="0x000A" />
+			<IDSymbol name="bmpBkmrkN" value="0x000C" />
+			<IDSymbol name="bmpBkmrkP" value="0x000B" />
+			<IDSymbol name="IDB_BKMRK_MENU_IMAGES" value="502" />
+		</GuidSymbol>
+		<GuidSymbol name="guidBkmrkGlbBmp" value="{8B0E08A5-8C2C-4AFB-9A99-ADAD3DC0B921}">
+			<IDSymbol name="bmpBkmrkGlb0" value="0x0001" />
+			<IDSymbol name="bmpBkmrkGlb1" value="0x0002" />
+			<IDSymbol name="bmpBkmrkGlb2" value="0x0003" />
+			<IDSymbol name="bmpBkmrkGlb3" value="0x0004" />
+			<IDSymbol name="bmpBkmrkGlb4" value="0x0005" />
+			<IDSymbol name="bmpBkmrkGlb5" value="0x0006" />
+			<IDSymbol name="bmpBkmrkGlb6" value="0x0007" />
+			<IDSymbol name="bmpBkmrkGlb7" value="0x0008" />
+			<IDSymbol name="bmpBkmrkGlb8" value="0x0009" />
+			<IDSymbol name="bmpBkmrkGlb9" value="0x000A" />
+			<IDSymbol name="IDB_BKMRK_G_MENU_IMAGES" value="501" />
+		</GuidSymbol>
+		<GuidSymbol name="guidMiscBmp" value="{8B0E08A7-8C2C-4AFB-9A99-ADAD3DC0B921}">
+			<IDSymbol name="bmpMiscSolution" value="0x0001" />
+			<IDSymbol name="bmpMiscCommandPrompt" value="0x0002" />
+			<IDSymbol name="IDB_MISC_MENU_IMAGES" value="503" />
+		</GuidSymbol>
+		<GuidSymbol name="guidToolsMenu" value="{AB0626A5-EE63-4347-A85C-3A95E37F83B4}">
+			<IDSymbol name="gidCodeBrowser" value="101" />
+			<IDSymbol name="gidHelp" value="500" />
+		</GuidSymbol>
+		<GuidSymbol name="guidEditMenu" value="{AB0626A6-EE63-4347-A85C-3A95E37F83B4}">
+			<IDSymbol name="gidEdit" value="0x00C8" />
+			<IDSymbol name="gidEditBkmrkGlb" value="0x012D" />
+			<IDSymbol name="gidEditBkmrkReg" value="0x012C" />
+			<IDSymbol name="gidEditBMClr" value="0x0133" />
+			<IDSymbol name="gidEditBMGet" value="0x012F" />
+			<IDSymbol name="gidEditBMGetGlb" value="0x0132" />
+			<IDSymbol name="gidEditBMSet" value="0x012E" />
+			<IDSymbol name="gidEditBMSetGlb" value="0x0131" />
+			<IDSymbol name="gidSurroundWith1" value="0x0191" />
+			<IDSymbol name="gidSurroundWith2" value="0x0192" />
+			<IDSymbol name="gidSurroundWith3" value="0x0193" />
+			<IDSymbol name="gidSurroundWith4" value="0x0194" />
+		</GuidSymbol>
+		<GuidSymbol name="guidSolutionExplorerMenu" value="{AB0626A8-EE63-4347-A85C-3A95E37F83B4}">
+			<IDSymbol name="gidMiscSolution" value="600" />
+			<IDSymbol name="gidMiscProject" value="601" />
+			<IDSymbol name="gidMiscCommandPromptItem" value="602" />
+			<IDSymbol name="gidMiscCommandPromptRef" value="603" />
+		</GuidSymbol>
+		<GuidSymbol name="guidDPackMenu" value="{AB0626A7-EE63-4347-A85C-3A95E37F83B4}">
+			<IDSymbol name="gidDPack" value="10" />
+			<IDSymbol name="gidBrowsers" value="11" />
+			<IDSymbol name="gidDPackMsc" value="12" />
+			<IDSymbol name="gidDPackOpt" value="13" />
+			<IDSymbol name="gidSupport" value="14" />
+			<IDSymbol name="gidDocument" value="15" />
+		</GuidSymbol>
+		<GuidSymbol name="GUID_CSSGrp" value="{A764E896-518D-11D2-9A89-00C04F79EFC3}">
+			<IDSymbol name="IDM_CTX_SOURCE" value="0x0102" />
+		</GuidSymbol>
+		<GuidSymbol name="GUID_HtmEdGrp" value="{D7E8C5E1-BDB8-11D0-9C88-0000F8040A53}">
+			<IDSymbol name="IDMX_HTM_SOURCE" value="0x0035" />
+			<IDSymbol name="IDMX_HTM_SOURCE_HTML" value="0x0033" />
+			<IDSymbol name="IDMX_HTM_SOURCE_XML" value="0x0038" />
+		</GuidSymbol>
+		<GuidSymbol name="GUID_NewXamlEdGr" value="{4C87B692-1202-46AA-B64C-EF01FAEC53DA}">
+			<IDSymbol name="IDM_XAML_SOURCE" value="0x0103"/>
+		</GuidSymbol>
+	</Symbols>
+</CommandTable>

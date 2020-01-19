@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="DPackRx.Features.FileBrowser.FileBrowserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:local="clr-namespace:DPackRx.Features.FileBrowser"
+             xmlns:converters="clr-namespace:DPackRx.UI.Converters"
+             xmlns:behaviors="clr-namespace:DPackRx.UI.Behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600"
+             behaviors:UserControlFocusOnLoad.Enabled="True">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Must reference resource via pack syntax due to host being VS -->
+                <ResourceDictionary Source="pack://application:,,,/DPackRx;component/UI/Styles/FeatureDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>    
+    </UserControl.Resources>
+
+    <DockPanel LastChildFill="True">
+
+        <Border DockPanel.Dock="Top" BorderThickness="0,1,0,1">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" ToolTip="Open Properties in Code Browser (Shift+Alt+P)"
+                        Command="{Binding OpenCodeBrowserPropertiesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                        Style="{StaticResource SearchButton}">
+                    <Image Width="16" Height="16"
+                           Source="{Binding ImageOpenCodeBrowserProperties, Mode=OneTime}"
+                           Style="{StaticResource SearchButtonImage}" />
+                </Button>
+
+                <Button DockPanel.Dock="Right" ToolTip="Open Methods in Code Browser (Alt+M)"
+                        Command="{Binding OpenCodeBrowserMethodsCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                        Style="{StaticResource SearchButton}">
+                    <Image Width="16" Height="16"
+                           Source="{Binding ImageOpenCodeBrowserMethods, Mode=OneTime}"
+                           Style="{StaticResource SearchButtonImage}" />
+                </Button>
+
+                <Button DockPanel.Dock="Right" ToolTip="Open Classes/Interfaces in Code Browser (Alt+C)"
+                        Command="{Binding OpenCodeBrowserClassesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                        Style="{StaticResource SearchButton}">
+                    <Image Width="16" Height="16"
+                           Source="{Binding ImageOpenCodeBrowserClasses, Mode=OneTime}"
+                           Style="{StaticResource SearchButtonImage}" />
+                </Button>
+
+                <Button DockPanel.Dock="Right" ToolTip="Open in Code Browser (Alt+G)"
+                        Command="{Binding OpenCodeBrowserAllCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                        Style="{StaticResource SearchButton}">
+                    <Image Width="16" Height="16"
+                           Source="{Binding ImageOpenCodeBrowserAll, Mode=OneTime}"
+                           Style="{StaticResource SearchButtonImage}" />
+                </Button>
+
+                <Separator DockPanel.Dock="Right" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+
+                <Button DockPanel.Dock="Right" Command="{Binding ShowFilesCommand}">
+                    <!-- Conditional tooltip -->
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SearchButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding AllFiles}" Value="true">
+                                    <Setter Property="ToolTip" Value="Show code files only (Alt+A)" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AllFiles}" Value="false">
+                                    <Setter Property="ToolTip" Value="Show all files (Alt+A)" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Image Width="16" Height="16">
+                        <!-- Conditional image -->
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding AllFiles}" Value="true">
+                                        <Setter Property="Source" Value="{Binding ImageShowCodeFiles, Mode=OneTime}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding AllFiles}" Value="false">
+                                        <Setter Property="Source" Value="{Binding ImageShowAllFiles, Mode=OneTime}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+
+                <TextBox behaviors:TextBoxSelectAllOnFocus.Enabled="True"
+                         behaviors:TextBoxInputRedirectToListView.Control="items"
+                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource SearchTextBox}">
+                    <TextBox.ToolTip>
+                        <TextBlock>
+                            Open file(s) in:
+                            <LineBreak /><LineBreak />
+                            edit view - <TextBlock FontWeight="Bold">Enter</TextBlock>
+                            <LineBreak />
+                            design view - <TextBlock FontWeight="Bold">Ctrl+Enter</TextBlock>
+                        </TextBlock>
+                    </TextBox.ToolTip>
+                </TextBox>
+            </DockPanel>
+        </Border>
+
+        <StatusBar DockPanel.Dock="Bottom" Focusable="False">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="16"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem x:Name="statusItem">
+                <TextBlock x:Name="statusText" Margin="4,0,0,0">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{converters:FileNamePathMinimizeConverter}">
+                            <Binding Path="SelectedItem.FileNameWithPath" ElementName="items" />
+                            <Binding Path="ActualWidth" ElementName="statusItem" />
+                            <Binding Path="FontFamily" ElementName="statusText" />
+                            <Binding Path="FontStyle" ElementName="statusText" />
+                            <Binding Path="FontWeight" ElementName="statusText" />
+                            <Binding Path="FontStretch" ElementName="statusText" />
+                            <Binding Path="FontSize" ElementName="statusText" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1" Style="{StaticResource SearchSeparator}" />
+            <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Items.Count, ElementName=items}" />
+            </StatusBarItem>
+            <Separator Grid.Column="3" Style="{StaticResource SearchSeparator}" />
+        </StatusBar>
+
+        <!-- ListView sorting and column auto-size setup -->
+        <ListView behaviors:ListViewAutoSizeColumn.Column="1"
+                  behaviors:ListViewMatchItemComparer.Enabled="True"
+                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+                  ItemsSource="{Binding Files, Mode=OneTime}" IsSynchronizedWithCurrentItem="True" x:Name="items"
+                  Style="{StaticResource SearchResults}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding OpenFilesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListView.View>
+                <GridView>
+                    <!-- Image -->
+                    <GridViewColumn Width="30">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Converter={converters:FileModelToImageConverter}}" Width="16" Height="16">
+                                    <Image.ToolTip>
+                                        <ToolTip Content="{Binding Converter={converters:RankToToolTipConverter}}" />
+                                    </Image.ToolTip>
+                                </Image>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- File name -->
+                    <GridViewColumn DisplayMemberBinding="{Binding FileName, Mode=OneTime}" Width="200">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="File" Style="{StaticResource SearchResultsHeader}" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <!-- Project name(s) -->
+                    <GridViewColumn Width="180">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Project" Style="{StaticResource SearchResultsHeader}" />
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProjectName, Mode=OneTime}"
+                                           ToolTip="{Binding Path=Text, RelativeSource={x:Static RelativeSource.Self}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+
+    <!-- Key bindings must be setup after referenced element's been created -->
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding OpenCodeBrowserAllCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                    Key="G" Modifiers="Alt" />
+        <KeyBinding Command="{Binding OpenCodeBrowserClassesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                    Key="C" Modifiers="Alt" />
+        <KeyBinding Command="{Binding OpenCodeBrowserMethodsCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                    Key="M" Modifiers="Alt" />
+        <KeyBinding Command="{Binding OpenCodeBrowserPropertiesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                    Key="P"  Modifiers="Shift+Alt" />
+        <KeyBinding Command="{Binding ShowFilesCommand}"
+                    Key="A" Modifiers="Alt" />
+        <KeyBinding Command="{Binding OpenFilesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                    Key="Return" />
+        <KeyBinding Command="{Binding OpenFilesCommand}" CommandParameter="{Binding SelectedItems, ElementName=items}"
+                    Key="Return" Modifiers="Ctrl" />
+    </UserControl.InputBindings>
+
+</UserControl>

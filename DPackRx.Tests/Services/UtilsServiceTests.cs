@@ -1,0 +1,70 @@
+﻿using System.Threading;
+
+using DPackRx.Services;
+
+using NUnit.Framework;
+
+namespace DPackRx.Tests.Services
+{
+	/// <summary>
+	/// UtilsService tests.
+	/// </summary>
+	[TestFixture]
+	public class UtilsServiceTests
+	{
+		#region Private Methods
+
+		/// <summary>
+		/// Returns test service instance.
+		/// </summary>
+		private IUtilsService GetService()
+		{
+			return new UtilsService();
+		}
+
+		#endregion
+
+		#region Tests
+
+		[Test]
+		[Explicit("Suppress beep")]
+		public void Beep()
+		{
+			var service = GetService();
+
+			Assert.DoesNotThrow(() => service.Beep());
+		}
+
+		[Test]
+		public void ControlKeyDown()
+		{
+			var service = GetService();
+
+			Assert.That(service.ControlKeyDown(), Is.False);
+		}
+
+		[Test]
+		[RequiresThread(ApartmentState.STA)]
+		public void SetClipboardData()
+		{
+			var service = GetService();
+
+			Assert.DoesNotThrow(() => service.SetClipboardData("test"));
+		}
+
+		[Test]
+		[RequiresThread(ApartmentState.STA)]
+		public void GetClipboardData()
+		{
+			var service = GetService();
+
+			service.SetClipboardData("test");
+			var result = service.GetClipboardData(out string data);
+
+			Assert.That(result, Is.True);
+			Assert.That(data, Is.EqualTo("test"));
+		}
+
+		#endregion
+	}
+}

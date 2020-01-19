@@ -1,0 +1,94 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+  <!-- Build steps -->
+  <PropertyGroup> 
+    <CoreBuildDependsOn>
+        ResolveVsixVersion;
+        UpdateAssemblyInfoExFromVsix;
+        $(CoreBuildDependsOn);
+        CopyVsixPackageWithVersion
+    </CoreBuildDependsOn>
+  </PropertyGroup>
+
+
+  <!-- Clean steps -->
+  <PropertyGroup>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      AssemblyInfoExCleanup
+    </CleanDependsOn>
+  </PropertyGroup>
+
+
+  <!-- Properties setup -->
+  <PropertyGroup>
+    <_AssemblyInfoEx>$(IntermediateOutputPath)AssemblyInfoEx.cs</_AssemblyInfoEx>
+    <_AssemblyFileVersion Condition=" '$(_AssemblyFileVersion)'=='' ">true</_AssemblyFileVersion>
+  </PropertyGroup>
+
+
+  <!-- Retrieve VSIX manifest version -->
+  <Target Name="ResolveVsixVersion">
+    <XmlPeek Namespaces="&lt;Namespace Prefix='pkg' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011'/&gt;"
+             XmlInputPath="$(MSBuildProjectDirectory)\source.extension.vsixmanifest" 
+             Query="/pkg:PackageManifest/pkg:Metadata/pkg:Identity/@Version">
+      <Output TaskParameter="Result" ItemName="_Version_" />
+    </XmlPeek>
+    <Error Condition=" '@(_Version_)' == '' " Text="Failed to retrieve package manifest version." />
+    <Message Text="Package manifest version = @(_Version_)" />
+    <!-- Convert item to property -->
+    <PropertyGroup>
+      <_Version>@(_Version_)</_Version>
+    </PropertyGroup>
+  </Target>
+
+
+  <!-- Generate AssemblyInfoEx.cs using VSIX manifest version -->
+  <Target Name="UpdateAssemblyInfoExFromVsix"
+          Inputs="$(MSBuildProjectDirectory)\source.extension.vsixmanifest"
+          Outputs="$(_AssemblyInfoEx)">
+    <CreateItem Include="System.Reflection.AssemblyVersionAttribute"
+                AdditionalMetadata="_Parameter1=$(_Version)">
+      <Output TaskParameter="Include" ItemName="_Attribute" />
+    </CreateItem>
+    <CreateItem Include="System.Reflection.AssemblyFileVersionAttribute"
+                AdditionalMetadata="_Parameter1=$(_Version)"
+                Condition=" '$(_AssemblyFileVersion)'=='true' ">
+      <Output TaskParameter="Include" ItemName="_Attribute" />
+    </CreateItem>
+
+    <WriteCodeFragment AssemblyAttributes="@(_Attribute)"
+                       OutputFile="$(_AssemblyInfoEx)"
+                       Language="$(Language)">
+      <Output TaskParameter="OutputFile" ItemName="Compile" />
+    </WriteCodeFragment>
+  </Target>
+
+
+  <!-- Copy VSIX package to project output folder with an extra file name's version suffix -->
+  <!-- Add copied file name to auto-clean file -->
+  <Target Name="CopyVsixPackageWithVersion">
+    <ItemGroup>
+      <_GeneratedVSIXPackage Include="$(TargetVsixContainerName)" />
+      <_SourceVSIXPackage Include="@(_GeneratedVSIXPackage->'$(TargetDir)%(Filename)%(Extension)')" />
+      <_TargetVSIXPackage Include="@(_GeneratedVSIXPackage->'$(TargetDir)$(ProjectName)-$(_Version)%(Extension)')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_SourceVSIXPackage)"
+          DestinationFiles="@(_TargetVSIXPackage)"
+          SkipUnchangedFiles="true" />
+    <Message Text="$(ProjectName) -&gt; @(_TargetVSIXPackage->'%(FullPath)')" Importance="High" />
+    <WriteLinesToFile File="$(IntermediateOutputPath)$(CleanFile)"
+                      Lines="@(_TargetVSIXPackage)"
+                      Overwrite="false" />
+  </Target>
+
+
+  <!-- Delete auto genned code file -->
+  <Target Name="AssemblyInfoExCleanup"
+          Condition=" Exists('$(_AssemblyInfoEx)') ">
+    <Delete Files="$(_AssemblyInfoEx)" />
+  </Target>
+
+
+</Project>
