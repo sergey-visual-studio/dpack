@@ -19,3 +19,4 @@ jobs:
     - name: Build Solution
       run: msbuild DPackRx.sln -verbosity:minimal /p:DeployExtension=false
 
+
