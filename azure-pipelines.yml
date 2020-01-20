@@ -53,3 +53,14 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'DPackRx'
     publishLocation: 'Container'
+
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'usysware_oath'
+    repositoryName: 'usysware/dpack'
+    action: 'edit'
+    target: '$(Build.SourceVersion)'
+    tag: '$(VsixVersion)'
+    isPreRelease: true
+    addChangeLog: false
+    assets: '$(Build.ArtifactStagingDirectory)/*'
