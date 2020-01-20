@@ -43,7 +43,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'bin/$(buildConfiguration)/DPackRx-*.vsix'
+    contents: 'DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
