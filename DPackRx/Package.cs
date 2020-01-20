@@ -101,10 +101,9 @@ namespace DPackRx
 #if BETA
 					log.Enabled = true;
 #else
-					var optionsFactory = _container.GetInstance<IOptionsFactory>();
-					var options = optionsFactory.GetOptions(Features.KnownFeature.Package);
+					var optionsService = _container.GetInstance<IOptionsService>();
 
-					log.Enabled = options.GetBoolOption("Logging");
+					log.Enabled = optionsService.GetBoolOption(Features.KnownFeature.SupportOptions, "Logging");
 #endif
 
 					var featureFactory = _container.GetInstance<IFeatureFactory>();
