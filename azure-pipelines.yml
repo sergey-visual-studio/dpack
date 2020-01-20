@@ -31,7 +31,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: '-verbosity:diagnostic'
+    msbuildArgs: '-verbosity:normal'
 
 - task: VSTest@2
   inputs:
