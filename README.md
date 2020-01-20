@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/usysware/dpack/_apis/build/status/usysware.dpack?branchName=master)](https://dev.azure.com/usysware/dpack/_build/latest?definitionId=1&branchName=master)
+
 # DPack is in BETA!
 
 Please be aware that DPack Rx currently is and will remain for a while in **BETA** status. Tread carefully and report any issues you might find. Thanks!
