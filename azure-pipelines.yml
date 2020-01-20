@@ -45,9 +45,11 @@ steps:
   inputs:
     contents: 'DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true
+    flattenFolders: true
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'DPackRx'
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'DPackRx'
     publishLocation: 'Container'
