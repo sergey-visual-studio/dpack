@@ -58,6 +58,7 @@
       <Output TaskParameter="Include" ItemName="_Attribute" />
     </CreateItem>
 
+    <!-- Required for Azure DevOps (for some reason) -->
     <MakeDir Condition="!Exists('$(MSBuildProjectDirectory)\$(IntermediateOutputPath)')"
              Directories="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)"/>
 
