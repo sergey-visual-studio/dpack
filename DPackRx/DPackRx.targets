@@ -23,7 +23,7 @@
 
   <!-- Properties setup -->
   <PropertyGroup>
-    <_AssemblyInfoEx>$(IntermediateOutputPath)AssemblyInfoEx.cs</_AssemblyInfoEx>
+    <_AssemblyInfoEx>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)AssemblyInfoEx.cs</_AssemblyInfoEx>
     <_AssemblyFileVersion Condition=" '$(_AssemblyFileVersion)'=='' ">true</_AssemblyFileVersion>
   </PropertyGroup>
 
