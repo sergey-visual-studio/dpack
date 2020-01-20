@@ -24,7 +24,7 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Build Solution
-      run: msbuild ${_Solution} -verbosity:minimal -p:Configuration=${_Config} -p:DeployExtension=false -p:AzureVsixVersion=true
+      run: msbuild ${_Solution} -verbosity:minimal -p:Configuration=Debug -p:DeployExtension=false -p:AzureVsixVersion=true
 
     - name: Setup VS2019
       uses: richardo2016/Setup-MSBuild@releases/clangcl_x_2017/v1
