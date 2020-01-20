@@ -58,12 +58,9 @@
       <Output TaskParameter="Include" ItemName="_Attribute" />
     </CreateItem>
 
-    <Message Condition=" Exists('$(MSBuildProjectDirectory)')" Importance="High" Text="> $(MSBuildProjectDirectory) - exists" />
-    <Message Condition="!Exists('$(MSBuildProjectDirectory)')" Importance="High" Text="> $(MSBuildProjectDirectory) - does not exist" />
-    <Message Condition=" Exists('$(MSBuildProjectDirectory)\$(IntermediateOutputPath)')" Importance="High" Text="> $(MSBuildProjectDirectory)\$(IntermediateOutputPath) - exists" />
-    <Message Condition="!Exists('$(MSBuildProjectDirectory)\$(IntermediateOutputPath)')" Importance="High" Text="> $(MSBuildProjectDirectory)\$(IntermediateOutputPath) - does not exist" />
-    <Message Condition=" Exists('$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)')" Importance="High" Text="> $(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath) - exists" />
-    <Message Condition="!Exists('$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)')" Importance="High" Text="> $(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath) - does not exist" />
+    <MakeDir Condition="!Exists('$(MSBuildProjectDirectory)\$(IntermediateOutputPath)')"
+             Directories="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)"/>
+
     <WriteCodeFragment AssemblyAttributes="@(_Attribute)"
                        OutputFile="$(_AssemblyInfoEx)"
                        Language="$(Language)">
