@@ -18,16 +18,16 @@ jobs:
       uses: warrenbuckley/Setup-Nuget@v1
 
     - name: Restore Nuget Packages
-      run: nuget restore $_Solution
+      run: nuget restore ${_Solution}
 
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Build Solution
-      run: msbuild $_Solution -verbosity:minimal -p:Configuration=$_Config -p:DeployExtension=false -p:AzureVsixVersion=true
+      run: msbuild ${_Solution} -verbosity:minimal -p:Configuration=${_Config} -p:DeployExtension=false -p:AzureVsixVersion=true
 
     - name: Setup VS2019
       uses: richardo2016/Setup-MSBuild@releases/clangcl_x_2017/v1
 
     - name: Run Tests
-      uses: $VSINSTALLDIR\Common7\IDE\Extensions\TestPlatform\vstest.console.exe DPackRx.Tests/bin/$_Config/DPackRx.Tests.dll
+      uses: ${VSINSTALLDIR}\Common7\IDE\Extensions\TestPlatform\vstest.console.exe DPackRx.Tests/bin/${_Config}/DPackRx.Tests.dll
