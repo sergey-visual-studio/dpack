@@ -40,3 +40,9 @@ steps:
     configuration: '$(buildConfiguration)'
     testAssemblyVer2: |
       **\*.Tests.dll
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/bin/$(buildConfiguration)/DPackRx-*.vsix'
+    ArtifactName: 'DPackRx'
+    publishLocation: 'Container'
