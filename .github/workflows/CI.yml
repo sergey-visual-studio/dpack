@@ -23,8 +23,8 @@ jobs:
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
 
-    - name: Build Solution
-      run: msbuild ${_Solution} -verbosity:minimal -p:Configuration=Debug -p:DeployExtension=false -p:AzureVsixVersion=true
+    - name: Setup VS Dev Environment
+      uses: seanmiddleditch/gha-setup-vsdevenv@v1
 
-    - name: Setup VS2019
-      uses: richardo2016/Setup-MSBuild@releases/clangcl_x_2017/v1
+    - name: Build Solution
+      run: msbuild ${_Solution} -verbosity:minimal -p:Configuration=${_Config} -p:DeployExtension=false -p:AzureVsixVersion=true
