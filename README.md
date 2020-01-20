@@ -32,7 +32,7 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 - *Bookmarks* feature has been rebuilt from the ground using editor taggers
 - *Bookmarks* feature bookmarks are no longer saved with the solution. This might be subject to change in the future
 - *Bookmarks* feature ToolWindow's been deprecated
-- Former browsers *ToolWindow Mode* is no longer available (see note above on the design principals)
+- Former browsers *ToolWindow Mode* is no longer available (see the note above on design principals)
 - *Solution Browser* rather infrequently used feature won't be migrated. If you rely on it then consider staying with older DPack extension
 - *Surround With* feature won't be migrated either
 - *Code Navigation* obscure feature won't be migrated either
