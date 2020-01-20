@@ -4,13 +4,16 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+  batch: true
+  branches:
+    include:
+      - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2019'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
@@ -20,9 +23,11 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+    verbosityRestore: 'Quiet'
 
 - task: VSBuild@1
   inputs:
+    vsVersion: '16.0'
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
@@ -30,5 +35,8 @@ steps:
 
 - task: VSTest@2
   inputs:
+    vsTestVersion: '16.0'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    testAssemblyVer2: |
+      **\*.Tests.dll
