@@ -41,8 +41,13 @@ steps:
     testAssemblyVer2: |
       **\*.Tests.dll
 
+- task: CopyFiles@2
+  inputs:
+    contents: 'bin/$(buildConfiguration)/DPackRx-*.vsix'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/bin/$(buildConfiguration)/DPackRx-*.vsix'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'DPackRx'
     publishLocation: 'Container'
