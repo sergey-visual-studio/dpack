@@ -18,7 +18,7 @@ jobs:
       uses: warrenbuckley/Setup-Nuget@v1
 
     - name: Restore Nuget Packages
-      run: nuget restore ${_Solution}
+      run: nuget restore $(_Solution)
 
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
@@ -27,4 +27,4 @@ jobs:
       uses: seanmiddleditch/gha-setup-vsdevenv@v1
 
     - name: Build Solution
-      run: msbuild ${_Solution} -verbosity:minimal -p:Configuration=${_Config} -p:DeployExtension=false -p:AzureVsixVersion=true
+      run: msbuild $(_Solution) -verbosity:minimal -p:Configuration=$(_Config) -p:DeployExtension=false -p:AzureVsixVersion=true
