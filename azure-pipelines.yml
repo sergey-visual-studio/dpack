@@ -30,7 +30,7 @@ steps:
     vsVersion: '16.0'
     solution: '$(solution)'
     platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    configuration: '$(Configuration)'
     msbuildArgs: '-verbosity:minimal /p:DeployExtension=false /p:AzureVsixVersion=true'
 
 - task: VSTest@2
