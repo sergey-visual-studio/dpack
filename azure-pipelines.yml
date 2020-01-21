@@ -16,9 +16,9 @@ variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  Beta: true
+  buildType: '.BETA'
 
-name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)${{ if eq(variables['Beta'], true) : '.BETA' }}"
+name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)$(buildType)"
 steps:
 - task: NuGetToolInstaller@1
 
@@ -33,7 +33,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:BETA=$(Beta)'
+    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:BETA=$(buildType)'
 
 - task: VSTest@2
   inputs:
