@@ -39,7 +39,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testAssemblyVer2: |
-      **\bin\**.Tests.dll
+      **/bin/$(buildConfiguration)/*.Tests.dll
 
 - task: CopyFiles@2
   inputs:
