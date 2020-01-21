@@ -16,7 +16,6 @@ variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
-  group: Variables
 
 steps:
 - task: NuGetToolInstaller@1
