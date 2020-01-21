@@ -41,6 +41,7 @@
     <PropertyGroup>
       <_Version>@(_Version_)</_Version>
       <AzureVsixVersion Condition=" '$(AzureVsixVersion)' == '' ">false</AzureVsixVersion>
+      <GitHubVsixVersion Condition=" '$(GitHubVsixVersion)' == '' ">false</GitHubVsixVersion>
     </PropertyGroup>
   </Target>
 
@@ -90,6 +91,9 @@
 	<!-- Update Azure DevOps custom variable -->
 	<Message Condition=" '$(AzureVsixVersion)' == 'true' "
 			 Text="##vso[task.setvariable variable=VsixVersion;]$(_Version)" Importance="High" />
+	<!-- Update GitHub custom variable -->
+	<Message Condition=" '$(GitHubVsixVersion)' == 'true' "
+			 Text="::set-env name=VsixVersion::$(_Version)" Importance="High" />
   </Target>
 
 
