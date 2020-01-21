@@ -17,14 +17,14 @@ jobs:
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
 
-    - name: Restore Nuget Packages
-      run: nuget restore $_Solution
-
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Setup VS Dev Environment
       uses: seanmiddleditch/gha-setup-vsdevenv@v1
+
+    - name: Restore Nuget Packages
+      run: nuget restore $env:_Solution
 
     - name: Build Solution
       run: msbuild $env:_Solution -verbosity:normal -p:Configuration=$env:_Config -p:DeployExtension=false -p:AzureVsixVersion=true
