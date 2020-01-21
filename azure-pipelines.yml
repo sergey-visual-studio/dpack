@@ -3,8 +3,7 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-trigger:
-  batch: true
+trigger: none
   branches:
     include:
       - master
@@ -39,7 +38,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testAssemblyVer2: |
-      **\*.Tests.dll
+      **\bin\**.Tests.dll
 
 - task: CopyFiles@2
   inputs:
@@ -52,3 +51,14 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'DPackRx'
+
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'usysware_oath'
+    repositoryName: 'usysware/dpack'
+    action: 'edit'
+    target: 'v$(Build.SourceVersion)'
+    tag: 'v$(VsixVersion)'
+    isPreRelease: true
+    addChangeLog: false
+    assets: '$(Build.ArtifactStagingDirectory)/*'
