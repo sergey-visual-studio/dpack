@@ -16,9 +16,9 @@ variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  VsixVersion: ''
+  Beta: true
 
-name: 'DPack_$(Date:MMddyyyy)_$(Build.BuildID)_$(VsixVersion)'
+name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)${{ if eq(variables['Beta'], true) : '.BETA' }}"
 steps:
 - task: NuGetToolInstaller@1
 
@@ -33,7 +33,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:AzureVsixVersion=true'
+    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:BETA=$(Beta)'
 
 - task: VSTest@2
   inputs:
