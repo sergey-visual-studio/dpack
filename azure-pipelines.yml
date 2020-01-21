@@ -15,7 +15,7 @@ pool:
 variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Debug'
+  buildConfiguration: 'Release'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -30,8 +30,8 @@ steps:
     vsVersion: '16.0'
     solution: '$(solution)'
     platform: '$(buildPlatform)'
-    configuration: '$(Configuration)'
-    msbuildArgs: '-verbosity:minimal /p:DeployExtension=false /p:AzureVsixVersion=true'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '-verbosity:minimal /p:DeployExtension=false'
 
 - task: VSTest@2
   inputs:
