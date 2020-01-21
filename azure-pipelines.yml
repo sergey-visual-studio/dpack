@@ -16,7 +16,7 @@ variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  buildType: '.BETA'
+  buildType: '.BETA' # set to an empty value or .BETA
 
 name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)$(buildType)"
 steps:
