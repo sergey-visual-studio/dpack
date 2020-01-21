@@ -27,4 +27,4 @@ jobs:
       uses: seanmiddleditch/gha-setup-vsdevenv@v1
 
     - name: Build Solution
-      run: msbuild $_Solution -verbosity:minimal -p:Configuration=$_Config /p:Platform="Any CPU" -p:DeployExtension=false -p:AzureVsixVersion=true
+      run: msbuild $_Solution -verbosity:normal -p:Configuration=$_Config /p:Platform="Any CPU" -p:DeployExtension=false -p:AzureVsixVersion=true
