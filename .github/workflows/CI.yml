@@ -27,4 +27,4 @@ jobs:
       run: nuget restore $env:_Solution
 
     - name: Build Solution
-      run: msbuild $env:_Solution -verbosity:normal -p:Configuration=$env:_Config -p:DeployExtension=false -p:AzureVsixVersion=true
+      run: msbuild $env:_Solution -verbosity:normal -p:Configuration=$env:_Config -p:DeployExtension=false -p:GitHubVsixVersion=true
