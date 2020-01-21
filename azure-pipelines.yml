@@ -16,7 +16,9 @@ variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  VsixVersion: ''
 
+name: 'DPack_$(Date:MMddyyyy)_$(Build.BuildID)_$(VsixVersion)'
 steps:
 - task: NuGetToolInstaller@1
 
@@ -31,7 +33,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: '-verbosity:minimal /p:DeployExtension=false'
+    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:AzureVsixVersion=true'
 
 - task: VSTest@2
   inputs:
