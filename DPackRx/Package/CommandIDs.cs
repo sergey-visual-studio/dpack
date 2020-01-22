@@ -77,8 +77,6 @@ namespace DPackRx.Package
 
 		[CommandName("Tools.SolutionBackup", "Global::Shift+Alt+B")] public const int BACKUP = 900;
 
-		[CommandName("Tools.SolutionBrowser", "Global::Alt+S")] public const int SOLUTION_BROWSER = 1000;
-
 		[CommandName("ProjectandSolutionContextMenus.Solution.CollapseAllProjects", "Global::Shift+Alt+C")] public const int COLLAPSE_SOLUTION_CONTEXT = 1101;
 		[CommandName("ProjectandSolutionContextMenus.ReferenceRoot.Copy")] public const int COPY_REFERENCES_CONTEXT = 1102;
 		[CommandName("ProjectandSolutionContextMenus.ReferenceRoot.Paste")] public const int PASTE_REFERENCES_CONTEXT = 1103;

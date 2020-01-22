@@ -174,16 +174,6 @@
 					<LocCanonicalName>DPackRx.FileBrowser</LocCanonicalName>
 				</Strings>
 			</Button>
-			<Button guid="CommandSet" id="cidSolutionBrowser" priority="0x0003" type="Button">
-				<Parent guid="guidDPackMenu" id="gidBrowsers" />
-				<Icon guid="CommandSet" id="bmpSolBr" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<Strings>
-					<ButtonText>&amp;Solution Browser...</ButtonText>
-					<LocCanonicalName>DPackRx.SolutionBrowser</LocCanonicalName>
-				</Strings>
-			</Button>
 			<Button guid="CommandSet" id="cidCodeStats" priority="0x0001" type="Button">
 				<Parent guid="guidDPackMenu" id="gidDPackMsc" />
 				<Icon guid="CommandSet" id="bmpStats" />
@@ -1064,9 +1054,6 @@
 		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionExists_" />
 		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasSingleProject" />
 		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasMultipleProjects" />
-		<VisibilityItem guid="CommandSet" id="cidSolutionBrowser" context="UICONTEXT_SolutionExists_" />
-		<VisibilityItem guid="CommandSet" id="cidSolutionBrowser" context="UICONTEXT_SolutionHasSingleProject" />
-		<VisibilityItem guid="CommandSet" id="cidSolutionBrowser" context="UICONTEXT_SolutionHasMultipleProjects" />
 		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionExists_" />
 		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionHasSingleProject" />
 		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />
@@ -1150,7 +1137,6 @@
 		<KeyBinding guid="CommandSet" id="cidSWProperty" editor="guidVSStd97" key1="K" mod1="Control" key2="O" />
 		<KeyBinding guid="CommandSet" id="cidSWRegion" editor="guidVSStd97" key1="K" mod1="Control" key2="R" />
 		<KeyBinding guid="CommandSet" id="cidBackup" editor="guidVSStd97" key1="B" mod1="Alt Shift" />
-		<KeyBinding guid="CommandSet" id="cidSolutionBrowser" editor="guidVSStd97" key1="S" mod1="Alt" />
 		<KeyBinding guid="CommandSet" id="cidCollapseSolCtxt" editor="guidVSStd97" key1="C" mod1="Alt Shift" />
 	</KeyBindings>
 
@@ -1247,7 +1233,6 @@
 			<IDSymbol name="cidOptions" value="710" />
 			<IDSymbol name="cidCodeStats" value="800" />
 			<IDSymbol name="cidBackup" value="900" />
-			<IDSymbol name="cidSolutionBrowser" value="1000" />
 			<IDSymbol name="cidCollapseSolCtxt" value="1101" />
 			<IDSymbol name="cidCopyReferencesCtxt" value="1102" />
 			<IDSymbol name="cidPasteReferencesCtxt" value="1103" />
