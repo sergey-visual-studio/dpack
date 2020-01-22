@@ -329,14 +329,11 @@ namespace DPackRx.Tests.Features
 			var repeatResult = service.SetBookmark(1);
 
 			var bookmarks = service.GetFileBookmarks("test");
-			var bookmark = bookmarks.FirstOrDefault();
 
 			Assert.That(result, Is.True);
-			Assert.That(repeatResult, Is.False);
+			Assert.That(repeatResult, Is.True);
 			Assert.That(bookmarks, Is.Not.Null);
-			Assert.That(bookmarks.Count(), Is.EqualTo(1));
-			Assert.That(bookmark, Is.Not.Null);
-			Assert.That(bookmark.Number, Is.EqualTo(5));
+			Assert.That(bookmarks.Count(), Is.EqualTo(2));
 		}
 
 		[Test]
@@ -525,14 +522,11 @@ namespace DPackRx.Tests.Features
 			var repeatResult = service.SetGlobalBookmark(1);
 
 			var bookmarks = service.GetFileBookmarks("test");
-			var bookmark = bookmarks.FirstOrDefault();
 
 			Assert.That(result, Is.True);
-			Assert.That(repeatResult, Is.False);
+			Assert.That(repeatResult, Is.True);
 			Assert.That(bookmarks, Is.Not.Null);
-			Assert.That(bookmarks.Count(), Is.EqualTo(1));
-			Assert.That(bookmark, Is.Not.Null);
-			Assert.That(bookmark.Number, Is.EqualTo(5));
+			Assert.That(bookmarks.Count(), Is.EqualTo(2));
 		}
 
 		[Test]

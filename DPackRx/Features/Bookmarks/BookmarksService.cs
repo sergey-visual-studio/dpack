@@ -200,12 +200,7 @@ namespace DPackRx.Features.Bookmarks
 				_bookmarks.Add(fileName, bookmarks);
 			}
 
-			// 1 bookmark per line check
-			var bookmark = bookmarks.FirstOrDefault(b => (b.Number != number) && (b.Type == BookmarkType.Local) && (GetBookmarkLine(fileName, b) == position.Line));
-			if (bookmark != null)
-				return false;
-
-			bookmark = bookmarks.FirstOrDefault(b => (b.Number == number) && (b.Type == BookmarkType.Local));
+			var bookmark = bookmarks.FirstOrDefault(b => (b.Number == number) && (b.Type == BookmarkType.Local));
 			if (bookmark != null)
 			{
 				var line = GetBookmarkLine(fileName, bookmark);
@@ -300,13 +295,6 @@ namespace DPackRx.Features.Bookmarks
 			var position = _shellSelectionService.GetActiveFilePosition();
 			if (position.IsEmpty())
 				return false;
-
-			// 1 bookmark per line check
-			foreach (var file in _bookmarks.Keys)
-			{
-				if (_bookmarks[file].FirstOrDefault(b => (b.Type == BookmarkType.Global) && (GetBookmarkLine(file, b) == position.Line)) != null)
-					return false;
-			}
 
 			// Find existing global bookmark and file it's in
 			var bookmarkFileName = string.Empty;
