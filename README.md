@@ -4,6 +4,11 @@
 
 Please be aware that DPack Rx currently is and will remain for a while in **BETA** status. Tread carefully and report any issues you might find. Thanks!
 
+Areas where I could use some help:
+- Testing the latest beta on VS 2017 and 2019
+- Graphics of DPack in action for this readme
+- Graphics for DPack's menu items
+
 ### DPack Rx (former DPack)
 
 FREE tools collection designed to greatly increase developer's productivity, automate repetitive processes and expand upon some of Microsoft Visual Studio features. Visual Studio 2017 and 2019 are supported.
@@ -22,7 +27,7 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 
 ### Future plans
 
-- CI pipeline setup
+~~- CI pipeline setup~~
 - Publish to Visual Studio Gallery
 - Setup Wiki page
 - Migrate former DPack *Solution Backup* feature
