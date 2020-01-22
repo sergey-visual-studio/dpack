@@ -27,7 +27,7 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 
 ### Future plans
 
-~~- CI pipeline setup~~
+- ~~CI pipeline setup~~
 - Publish to Visual Studio Gallery
 - Setup Wiki page
 - Migrate former DPack *Solution Backup* feature
