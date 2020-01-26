@@ -26,6 +26,7 @@ namespace DPackRx.Tests.Features
 		private Mock<IOptionsService> _optionsServiceMock;
 		private Mock<IShellSelectionService> _shellSelectionServiceMock;
 		private Mock<IModalDialogService> _modalDialogServiceMock;
+		private Mock<IFileProcessor> _fileProcessorMock;
 		private Mock<ILanguageService> _languageServiceMock;
 		private Mock<IMessageService> _messageServiceMock;
 
@@ -53,6 +54,10 @@ namespace DPackRx.Tests.Features
 				.Returns(true)
 				.Verifiable();
 
+			var obj = new object();
+			_fileProcessorMock = new Mock<IFileProcessor>();
+			_fileProcessorMock.Setup(f => f.IsDocumentValid(It.IsAny<object>(), out obj)).Returns(true).Verifiable();
+
 			_languageServiceMock = new Mock<ILanguageService>();
 			_languageServiceMock
 				.Setup(l => l.GetExtensionLanguage(It.IsAny<string>()))
@@ -60,6 +65,7 @@ namespace DPackRx.Tests.Features
 				.Verifiable();
 
 			_messageServiceMock = new Mock<IMessageService>();
+			_messageServiceMock.Setup(m => m.ShowError(It.IsNotNull<string>(), false)).Verifiable();
 		}
 
 		[TearDown]
@@ -70,6 +76,7 @@ namespace DPackRx.Tests.Features
 			_optionsServiceMock = null;
 			_shellSelectionServiceMock = null;
 			_modalDialogServiceMock = null;
+			_fileProcessorMock = null;
 			_languageServiceMock = null;
 			_messageServiceMock = null;
 		}
@@ -84,7 +91,8 @@ namespace DPackRx.Tests.Features
 		private IFeature GetFeature()
 		{
 			return new CodeBrowserFeature(_serviceProviderMock.Object, _logMock.Object, _optionsServiceMock.Object,
-				_shellSelectionServiceMock.Object, _modalDialogServiceMock.Object, _languageServiceMock.Object, _messageServiceMock.Object);
+				_shellSelectionServiceMock.Object, _modalDialogServiceMock.Object, _fileProcessorMock.Object,
+				_languageServiceMock.Object, _messageServiceMock.Object);
 		}
 
 		#endregion
@@ -144,10 +152,13 @@ namespace DPackRx.Tests.Features
 
 			var result = feature.Execute(commandId);
 
+			var obj = new object();
 			Assert.That(result, Is.True);
 			_shellSelectionServiceMock.Verify(s => s.GetActiveFileName());
+			_fileProcessorMock.Verify(f => f.IsDocumentValid(It.IsAny<object>(), out obj));
 			_languageServiceMock.Verify(l => l.GetExtensionLanguage(It.IsAny<string>()));
 			_modalDialogServiceMock.Verify(d => d.ShowDialog<CodeBrowserWindow, CodeBrowserViewModel>(It.IsNotNull<string>(), filter));
+			_messageServiceMock.Verify(m => m.ShowError(It.IsNotNull<string>(), false), Times.Never);
 		}
 
 		[Test]
@@ -164,6 +175,7 @@ namespace DPackRx.Tests.Features
 			_languageServiceMock.Verify(l => l.GetExtensionLanguage(It.IsAny<string>()), Times.Never);
 			_modalDialogServiceMock.Verify(d => d.ShowDialog<CodeBrowserWindow, CodeBrowserViewModel>(
 				It.IsNotNull<string>(), It.IsAny<CodeModelFilterFlags>()), Times.Never);
+			_messageServiceMock.Verify(m => m.ShowError(It.IsNotNull<string>(), false), Times.Never);
 		}
 
 		[Test]
@@ -178,11 +190,32 @@ namespace DPackRx.Tests.Features
 
 			var result = feature.Execute(CommandIDs.CODE_BROWSER);
 
+			var obj = new object();
 			Assert.That(result, Is.True);
 			_shellSelectionServiceMock.Verify(s => s.GetActiveFileName());
+			_fileProcessorMock.Verify(f => f.IsDocumentValid(It.IsAny<object>(), out obj), Times.Never);
 			_languageServiceMock.Verify(l => l.GetExtensionLanguage(It.IsAny<string>()));
 			_modalDialogServiceMock.Verify(d => d.ShowDialog<CodeBrowserWindow, CodeBrowserViewModel>(
 				It.IsNotNull<string>(), It.IsAny<CodeModelFilterFlags>()), Times.Never);
+			_messageServiceMock.Verify(m => m.ShowError(It.IsNotNull<string>(), false));
+		}
+
+		[Test]
+		public void Execute_InvalidDocument()
+		{
+			var feature = GetFeature();
+			var obj = new object();
+			_fileProcessorMock.Setup(f => f.IsDocumentValid(It.IsAny<object>(), out obj)).Returns(false).Verifiable();
+
+			var result = feature.Execute(CommandIDs.CODE_BROWSER);
+
+			Assert.That(result, Is.True);
+			_shellSelectionServiceMock.Verify(s => s.GetActiveFileName());
+			_fileProcessorMock.Verify(f => f.IsDocumentValid(It.IsAny<object>(), out obj));
+			_languageServiceMock.Verify(l => l.GetExtensionLanguage(It.IsAny<string>()));
+			_modalDialogServiceMock.Verify(d => d.ShowDialog<CodeBrowserWindow, CodeBrowserViewModel>(
+				It.IsNotNull<string>(), It.IsAny<CodeModelFilterFlags>()), Times.Never);
+			_messageServiceMock.Verify(m => m.ShowError(It.IsNotNull<string>(), false));
 		}
 
 		#endregion

@@ -20,17 +20,19 @@ namespace DPackRx.Features.CodeBrowser
 
 		private readonly IShellSelectionService _shellSelectionService;
 		private readonly IModalDialogService _dialogService;
+		private readonly IFileProcessor _fileProcessor;
 		private readonly ILanguageService _languageService;
 		private readonly IMessageService _messageService;
 
 		#endregion
 
 		public CodeBrowserFeature(IServiceProvider serviceProvider, ILog log, IOptionsService optionsService,
-			IShellSelectionService shellSelectionService, IModalDialogService dialogService,
+			IShellSelectionService shellSelectionService, IModalDialogService dialogService, IFileProcessor fileProcessor,
 			ILanguageService languageService, IMessageService messageService) : base(serviceProvider, log, optionsService)
 		{
 			_shellSelectionService = shellSelectionService;
 			_dialogService = dialogService;
+			_fileProcessor = fileProcessor;
 			_languageService = languageService;
 			_messageService = messageService;
 		}
@@ -112,7 +114,7 @@ namespace DPackRx.Features.CodeBrowser
 		#region Private Methods
 
 		/// <summary>
-		/// Shows code browser window with provided filter selecion.
+		/// Shows code browser window with provided filter selection.
 		/// </summary>
 		private bool ShowBrowser(CodeModelFilterFlags filter)
 		{
@@ -124,6 +126,12 @@ namespace DPackRx.Features.CodeBrowser
 			if ((languageSet == null) || (languageSet.Type == LanguageType.Unknown))
 			{
 				_messageService.ShowError($"{this.Name} request cannot be processed.\r\n\r\nThis non-code file type is not supported.", false);
+				return true;
+			}
+
+			if (!_fileProcessor.IsDocumentValid(null, out _))
+			{
+				_messageService.ShowError($"{this.Name} request cannot be processed.\r\n\r\nFile code model cannot be determined.", false);
 				return true;
 			}
 

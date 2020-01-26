@@ -137,7 +137,7 @@ namespace DPackRx.Services
 							try
 							{
 								if (featureInstance == null)
-									throw new ApplicationException($"Feature {feature} is not available");
+									throw new ApplicationException($"Feature {feature} is not available/registered");
 
 								featureInstance.Initialize();
 							}

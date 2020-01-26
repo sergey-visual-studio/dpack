@@ -11,7 +11,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Returns whether document is valid for code model collection.
 		/// </summary>
-		/// <param name="document">Open document. Untyped extensibility link (name matches the actual type).</param>
+		/// <param name="document">Open document or null for active document. Untyped extensibility link (name matches the actual type).</param>
 		/// <param name="projectItem">Item associated with the document. Untyped extensibility link (name matches the actual type).</param>
 		/// <returns>Code model collection status.</returns>
 		bool IsDocumentValid(object document, out object projectItem);
