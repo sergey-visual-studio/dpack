@@ -15,10 +15,8 @@ pool:
 variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  buildType: '.BETA' # set to an empty value or .BETA
 
-name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)$(buildType)"
+name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)$(BuildBeta)"
 steps:
 - task: NuGetToolInstaller@1
 
@@ -32,20 +30,20 @@ steps:
     vsVersion: '16.0'
     solution: '$(solution)'
     platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:BETA=$(buildType)'
+    configuration: '$(BuildConfiguration)'
+    msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:BETA=$(BuildBeta)'
 
 - task: VSTest@2
   inputs:
     vsTestVersion: '16.0'
     platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    configuration: '$(BuildConfiguration)'
     testAssemblyVer2: |
-      **/bin/$(buildConfiguration)/*.Tests.dll
+      **/bin/$(BuildConfiguration)/*.Tests.dll
 
 - task: CopyFiles@2
   inputs:
-    contents: 'DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix'
+    contents: 'DPackRx/bin/$(BuildConfiguration)/DPackRx-*.vsix'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true
     flattenFolders: true
