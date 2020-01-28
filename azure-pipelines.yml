@@ -15,6 +15,7 @@ pool:
 variables:
   solution: 'DPackRx.sln'
   buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
 name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)$(BuildBeta)"
 steps:
@@ -30,20 +31,20 @@ steps:
     vsVersion: '16.0'
     solution: '$(solution)'
     platform: '$(buildPlatform)'
-    configuration: '$(BuildConfiguration)'
+    configuration: '$(buildConfiguration)'
     msbuildArgs: '-verbosity:minimal -p:DeployExtension=false -p:BETA=$(BuildBeta)'
 
 - task: VSTest@2
   inputs:
     vsTestVersion: '16.0'
     platform: '$(buildPlatform)'
-    configuration: '$(BuildConfiguration)'
+    configuration: '$(buildConfiguration)'
     testAssemblyVer2: |
-      **/bin/$(BuildConfiguration)/*.Tests.dll
+      **/bin/$(buildConfiguration)/*.Tests.dll
 
 - task: CopyFiles@2
   inputs:
-    contents: 'DPackRx/bin/$(BuildConfiguration)/DPackRx-*.vsix'
+    contents: 'DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true
     flattenFolders: true
