@@ -138,6 +138,16 @@ namespace DPackRx.Tests.Features
 			_modalDialogServiceMock.Verify(d => d.ShowDialog<FileBrowserWindow, FileBrowserViewModel>(It.IsNotNull<string>()));
 		}
 
+		[Test]
+		public void Execute_InvalidCommand()
+		{
+			var feature = GetFeature();
+
+			var result = feature.Execute(0);
+
+			Assert.That(result, Is.False);
+		}
+
 		#endregion
 	}
 }

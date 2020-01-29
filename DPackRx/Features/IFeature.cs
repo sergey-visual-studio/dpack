@@ -72,7 +72,8 @@ namespace DPackRx.Features
 
 		Bookmarks,
 
-		//SurroundWith,
+		[Description("Surround With")]
+		SurroundWith,
 
 		//SolutionStats,
 

@@ -57,17 +57,9 @@ namespace DPackRx.Package
 
 		[CommandName("Edit.TryCatch", "Global::Ctrl+K, X")] public const int SW_TRY_CATCH = 600;
 		[CommandName("Edit.TryFinally", "Global::Ctrl+K, T")] public const int SW_TRY_FINALLY = 601;
-		[CommandName("Edit.TryCatchFinally", "Global::Ctrl+K, Y")] public const int SW_TRY_CATCH_FINALLY = 602;
-		[CommandName("Edit.Using", "Global::Ctrl+K, U")] public const int SW_USING = 603;
-		[CommandName("Edit.For", "Global::Ctrl+K, F")] public const int SW_FOR = 604;
-		[CommandName("Edit.ForEach", "Global::Ctrl+K, E")] public const int SW_FOR_EACH = 605;
-		[CommandName("Edit.While", "Global::Ctrl+K, W")] public const int SW_WHILE = 606;
-		[CommandName("Edit.DoWhile", "Global::Ctrl+K, D")] public const int SW_DO_WHILE = 607;
-		[CommandName("Edit.If", "Global::Ctrl+K, I")] public const int SW_IF = 608;
-		[CommandName("Edit.IfElse", "Global::Ctrl+K, L")] public const int SW_IF_ELSE = 609;
-		[CommandName("Edit.Switch", "Global::Ctrl+K, S")] public const int SW_SWITCH = 610;
-		[CommandName("Edit.Property", "Global::Ctrl+K, O")] public const int SW_PROPERTY = 611;
-		[CommandName("Edit.Region", "Global::Ctrl+K, R")] public const int SW_REGION = 612;
+		[CommandName("Edit.For", "Global::Ctrl+K, F")] public const int SW_FOR = 602;
+		[CommandName("Edit.ForEach", "Global::Ctrl+K, E")] public const int SW_FOR_EACH = 603;
+		[CommandName("Edit.Region", "Global::Ctrl+K, R")] public const int SW_REGION = 604;
 
 		[CommandName("Tools.DPackWebSite")] public const int PROJECT_HOME = 700;
 		[CommandName("Tools.DPackEmailUs")] public const int SUPPORT_EMAIL = 701;

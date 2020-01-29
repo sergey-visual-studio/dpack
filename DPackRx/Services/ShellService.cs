@@ -428,6 +428,29 @@ namespace DPackRx.Services
 			package.ShowOptionPage(typeof(T));
 		}
 
+		/// <summary>
+		/// Executes built-in command.
+		/// </summary>
+		/// <param name="command">Internal command name.</param>
+		/// <param name="arguments">Optional command arguments.</param>
+		public void ExecuteCommand(string command, string arguments = null)
+		{
+			if (string.IsNullOrEmpty(command))
+				throw new ArgumentNullException(nameof(command));
+
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			var dte = GetDTEInternal();
+			try
+			{
+				dte.ExecuteCommand(command);
+			}
+			catch (Exception ex)
+			{
+				_log.LogMessage($"Error executing {command} command: {ex.Message}", ex);
+			}
+		}
+
 		#endregion
 
 		#region IShellStatusBarService Members
@@ -599,6 +622,20 @@ namespace DPackRx.Services
 					_log.LogMessage($"Invalid selection context: {context}");
 					return false;
 			}
+		}
+
+		/// <summary>
+		/// Returns active document's untyped Project instance.
+		/// </summary>
+		public object GetActiveProject()
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			Document document = GetActiveDocument() as Document;
+			if (document == null)
+				return null;
+
+			return document.ProjectItem?.ContainingProject;
 		}
 
 		/// <summary>

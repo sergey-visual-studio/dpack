@@ -59,5 +59,12 @@ namespace DPackRx.Services
 		/// Shows options setting page.
 		/// </summary>
 		void ShowOptions<T>() where T : OptionsBase;
+
+		/// <summary>
+		/// Executes built-in command.
+		/// </summary>
+		/// <param name="command">Internal command name.</param>
+		/// <param name="arguments">Optional command arguments.</param>
+		void ExecuteCommand(string command, string arguments = null);
 	}
 }

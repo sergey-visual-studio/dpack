@@ -308,6 +308,16 @@ namespace DPackRx.Tests.Features
 			_shellHelperServiceMock.Verify(s => s.GetCurrentProjectPath());
 		}
 
+		[Test]
+		public void Execute_InvalidCommand()
+		{
+			var feature = GetFeature();
+
+			var result = feature.Execute(0);
+
+			Assert.That(result, Is.False);
+		}
+
 		#endregion
 	}
 }

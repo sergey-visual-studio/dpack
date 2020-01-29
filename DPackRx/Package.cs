@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DPackRx.CodeModel;
 using DPackRx.Extensions;
 using DPackRx.Features.Bookmarks;
+using DPackRx.Features.SurroundWith;
 using DPackRx.Language;
 using DPackRx.Options;
 using DPackRx.Package;
@@ -45,7 +46,7 @@ namespace DPackRx
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp, "C#", new[] { "cs" },
 		WebName = "Visual C#", WebLanguage = "CSharpCodeProvider", Comments = new[] { "//", "/*" }, XmlDoc = "/doc/summary",
-		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported)]
+		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported, SurroundWith = true)]
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB, "VB", new[] { "bas", "vb", "frm" },
 		WebName = "Visual Basic", WebLanguage = "VBCodeProvider", Comments = new[] { "'" }, XmlDoc = "/summary", XmlDocSurround = true,
@@ -53,7 +54,7 @@ namespace DPackRx
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVC, "C++", new[] { "c", "cpp", "h", "hpp", "inl", "cc", "hxx", "hh" },
 		Comments = new[] { "//", "/*" }, XmlDoc = "/summary,", XmlDocSurround = true,
-		CheckDuplicateNames = true, IgnoreCodeType = true, ParentlessFullName = true)]
+		CheckDuplicateNames = true, IgnoreCodeType = true, ParentlessFullName = true, SurroundWith = true)]
 	[ProvideLanguage(
 		"#101", LanguageConsts.vsLanguageJavaScript, "JavaScript", new[] { "js", "aspx", "ascx", "html", "htm", "asp", "master", "cshtml", "vbhtml" },
 		Comments = new[] { "//", "/*" }, SmartFormat = false)]
@@ -217,6 +218,7 @@ namespace DPackRx
 				_container.Register<IAsyncTaskService, AsyncTaskService>(new PerContainerLifetime());
 				_container.Register<IOptionsService, OptionsService>(new PerContainerLifetime());
 				_container.Register<IOptionsPersistenceService, OptionsPersistenceService>(new PerContainerLifetime());
+				_container.Register<IKeyboardService, KeyboardService>(new PerContainerLifetime());
 				// Per request services
 				_container.Register<IFeatureCommandFactory, FeatureCommandFactory>();
 				_container.Register<IFeatureFactory, FeatureFactory>();
@@ -240,6 +242,8 @@ namespace DPackRx
 				// Bookmarks feature
 				_container.Register<BookmarksFeature>(new PerContainerLifetime());
 				_container.Register<IBookmarksService, BookmarksService>(new PerContainerLifetime());
+				// Surround With feature
+				_container.Register<SurroundWithFeature>(new PerContainerLifetime());
 
 				_container.Compile();
 				_sharedServiceProvider?.Initialize(this, _container);

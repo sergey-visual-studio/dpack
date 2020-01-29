@@ -113,7 +113,7 @@ namespace DPackRx.Features.Bookmarks
 						_shellSelectionService.IsContextActive(ContextType.HTMLSourceEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.CSSTextEditor));
 				default:
-					return false;
+					return base.IsValidContext(commandId);
 			}
 		}
 

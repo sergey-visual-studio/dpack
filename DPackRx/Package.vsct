@@ -627,143 +627,45 @@
 			<Button guid="CommandSet" id="cidSWTryCatch" priority="0x0001" type="Button">
 				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
 				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
 				<Strings>
-					<ButtonText>Try/Catch</ButtonText>
+					<ButtonText>try/catch</ButtonText>
 					<LocCanonicalName>DPackRx.SurroundWith.TryCatch</LocCanonicalName>
 				</Strings>
 			</Button>
 			<Button guid="CommandSet" id="cidSWTryFinally" priority="0x0002" type="Button">
 				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
 				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
 				<Strings>
-					<ButtonText>Try/Finally</ButtonText>
+					<ButtonText>try/finally</ButtonText>
 					<LocCanonicalName>DPackRx.SurroundWith.TryFinally</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWTryCFinally" priority="0x0003" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>Try/Catch/Finally</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.TryCatchFinally</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWUsing" priority="0x0004" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith1" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>Using</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.Using</LocCanonicalName>
 				</Strings>
 			</Button>
 			<Button guid="CommandSet" id="cidSWFor" priority="0x0001" type="Button">
 				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
 				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
 				<Strings>
-					<ButtonText>For</ButtonText>
+					<ButtonText>for</ButtonText>
 					<LocCanonicalName>DPackRx.SurroundWith.For</LocCanonicalName>
 				</Strings>
 			</Button>
 			<Button guid="CommandSet" id="cidSWForEach" priority="0x0002" type="Button">
 				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
 				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
 				<Strings>
-					<ButtonText>For/Each</ButtonText>
+					<ButtonText>for/each</ButtonText>
 					<LocCanonicalName>DPackRx.SurroundWith.ForEach</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWWhile" priority="0x0003" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>While</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.While</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWDoWhile" priority="0x0004" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith2" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>Do/While</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.DoWhile</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWIf" priority="0x0001" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith3" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>If</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.If</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWIfElse" priority="0x0002" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith3" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>If/Else</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.IfElse</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWSwitch" priority="0x0003" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith3" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>Switch</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.Switch</LocCanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="CommandSet" id="cidSWProperty" priority="0x0001" type="Button">
-				<Parent guid="guidEditMenu" id="gidSurroundWith4" />
-				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
-				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
-				<Strings>
-					<ButtonText>Property</ButtonText>
-					<LocCanonicalName>DPackRx.SurroundWith.Property</LocCanonicalName>
 				</Strings>
 			</Button>
 			<Button guid="CommandSet" id="cidSWRegion" priority="0x0002" type="Button">
 				<Parent guid="guidEditMenu" id="gidSurroundWith4" />
 				<CommandFlag>DefaultInvisible</CommandFlag>
-				<CommandFlag>DefaultDisabled</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
-				<CommandFlag>TextChanges</CommandFlag>
 				<Strings>
-					<ButtonText>Region</ButtonText>
+					<ButtonText>region</ButtonText>
 					<LocCanonicalName>DPackRx.SurroundWith.Region</LocCanonicalName>
 				</Strings>
 			</Button>
@@ -1034,16 +936,8 @@
 		<VisibilityItem guid="CommandSet" id="cidBkmrkGetGlb0" context="GUID_XamlLanguageService" />
 		<VisibilityItem guid="CommandSet" id="cidSWTryCatch" context="GUID_TextEditorFactory" />
 		<VisibilityItem guid="CommandSet" id="cidSWTryFinally" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWTryCFinally" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWUsing" context="GUID_TextEditorFactory" />
 		<VisibilityItem guid="CommandSet" id="cidSWFor" context="GUID_TextEditorFactory" />
 		<VisibilityItem guid="CommandSet" id="cidSWForEach" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWWhile" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWDoWhile" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWIf" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWIfElse" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWSwitch" context="GUID_TextEditorFactory" />
-		<VisibilityItem guid="CommandSet" id="cidSWProperty" context="GUID_TextEditorFactory" />
 		<VisibilityItem guid="CommandSet" id="cidSWRegion" context="GUID_TextEditorFactory" />
 		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionHasMultipleProjects" />
 		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionHasSingleProject" />
@@ -1125,16 +1019,8 @@
 		<KeyBinding guid="CommandSet" id="cidBkmrkGetGlb0" editor="guidVSStd97" key1="0" mod1="Control Alt" />
 		<KeyBinding guid="CommandSet" id="cidSWTryCatch" editor="guidVSStd97" key1="K" mod1="Control" key2="X" />
 		<KeyBinding guid="CommandSet" id="cidSWTryFinally" editor="guidVSStd97" key1="K" mod1="Control" key2="T" />
-		<KeyBinding guid="CommandSet" id="cidSWTryCFinally" editor="guidVSStd97" key1="K" mod1="Control" key2="Y" />
-		<KeyBinding guid="CommandSet" id="cidSWUsing" editor="guidVSStd97" key1="K" mod1="Control" key2="U" />
 		<KeyBinding guid="CommandSet" id="cidSWFor" editor="guidVSStd97" key1="K" mod1="Control" key2="F" />
 		<KeyBinding guid="CommandSet" id="cidSWForEach" editor="guidVSStd97" key1="K" mod1="Control" key2="E" />
-		<KeyBinding guid="CommandSet" id="cidSWWhile" editor="guidVSStd97" key1="K" mod1="Control" key2="W" />
-		<KeyBinding guid="CommandSet" id="cidSWDoWhile" editor="guidVSStd97" key1="K" mod1="Control" key2="D" />
-		<KeyBinding guid="CommandSet" id="cidSWIf" editor="guidVSStd97" key1="K" mod1="Control" key2="I" />
-		<KeyBinding guid="CommandSet" id="cidSWIfElse" editor="guidVSStd97" key1="K" mod1="Control" key2="L" />
-		<KeyBinding guid="CommandSet" id="cidSWSwitch" editor="guidVSStd97" key1="K" mod1="Control" key2="S" />
-		<KeyBinding guid="CommandSet" id="cidSWProperty" editor="guidVSStd97" key1="K" mod1="Control" key2="O" />
 		<KeyBinding guid="CommandSet" id="cidSWRegion" editor="guidVSStd97" key1="K" mod1="Control" key2="R" />
 		<KeyBinding guid="CommandSet" id="cidBackup" editor="guidVSStd97" key1="B" mod1="Alt Shift" />
 		<KeyBinding guid="CommandSet" id="cidCollapseSolCtxt" editor="guidVSStd97" key1="C" mod1="Alt Shift" />
@@ -1217,17 +1103,9 @@
 			<IDSymbol name="cidBkmrkGetGlb0" value="549" />
 			<IDSymbol name="cidSWTryCatch" value="600" />
 			<IDSymbol name="cidSWTryFinally" value="601" />
-			<IDSymbol name="cidSWTryCFinally" value="602" />
-			<IDSymbol name="cidSWUsing" value="603" />
-			<IDSymbol name="cidSWFor" value="604" />
-			<IDSymbol name="cidSWForEach" value="605" />
-			<IDSymbol name="cidSWWhile" value="606" />
-			<IDSymbol name="cidSWDoWhile" value="607" />
-			<IDSymbol name="cidSWIf" value="608" />
-			<IDSymbol name="cidSWIfElse" value="609" />
-			<IDSymbol name="cidSWSwitch" value="610" />
-			<IDSymbol name="cidSWProperty" value="611" />
-			<IDSymbol name="cidSWRegion" value="612" />
+			<IDSymbol name="cidSWFor" value="602" />
+			<IDSymbol name="cidSWForEach" value="603" />
+			<IDSymbol name="cidSWRegion" value="604" />
 			<IDSymbol name="cidProjectHome" value="700" />
 			<IDSymbol name="cidSupportEmail" value="701" />
 			<IDSymbol name="cidOptions" value="710" />

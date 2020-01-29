@@ -162,6 +162,16 @@ namespace DPackRx.Tests.Features
 		}
 
 		[Test]
+		public void Execute_InvalidCommand()
+		{
+			var feature = GetFeature();
+
+			var result = feature.Execute(0);
+
+			Assert.That(result, Is.False);
+		}
+
+		[Test]
 		public void Execute_NoActiveFile()
 		{
 			var feature = GetFeature();

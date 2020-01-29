@@ -153,6 +153,11 @@ namespace DPackRx.Language
 		/// </summary>
 		public bool SupportsGenerics { get; set; }
 
+		/// <summary>
+		/// Whether language supports surround with.
+		/// </summary>
+		public bool SurroundWith { get; set; }
+
 		#endregion
 	}
 

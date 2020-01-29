@@ -13,6 +13,11 @@ namespace DPackRx.Services
 		bool IsContextActive(ContextType context);
 
 		/// <summary>
+		/// Returns active document's untyped Project instance.
+		/// </summary>
+		object GetActiveProject();
+
+		/// <summary>
 		/// Returns active document's untyped ProjectItem instance.
 		/// </summary>
 		object GetActiveItem();
