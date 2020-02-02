@@ -17,7 +17,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-name: "DPack.$(Date:MMddyyyy).$(Build.BuildID)$(BuildBeta)"
+name: "DPack.$(Date:MM/dd/yyyy).$(Build.BuildID)$(BuildBeta)"
 steps:
 - task: NuGetToolInstaller@1
 
