@@ -32,13 +32,7 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 
 ![Bookmarks](https://user-images.githubusercontent.com/55639583/73682355-3bc09a80-468e-11ea-94b6-226f257932d6.gif)
 
-### Future plans
-
-- ~~CI pipeline setup~~
-- ~~Publish to Visual Studio Gallery~~
-- Setup Wiki page
-- Migrate former DPack *Solution Backup* feature
-- Migrate former DPack *Solution Statistics* feature
+- *Surround With* feature - serves as a shortcut for built-in subset of Visual Studio Surround With templates
 
 ### Major changes
 
@@ -48,8 +42,15 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 - *Bookmarks* feature ToolWindow's been deprecated
 - Former browsers *ToolWindow Mode* is no longer available (see the note above on design principals)
 - *Solution Browser* rather infrequently used feature won't be migrated. If you rely on it then consider staying with older DPack extension
-- *Surround With* feature won't be migrated either
 - *Code Navigation* obscure feature won't be migrated either
+- *Surround With* feature has been considerably simplified
+
+### Future plans 
+- ~~CI pipeline setup~~
+- ~~Publish to Visual Studio Gallery~~
+- Setup Wiki page
+- Migrate former DPack *Solution Backup* feature
+- Migrate former DPack *Solution Statistics* feature
 
 Thanks and enjoy.
 
