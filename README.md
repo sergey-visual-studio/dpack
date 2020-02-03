@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/usysware/dpack/_apis/build/status/usysware.dpack?branchName=master)](https://dev.azure.com/usysware/dpack/_build/latest?definitionId=1&branchName=master)
 ![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/usysware/dpack/1/master)
 
 # DPack is in BETA!
