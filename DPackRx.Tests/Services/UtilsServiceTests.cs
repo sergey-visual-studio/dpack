@@ -26,7 +26,7 @@ namespace DPackRx.Tests.Services
 
 		#region Tests
 
-#if RELEASE
+#if !DEBUG
 		[Test]
 		public void Beep()
 		{
