@@ -3,12 +3,7 @@
 
 # DPack is in BETA!
 
-Please be aware that DPack Rx currently is and will remain for a while in **BETA** status. Tread carefully and report any issues you might find. Thanks!
-
-Areas where I could use some help:
-- Testing the latest beta on VS 2017 and 2019
-- Graphics of DPack in action for this readme
-- Graphics for DPack's menu items
+Please be aware that [DPack Rx](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPackRx) currently is and will remain for a while in **BETA** status. Tread carefully and report any issues you might find. Thanks!
 
 ### DPack Rx (former DPack)
 
@@ -51,6 +46,11 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 - Setup Wiki page
 - Migrate former DPack *Solution Backup* feature
 - Migrate former DPack *Solution Statistics* feature
+
+### Help needed
+
+- Testing the latest beta on VS 2017 and 2019
+- Graphics for DPack's menu items
 
 Thanks and enjoy.
 
