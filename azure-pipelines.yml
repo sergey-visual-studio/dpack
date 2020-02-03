@@ -42,13 +42,6 @@ steps:
     testAssemblyVer2: |
       **/bin/$(buildConfiguration)/*.Tests.dll
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'NUnit'
-    testResultsFiles: '**/TEST-*.xml'
-    buildPlatform: '$(buildPlatform)'
-    buildConfiguration: '$(buildConfiguration)'
-
 - task: CopyFiles@2
   inputs:
     contents: 'DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix'
