@@ -26,14 +26,15 @@ namespace DPackRx.Tests.Services
 
 		#region Tests
 
+#if RELEASE
 		[Test]
-		[Explicit("Suppress beep")]
 		public void Beep()
 		{
 			var service = GetService();
 
 			Assert.DoesNotThrow(() => service.Beep());
 		}
+#endif
 
 		[Test]
 		public void ControlKeyDown()

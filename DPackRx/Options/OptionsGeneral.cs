@@ -128,7 +128,7 @@ namespace DPackRx.Options
 		protected override void OnLoad()
 		{
 			_logging = this.OptionsService.GetBoolOption(this.Feature, "Logging", false);
-#if (BETA)
+#if BETA
 			if (!this.Logging)
 				_logging = true;
 #endif
