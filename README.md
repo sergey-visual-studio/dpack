@@ -23,8 +23,14 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 ### What features are included so far?
 
 -	*File Browser* feature
+
+![FileBrowser](https://user-images.githubusercontent.com/55639583/73682340-35322300-468e-11ea-8984-d224cea72995.gif)
 -	*Code Browser* feature
+
+![CodeBrowser](https://user-images.githubusercontent.com/55639583/73682351-395e4080-468e-11ea-9126-c762fd39e4ad.gif)
 -	*Bookmarks* feature
+
+![Bookmarks](https://user-images.githubusercontent.com/55639583/73682355-3bc09a80-468e-11ea-94b6-226f257932d6.gif)
 
 ### Future plans
 
