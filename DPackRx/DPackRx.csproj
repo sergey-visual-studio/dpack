@@ -421,7 +421,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Preview.png" />
+    <Content Include="Resources\Preview.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="Resources\BookmarksGlobalMenu.png" />
     <None Include="Resources\BookmarksMenu.png" />
     <None Include="Resources\Menu.png" />
