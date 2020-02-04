@@ -2,8 +2,7 @@
   "$schema": "http://json.schemastore.org/vsix-publish",
   "categories": [ "build", "coding", "other" ],
   "identity": {
-    "internalName": "DPackRx",
-    "tags": [ "code", "coding", "DPack", "Productivity", "Tools" ]
+    "internalName": "DPackRx"
   },
   "publisher": "SergeyM",
   "priceCategory": "free",

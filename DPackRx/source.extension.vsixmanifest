@@ -7,7 +7,7 @@
         <MoreInfo>https://github.com/usysware/dpack</MoreInfo>
         <Icon>Resources\Package.ico</Icon>
         <PreviewImage>Resources\Preview.png</PreviewImage>
-        <Tags>DPack, Coding, Tools, Power Tools, Code, Productivity</Tags>
+        <Tags>Code, Coding, Tools, Productivity, DPack</Tags>
         <Preview>true</Preview>
     </Metadata>
     <Assets>
