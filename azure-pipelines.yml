@@ -47,7 +47,13 @@ steps:
     contents: |
       DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix
       build/*.json
-      README.md
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  inputs:
+    contents: README.md
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true
     flattenFolders: true
