@@ -9,6 +9,6 @@
   "priceCategory": "free",
   "qna": true,
   "private": true,
-  "overview": "../readme.md",
+  "overview": "readme.md",
   "repo": "https://github.com/usysware/dpack"
 }
