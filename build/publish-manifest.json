@@ -3,7 +3,7 @@
   "categories": [ "build", "coding", "other" ],
   "identity": {
     "internalName": "DPackRx",
-    "tags": [ "code", "coding", "DPack", "DPack Rx", "Power Tools", "Productivity", "Tools" ]
+    "tags": [ "code", "coding", "DPack", "Productivity", "Tools" ]
   },
   "publisher": "SergeyM",
   "priceCategory": "free",
