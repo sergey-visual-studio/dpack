@@ -7,7 +7,6 @@
   "publisher": "SergeyM",
   "priceCategory": "free",
   "qna": true,
-  "private": true,
-  "overview": "readme.md",
+  "private": false,
   "repo": "https://github.com/usysware/dpack"
 }
