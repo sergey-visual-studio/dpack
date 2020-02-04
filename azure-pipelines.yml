@@ -47,8 +47,7 @@ steps:
     contents: |
       DPackRx/bin/$(buildConfiguration)/DPackRx-*.vsix
       build/*.json
-      README.md
-      license.md
+      readme.md
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true
     flattenFolders: true
