@@ -1,6 +1,8 @@
 [![Build Status](https://dev.azure.com/usysware/dpack/_apis/build/status/usysware.dpack?branchName=master)](https://dev.azure.com/usysware/dpack/_build/latest?definitionId=1&branchName=master)
 ![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/usysware/dpack/1/master)
 
+[[What is DPack Rx]](#what-is-dpack-rx) [[What's included]](#what-features-are-included-so-far) [[Major changes]](#major-changes) [[Future plans]](#future-plans) [[Contribute]](#help-needed) [[Donate]](#donate)
+
 # DPack is in BETA!
 
 Please be aware that [DPack Rx](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPackRx) currently is and will remain for a while in **BETA** status. Tread carefully and report any issues you might find. Thanks!
@@ -43,7 +45,7 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 ### Future plans 
 - ~~CI pipeline setup~~
 - ~~Publish to Visual Studio Gallery~~
-- Setup Wiki page
+- ~Setup Wiki page~
 - Migrate former DPack *Solution Backup* feature
 - Migrate former DPack *Solution Statistics* feature
 
@@ -55,3 +57,14 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 Thanks and enjoy.
 
 Sergey @ USysWare
+
+### Donate
+
+If you wish to express your appreciation 
+for the time and resources the authors have expended developing and supporting 
+DPack over the years, we do accept and appreciate donations.
+You can contribute via PayPal donate button below.
+
+Thank you for your support!
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif "Donate")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DXDC8CEJZRQLE&source=url)
