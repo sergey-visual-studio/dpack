@@ -575,8 +575,12 @@ namespace DPackRx.CodeModel
 			if (languageSet?.Type == LanguageType.Unknown)
 				return null;
 
+			var items = project.ProjectItems;
+			if (items == null)
+				return null;
+
 			// Get the first file from the first active project
-			foreach (ProjectItem item in project.ProjectItems)
+			foreach (ProjectItem item in items)
 			{
 				if ((string.Compare(item.Kind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
 						(string.Compare(item.Kind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))

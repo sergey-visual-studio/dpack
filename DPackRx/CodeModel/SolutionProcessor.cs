@@ -199,7 +199,11 @@ namespace DPackRx.CodeModel
 			if (project == null)
 				return;
 
-			foreach (ProjectItem item in project.ProjectItems)
+			var items = project.ProjectItems;
+			if (items == null)
+				return;
+
+			foreach (ProjectItem item in items)
 			{
 				Project subProject;
 				try
