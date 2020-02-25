@@ -212,6 +212,7 @@ namespace DPackRx
 				_container.Register<IShellCodeModelService>((factory) => factory.GetInstance<ShellService>(), new PerContainerLifetime());
 				_container.Register<IShellEventsService, ShellEventsService>(new PerContainerLifetime());
 				_container.Register<IShellImageService, ShellImageService>(new PerContainerLifetime());
+				_container.Register<IShellInfoBarService, ShellInfoBarService>(new PerContainerLifetime());
 				_container.Register<IImageService, ImageService>(new PerContainerLifetime());
 				_container.Register<IMessageService, MessageService>(new PerContainerLifetime());
 				_container.Register<JoinableTaskFactory>((factory) => this.JoinableTaskFactory, new PerContainerLifetime());

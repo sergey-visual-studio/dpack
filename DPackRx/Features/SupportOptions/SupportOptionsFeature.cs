@@ -20,6 +20,7 @@ namespace DPackRx.Features.SupportOptions
 		private readonly IPackageService _packageService;
 		private readonly IShellEventsService _shellEventsService;
 		private readonly IShellHelperService _shellHelperService;
+		private readonly IShellInfoBarService _shellInfoBarService;
 		private readonly IMessageService _messageService;
 		private SupportOptionsFirstTimeUse _firstTimeUse;
 
@@ -30,11 +31,12 @@ namespace DPackRx.Features.SupportOptions
 
 		public SupportOptionsFeature(IServiceProvider serviceProvider, ILog log, IOptionsService optionsService,
 			IPackageService packageService, IShellEventsService shellEventsService, IShellHelperService shellHelperService,
-			IMessageService messageService) : base(serviceProvider, log, optionsService)
+			IShellInfoBarService shellInfoBarService, IMessageService messageService) : base(serviceProvider, log, optionsService)
 		{
 			_packageService = packageService;
 			_shellEventsService = shellEventsService;
 			_shellHelperService = shellHelperService;
+			_shellInfoBarService = shellInfoBarService;
 			_messageService = messageService;
 		}
 
@@ -65,7 +67,7 @@ namespace DPackRx.Features.SupportOptions
 		{
 			base.Initialize();
 
-			_firstTimeUse = new SupportOptionsFirstTimeUse(this.Log, this.OptionsService, _packageService, _shellHelperService, _messageService);
+			_firstTimeUse = new SupportOptionsFirstTimeUse(this.Log, this.OptionsService, _packageService, _shellHelperService, _shellInfoBarService, _messageService);
 			_shellEventsService.SubscribeSolutionEvents(_firstTimeUse);
 		}
 

@@ -14,22 +14,21 @@ namespace DPackRx.Features.SupportOptions
 		private readonly IOptionsService _optionsService;
 		private readonly IPackageService _packageService;
 		private readonly IShellHelperService _shellHelperService;
+		private readonly IShellInfoBarService _shellInfoBarService;
 		private readonly IMessageService _messageService;
 		private bool _firstTimeUseChecked;
 
 		private const string WELCOME = "Welcome";
 		private const string WELCOME_TEXT =
-			"Thank you for choosing {0}!\r\n\r\n" +
-			"{0} extends Visual Studio {1} by adding various features to its Tools and editor context menu. Tools|{0} menu should be your starting point. Tools|{0}|Options menu item allows you to customize many of {0}'s features.\r\n\r\n" +
-			"Don't hesitate to contact support if you have any questions or run into any problems. Enjoy.\r\n\r\n" +
-			"Sergey Mishkovskiy @ USysWare, Inc.\r\n\r\n\r\n" +
-			"For best {0} experience it's recommended to let {0} assign its keyboard shortcuts. It can also be done later via Tools|{0}|Options menu item.\r\n\r\n" +
-			"Would you like to assign {0} keyboard shortcuts now?";
+			"Thank you for choosing {0}!  " +
+			"{0} features are accessible from Tools and editor context menu, and can be customized via Options dialog.  " +
+			"Don't hesitate to contact support if you have any questions or run into any issues.";
 
 		#endregion
 
 		public SupportOptionsFirstTimeUse(ILog log, IOptionsService optionsService,
-			IPackageService packageService, IShellHelperService shellHelperService, IMessageService messageService)
+			IPackageService packageService, IShellHelperService shellHelperService, IShellInfoBarService shellInfoBarService,
+			IMessageService messageService)
 		{
 			if (log == null)
 				throw new ArgumentNullException(nameof(log));
@@ -47,6 +46,7 @@ namespace DPackRx.Features.SupportOptions
 			_optionsService = optionsService;
 			_packageService = packageService;
 			_shellHelperService = shellHelperService;
+			_shellInfoBarService = shellInfoBarService;
 			_messageService = messageService;
 		}
 
@@ -134,14 +134,22 @@ namespace DPackRx.Features.SupportOptions
 				if (_optionsService.GetBoolOption(KnownFeature.SupportOptions, WELCOME))
 					return;
 
-				if (_messageService.ShowQuestion(string.Format(WELCOME_TEXT, _packageService.ProductName, _packageService.VSKnownVersion)))
-					_shellHelperService.AssignShortcuts();
+				var message = string.Format(WELCOME_TEXT, _packageService.ProductName, _packageService.VSKnownVersion);
+				_shellInfoBarService.ShowInfoBar(message, "Assign Keyboard Shortcuts", AssignShortcuts, true);
 			}
 			finally
 			{
 				_firstTimeUseChecked = true;
 				_optionsService.SetBoolOption(KnownFeature.SupportOptions, WELCOME, true);
 			}
+		}
+
+		private void AssignShortcuts()
+		{
+			if (_shellHelperService.AssignShortcuts())
+				_messageService.ShowMessage("Successfully assigned default keyboard shortcuts.");
+			else
+				_messageService.ShowError("Failed to assign default keyboard shortcuts.");
 		}
 
 		#endregion

@@ -83,6 +83,7 @@
     <Compile Include="Services\IShellEventsService.cs" />
     <Compile Include="Services\IShellCodeModelService.cs" />
     <Compile Include="Services\IShellImageService.cs" />
+    <Compile Include="Services\IShellInfoBarService.cs" />
     <Compile Include="Services\IShellProjectService.cs" />
     <Compile Include="Services\IShellSelectionService.cs" />
     <Compile Include="Services\IShellReferenceService.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Services\SearchMatchService.cs" />
     <Compile Include="Services\ShellEventsService.cs" />
     <Compile Include="Services\ShellImageService.cs" />
+    <Compile Include="Services\ShellInfoBarService.cs" />
     <Compile Include="Services\WildcardMatch.cs" />
     <Compile Include="UI\Behaviors\ListViewMatchItemComparer.cs" />
     <Compile Include="UI\Behaviors\TextBoxInputRedirectToListView.cs" />

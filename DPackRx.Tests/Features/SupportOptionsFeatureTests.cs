@@ -25,6 +25,7 @@ namespace DPackRx.Tests.Features
 		private Mock<IPackageService> _packageServiceMock;
 		private Mock<IShellEventsService> _shellEventsServiceMock;
 		private Mock<IShellHelperService> _shellHelperServiceMock;
+		private Mock<IShellInfoBarService> _shellInfoBarServiceMock;
 		private Mock<IMessageService> _messageServiceMock;
 
 		#endregion
@@ -49,6 +50,8 @@ namespace DPackRx.Tests.Features
 
 			_shellHelperServiceMock = new Mock<IShellHelperService>();
 			_shellHelperServiceMock.Setup(s => s.ShowOptions<OptionsGeneral>()).Verifiable();
+
+			_shellInfoBarServiceMock = new Mock<IShellInfoBarService>();
 
 			_messageServiceMock = new Mock<IMessageService>();
 		}
@@ -75,7 +78,8 @@ namespace DPackRx.Tests.Features
 		private IFeature GetFeature()
 		{
 			return new SupportOptionsFeature(_serviceProviderMock.Object, _logMock.Object, _optionsServiceMock.Object,
-				_packageServiceMock.Object, _shellEventsServiceMock.Object, _shellHelperServiceMock.Object, _messageServiceMock.Object);
+				_packageServiceMock.Object, _shellEventsServiceMock.Object, _shellHelperServiceMock.Object, _shellInfoBarServiceMock.Object,
+				_messageServiceMock.Object);
 		}
 
 		#endregion

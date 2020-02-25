@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="3D22E261-32E5-46CE-A4B0-B884FA49A9A2" Version="4.0.0.24" Language="en-US" Publisher="USysWare" />
+        <Identity Id="3D22E261-32E5-46CE-A4B0-B884FA49A9A2" Version="4.0.0.25" Language="en-US" Publisher="USysWare" />
         <DisplayName>DPack Rx</DisplayName>
         <Description xml:space="preserve">FREE tools collection designed to greatly increase developer's productivity, automate repetitive processes and expand upon some of Microsoft Visual Studio features. Visual Studio 2017 and 2019 are supported.</Description>
         <MoreInfo>https://github.com/usysware/dpack</MoreInfo>

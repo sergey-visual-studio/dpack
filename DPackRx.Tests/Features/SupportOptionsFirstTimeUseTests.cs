@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using System;
+
+using Moq;
 using NUnit.Framework;
 
 using DPackRx.Features;
@@ -21,6 +23,7 @@ namespace DPackRx.Tests.Features
 		private Mock<IOptionsService> _optionsServiceMock;
 		private Mock<IPackageService> _packageServiceMock;
 		private Mock<IShellHelperService> _shellHelperServiceMock;
+		private Mock<IShellInfoBarService> _shellInfoBarServiceMock;
 		private Mock<IMessageService> _messageServiceMock;
 
 		#endregion
@@ -43,6 +46,9 @@ namespace DPackRx.Tests.Features
 			_shellHelperServiceMock = new Mock<IShellHelperService>();
 			_shellHelperServiceMock.Setup(s => s.ShowOptions<OptionsGeneral>()).Verifiable();
 			_shellHelperServiceMock.Setup(s => s.AssignShortcuts()).Verifiable();
+
+			_shellInfoBarServiceMock = new Mock<IShellInfoBarService>();
+			_shellInfoBarServiceMock.Setup(s => s.ShowInfoBar(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action>(), It.IsAny<bool>())).Verifiable();
 
 			_messageServiceMock = new Mock<IMessageService>();
 			_messageServiceMock.Setup(m => m.ShowQuestion(It.IsAny<string>())).Returns(true).Verifiable();
@@ -68,7 +74,8 @@ namespace DPackRx.Tests.Features
 		private ISolutionEvents GetFeature()
 		{
 			return new SupportOptionsFirstTimeUse(_logMock.Object, _optionsServiceMock.Object,
-				_packageServiceMock.Object, _shellHelperServiceMock.Object, _messageServiceMock.Object);
+				_packageServiceMock.Object, _shellHelperServiceMock.Object, _shellInfoBarServiceMock.Object,
+				_messageServiceMock.Object);
 		}
 
 		#endregion
@@ -90,13 +97,11 @@ namespace DPackRx.Tests.Features
 
 			if (alreadyProcessed)
 			{
-				_messageServiceMock.Verify(m => m.ShowQuestion(It.IsAny<string>()), Times.Never);
-				_shellHelperServiceMock.Verify(s => s.AssignShortcuts(), Times.Never);
+				_shellInfoBarServiceMock.Verify(s => s.ShowInfoBar(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action>(), It.IsAny<bool>()), Times.Never);
 			}
 			else
 			{
-				_messageServiceMock.Verify(m => m.ShowQuestion(It.IsAny<string>()), Times.Once);
-				_shellHelperServiceMock.Verify(s => s.AssignShortcuts());
+				_shellInfoBarServiceMock.Verify(s => s.ShowInfoBar(It.IsNotNull<string>(), It.IsNotNull<string>(), It.IsNotNull<Action>(), true), Times.Once);
 			}
 		}
 
@@ -108,7 +113,7 @@ namespace DPackRx.Tests.Features
 			feature.SolutionOpened(true);
 			feature.SolutionOpened(true);
 
-			_messageServiceMock.Verify(m => m.ShowQuestion(It.IsAny<string>()), Times.Once);
+			_shellInfoBarServiceMock.Verify(s => s.ShowInfoBar(It.IsNotNull<string>(), It.IsNotNull<string>(), It.IsNotNull<Action>(), true), Times.Once);
 		}
 
 		[Test]
@@ -120,8 +125,7 @@ namespace DPackRx.Tests.Features
 
 			feature.SolutionOpened(true);
 
-			_messageServiceMock.Verify(m => m.ShowQuestion(It.IsAny<string>()), Times.Once);
-			_shellHelperServiceMock.Verify(s => s.AssignShortcuts(), Times.Never);
+			_shellInfoBarServiceMock.Verify(s => s.ShowInfoBar(It.IsNotNull<string>(), It.IsNotNull<string>(), It.IsNotNull<Action>(), true), Times.Once);
 			_optionsServiceMock.Verify(o => o.GetBoolOption(It.IsAny<KnownFeature>(), It.IsAny<string>(), false));
 			_optionsServiceMock.Verify(o => o.SetBoolOption(It.IsAny<KnownFeature>(), It.IsAny<string>(), true));
 		}

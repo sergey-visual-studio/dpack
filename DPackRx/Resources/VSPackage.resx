@@ -135,7 +135,7 @@ Copyright © 2004-2020 USysWare, Inc.</value>
     <comment>Project URL</comment>
   </data>
   <data name="105" xml:space="preserve">
-    <value>usysware@gmail.com</value>
+    <value>usysware@outlook.com</value>
     <comment>Project email</comment>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
