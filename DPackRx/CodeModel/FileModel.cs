@@ -58,7 +58,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Optional file code members.
 		/// </summary>
-		public ICollection<FileCodeModel> Members { get; private set; } = new List<FileCodeModel>();
+		public ICollection<MemberCodeModel> Members { get; private set; } = new List<MemberCodeModel>();
 
 		#endregion
 

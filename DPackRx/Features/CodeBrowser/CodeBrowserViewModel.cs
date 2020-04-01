@@ -33,7 +33,7 @@ namespace DPackRx.Features.CodeBrowser
 		private readonly ISearchMatchService _searchMatchService;
 		private readonly IShellSelectionService _shellSelectionService;
 		private readonly IShellImageService _shellImageService;
-		private readonly ObservableCollection<FileCodeModel> _sourceMembers;
+		private readonly ObservableCollection<MemberCodeModel> _sourceMembers;
 		private readonly CollectionViewSource _members;
 		private string _search = string.Empty;
 
@@ -58,7 +58,7 @@ namespace DPackRx.Features.CodeBrowser
 			_shellImageService = shellImageService;
 
 			// Source members must be setup in constructor or view won't show any binding data
-			_sourceMembers = new ObservableCollection<FileCodeModel>();
+			_sourceMembers = new ObservableCollection<MemberCodeModel>();
 			_members = new CollectionViewSource { Source = _sourceMembers }; // must be ObservableCollection
 
 			this.ShowAllMembersCommand = new RelayCommand(_messageService, OnShowAllMembers, OnCanShowAllMembers);
@@ -78,6 +78,7 @@ namespace DPackRx.Features.CodeBrowser
 			if (!(argument is CodeModelFilterFlags))
 				throw new ArgumentException("Invalid initialization argument", nameof(argument));
 
+			this.FileName = _optionsService.GetStringOption(this.Feature, "File", this.FileName);
 			_search = _optionsService.GetStringOption(this.Feature, "Search", _search);
 			this.Filter = (CodeModelFilterFlags)argument;
 			var filter = (CodeModelFilterFlags)_optionsService.GetIntOption(this.Feature, "Filter", (int)this.Filter);
@@ -102,6 +103,7 @@ namespace DPackRx.Features.CodeBrowser
 		/// </summary>
 		public override void OnClose(bool apply)
 		{
+			_optionsService.SetStringOption(this.Feature, "File", this.FileName);
 			_optionsService.SetStringOption(this.Feature, "Search", _search);
 			_optionsService.SetIntOption(this.Feature, "Filter", (int)this.Filter);
 
@@ -111,11 +113,11 @@ namespace DPackRx.Features.CodeBrowser
 			if (this.Selection == null)
 				return;
 
-			var fileCodeModel = this.Selection as FileCodeModel;
-			if (fileCodeModel == null)
+			var member = this.Selection as MemberCodeModel;
+			if (member == null)
 				return;
 
-			_shellSelectionService.SetActiveFilePosition(fileCodeModel.Line, 1);
+			_shellSelectionService.SetActiveFilePosition(member.Line, 1);
 		}
 
 		#endregion
@@ -169,9 +171,9 @@ namespace DPackRx.Features.CodeBrowser
 		/// Filtered members.
 		/// </summary>
 		/// <remarks>Exposed for testing purposes only.</remarks>
-		protected internal IList<FileCodeModel> FilteredMembers
+		protected internal IList<MemberCodeModel> FilteredMembers
 		{
-			get { return ((IEnumerable)_members?.View).Cast<FileCodeModel>().ToList(); }
+			get { return ((IEnumerable)_members?.View).Cast<MemberCodeModel>().ToList(); }
 		}
 
 		/// <summary>
@@ -203,6 +205,12 @@ namespace DPackRx.Features.CodeBrowser
 		/// <remarks>Exposed for testing purposes only.</remarks>
 		protected internal IExtensibilityItem Selection { get; set; }
 
+		/// <summary>
+		/// Full file name.
+		/// </summary>
+		/// <remarks>Exposed for testing purposes only.</remarks>
+		protected internal string FileName { get; private set; } = string.Empty;
+
 		#endregion
 
 		#region Private Methods
@@ -216,7 +224,14 @@ namespace DPackRx.Features.CodeBrowser
 			if (_optionsService.GetBoolOption(this.Feature, "XmlDoc"))
 				flags = flags | ProcessorFlags.IncludeMemberXmlDoc;
 
-			var members = _fileProcessor.GetMembers(flags, this.Filter);
+			var model = _fileProcessor.GetMembers(flags, this.Filter);
+			var members = model.Members;
+			var fileName = model.FileName;
+
+			// Reset search on new file
+			if (!string.IsNullOrEmpty(this.FileName) && !string.IsNullOrEmpty(fileName) && !fileName.Equals(this.FileName, StringComparison.OrdinalIgnoreCase))
+				_search = string.Empty;
+			this.FileName = fileName;
 
 			_sourceMembers.Clear();
 			_sourceMembers.AddRange(members); // causes filter to be evaluated
@@ -244,14 +259,14 @@ namespace DPackRx.Features.CodeBrowser
 				return;
 			}
 
-			if (!(e.Item is FileCodeModel))
+			if (!(e.Item is MemberCodeModel))
 			{
 				e.Accepted = false;
 				return;
 			}
 
-			var fileCodeModel = (FileCodeModel)e.Item;
-			e.Accepted = fileCodeModel.Matched;
+			var member = (MemberCodeModel)e.Item;
+			e.Accepted = member.Matched;
 		}
 
 		/// <summary>
@@ -293,7 +308,7 @@ namespace DPackRx.Features.CodeBrowser
 		/// <param name="obj">Optional Xaml defined parameter.</param>
 		private void OnSelectMember(object obj)
 		{
-			this.Selection = obj as FileCodeModel;
+			this.Selection = obj as MemberCodeModel;
 			this.CloseWindow = true;
 		}
 

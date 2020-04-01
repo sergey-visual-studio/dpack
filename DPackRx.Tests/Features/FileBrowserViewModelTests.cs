@@ -64,7 +64,7 @@ namespace DPackRx.Tests.Features
 			_solutionProcessorMock = new Mock<ISolutionProcessor>();
 			_solutionProcessorMock
 				.Setup(p => p.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles, CodeModelFilterFlags.All))
-				.Returns(new SolutionModel { Files = _files })
+				.Returns(new SolutionModel { SolutionName = "test", Files = _files })
 				.Verifiable();
 
 			_fileTypeResolverMock = new Mock<IFileTypeResolver>();
@@ -142,6 +142,7 @@ namespace DPackRx.Tests.Features
 			else
 				_files.Where(f => f.FileName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0).ForEach(f => f.Matched = true);
 
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Solution", string.Empty)).Returns("test").Verifiable();
 			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty)).Returns(search).Verifiable();
 			_optionsServiceMock.Setup(o => o.GetBoolOption(viewModel.Feature, "AllFiles", false)).Returns(allFiles).Verifiable();
 			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "IgnoreFiles", null)).Returns(ignoreFiles).Verifiable();
@@ -159,7 +160,9 @@ namespace DPackRx.Tests.Features
 			Assert.That(viewModel.FilteredFiles.Count, Is.EqualTo(expectedCodeFileCount + expectedNoneCodeFileCount));
 			Assert.That(viewModel.Search, Is.EqualTo(search));
 			Assert.That(viewModel.AllFiles, Is.EqualTo(allFiles));
+			Assert.That(viewModel.SolutionName, Is.EqualTo("test"));
 			_solutionProcessorMock.Verify(p => p.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles, CodeModelFilterFlags.All));
+			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "Solution", string.Empty), Times.Once);
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty), Times.Once);
 			_optionsServiceMock.Verify(o => o.GetBoolOption(viewModel.Feature, "AllFiles", false), Times.Once);
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "IgnoreFiles", null), Times.Once);
@@ -180,6 +183,20 @@ namespace DPackRx.Tests.Features
 			_searchMatchServiceMock.Verify(s => s.MatchItems(search, It.IsAny<IEnumerable<IMatchItem>>()), Times.Once);
 		}
 
+		[Test]
+		public void OnInitialize_ResetSearch()
+		{
+			var viewModel = GetViewModel();
+
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Solution", string.Empty)).Returns("something else").Verifiable();
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty)).Returns("hello").Verifiable();
+
+			viewModel.OnInitialize(null);
+
+			Assert.That(viewModel.Search, Is.Null.Or.Empty, "Search should be reset on new solution");
+			Assert.That(viewModel.SolutionName, Is.EqualTo("test"));
+		}
+
 		[TestCase(true, true)]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
@@ -187,6 +204,7 @@ namespace DPackRx.Tests.Features
 		{
 			var viewModel = GetViewModel();
 
+			_optionsServiceMock.Setup(o => o.SetStringOption(viewModel.Feature, "Solution", string.Empty)).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetStringOption(viewModel.Feature, "Search", string.Empty)).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetBoolOption(viewModel.Feature, "AllFiles", false)).Verifiable();
 
@@ -198,6 +216,7 @@ namespace DPackRx.Tests.Features
 
 			viewModel.OnClose(apply);
 
+			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "Solution", string.Empty));
 			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "Search", string.Empty));
 			_optionsServiceMock.Verify(o => o.SetBoolOption(viewModel.Feature, "AllFiles", false));
 			if (apply)

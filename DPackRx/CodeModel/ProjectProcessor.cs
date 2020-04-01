@@ -214,9 +214,9 @@ namespace DPackRx.CodeModel
 
 							if (flags.HasFlag(ProcessorFlags.IncludeFileCodeModel))
 							{
-								var members = _fileProcessor.GetMembers(projectItem, flags, filter);
-								if (members != null)
-									itemModel.Members.AddRange(members);
+								var codeMembers = _fileProcessor.GetMembers(projectItem, flags, filter);
+								if ((codeMembers != null) && (codeMembers.Members != null))
+									itemModel.Members.AddRange(codeMembers.Members);
 							}
 
 							model.Add(itemModel);

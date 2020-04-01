@@ -31,7 +31,7 @@ namespace DPackRx.Tests.Features
 		private Mock<ISearchMatchService> _searchMatchServiceMock;
 		private Mock<IShellSelectionService> _shellSelectionServiceMock;
 		private Mock<IShellImageService> _shellImageServiceMock;
-		private List<FileCodeModel> _members;
+		private List<MemberCodeModel> _members;
 
 		#endregion
 
@@ -49,17 +49,17 @@ namespace DPackRx.Tests.Features
 
 			_optionsServiceMock = new Mock<IOptionsService>();
 
-			_members = new List<FileCodeModel>
+			_members = new List<MemberCodeModel>
 			{
-				new FileCodeModel { Name = "Test", FullName = "class1.Test", ElementKind = Kind.Method, Rank = 0, Matched = false },
-				new FileCodeModel { Name = "Hello", FullName = "class1.Hello", ElementKind = Kind.Method, Rank = 0, Matched = false },
-				new FileCodeModel { Name = "TestToo", FullName = "class1.TestToo", ElementKind = Kind.Property, Rank = 0, Matched = false },
-				new FileCodeModel { Name = "_somethingElse", FullName = "class1._somethingElse", ElementKind = Kind.Variable, Rank = 0, Matched = false },
+				new MemberCodeModel { Name = "Test", FullName = "class1.Test", ElementKind = Kind.Method, Rank = 0, Matched = false },
+				new MemberCodeModel { Name = "Hello", FullName = "class1.Hello", ElementKind = Kind.Method, Rank = 0, Matched = false },
+				new MemberCodeModel { Name = "TestToo", FullName = "class1.TestToo", ElementKind = Kind.Property, Rank = 0, Matched = false },
+				new MemberCodeModel { Name = "_somethingElse", FullName = "class1._somethingElse", ElementKind = Kind.Variable, Rank = 0, Matched = false },
 			};
 			_fileProcessorMock = new Mock<IFileProcessor>();
 			_fileProcessorMock
 				.Setup(p => p.GetMembers(ProcessorFlags.IncludeFileCodeModel, It.IsAny<CodeModelFilterFlags>()))
-				.Returns(_members)
+				.Returns(new FileCodeModel { FileName = "test", Members = _members })
 				.Verifiable();
 
 			_searchMatchServiceMock = new Mock<ISearchMatchService>();
@@ -125,6 +125,7 @@ namespace DPackRx.Tests.Features
 			else if (flags == CodeModelFilterFlags.ClassesInterfaces)
 				_members.Where(f => f.Matched && !((f.ElementKind == Kind.Class) || (f.ElementKind == Kind.Interface))).ForEach(f => f.Matched = false);
 
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "File", string.Empty)).Returns("test").Verifiable();
 			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty)).Returns(search).Verifiable();
 			_optionsServiceMock.Setup(o => o.GetIntOption(viewModel.Feature, "Filter", (int)flags)).Returns((int)flags).Verifiable();
 			_optionsServiceMock.Setup(o => o.GetBoolOption(viewModel.Feature, "XmlDoc", false)).Returns(false).Verifiable();
@@ -137,10 +138,25 @@ namespace DPackRx.Tests.Features
 			Assert.That(viewModel.Search, Is.EqualTo(search));
 			Assert.That(viewModel.Filter, Is.EqualTo(flags));
 			_fileProcessorMock.Verify(p => p.GetMembers(ProcessorFlags.IncludeFileCodeModel, It.IsAny<CodeModelFilterFlags>()));
+			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "File", string.Empty));
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty));
 			_optionsServiceMock.Verify(o => o.GetIntOption(viewModel.Feature, "Filter", (int)flags));
 			_optionsServiceMock.Verify(o => o.GetBoolOption(viewModel.Feature, "XmlDoc", false));
 			_searchMatchServiceMock.Verify(s => s.MatchItems(search, It.IsAny<IEnumerable<IMatchItem>>()), Times.Once);
+		}
+
+		[Test]
+		public void OnInitialize_ResetSearch()
+		{
+			var viewModel = GetViewModel();
+
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "File", string.Empty)).Returns("something else").Verifiable();
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty)).Returns("hello").Verifiable();
+
+			viewModel.OnInitialize(CodeModelFilterFlags.All);
+
+			Assert.That(viewModel.Search, Is.Null.Or.Empty, "Search should be reset on new file");
+			Assert.That(viewModel.FileName, Is.EqualTo("test"));
 		}
 
 		[Test]
@@ -157,6 +173,7 @@ namespace DPackRx.Tests.Features
 		{
 			var viewModel = GetViewModel();
 
+			_optionsServiceMock.Setup(o => o.SetStringOption(viewModel.Feature, "File", string.Empty)).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetStringOption(viewModel.Feature, "Search", string.Empty)).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetIntOption(viewModel.Feature, "Filter", 0)).Verifiable();
 
@@ -166,6 +183,7 @@ namespace DPackRx.Tests.Features
 
 			viewModel.OnClose(apply);
 
+			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "File", string.Empty));
 			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "Search", string.Empty));
 			_optionsServiceMock.Verify(o => o.SetIntOption(viewModel.Feature, "Filter", 0));
 			if (apply)
@@ -238,7 +256,7 @@ namespace DPackRx.Tests.Features
 		{
 			var viewModel = GetViewModel();
 
-			var selection = new FileCodeModel();
+			var selection = new MemberCodeModel();
 			viewModel.SelectMemberCommand.Execute(selection);
 
 			Assert.That(viewModel.Selection, Is.EqualTo(selection));

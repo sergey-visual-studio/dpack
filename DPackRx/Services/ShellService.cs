@@ -1289,6 +1289,23 @@ namespace DPackRx.Services
 			return null;
 		}
 
+		/// <summary>
+		/// Returns untyped Project file name.
+		/// </summary>
+		public string GetItemFileName(object projectItem)
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			var dteItem = GetProjectItemInternal(projectItem, false);
+			if (dteItem == null)
+				return null;
+
+			if (dteItem.FileCount == 0)
+				return null;
+
+			return dteItem.FileNames[1];
+		}
+
 		#endregion
 
 		#region IShellCodeModelService Members

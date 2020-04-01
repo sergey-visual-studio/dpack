@@ -84,5 +84,10 @@
 		/// Returns untyped ProjectItem instance for untyped Document instance.
 		/// </summary>
 		object GetDocumentProjectItem(object document);
+
+		/// <summary>
+		/// Returns untyped Project file name.
+		/// </summary>
+		string GetItemFileName(object projectItem);
 	}
 }

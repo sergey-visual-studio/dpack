@@ -89,11 +89,19 @@ namespace DPackRx.Features.FileBrowser
 		{
 			_log.LogMessage(this.Feature, "Initializing...");
 
-			var files = _solutionProcessor.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles).Files;
+			var model = _solutionProcessor.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles);
+			var files = model.Files;
+			var solutionName = model.SolutionName;
 			files = ApplyOptions(files);
 
+			this.SolutionName = _optionsService.GetStringOption(this.Feature, "Solution", this.SolutionName);
 			_search = _optionsService.GetStringOption(this.Feature, "Search", _search);
 			_allFiles = _optionsService.GetBoolOption(this.Feature, "AllFiles", _allFiles);
+
+			// Reset search on new solution
+			if (!string.IsNullOrEmpty(this.SolutionName) && !string.IsNullOrEmpty(solutionName) && !solutionName.Equals(this.SolutionName, StringComparison.OrdinalIgnoreCase))
+				_search = string.Empty;
+			this.SolutionName = solutionName;
 
 			_sourceFiles.Clear();
 			_sourceFiles.AddRange(files); // causes filter to be evaluated
@@ -114,6 +122,7 @@ namespace DPackRx.Features.FileBrowser
 		/// </summary>
 		public override void OnClose(bool apply)
 		{
+			_optionsService.SetStringOption(this.Feature, "Solution", this.SolutionName);
 			_optionsService.SetStringOption(this.Feature, "Search", _search);
 			_optionsService.SetBoolOption(this.Feature, "AllFiles", _allFiles);
 
@@ -289,6 +298,12 @@ namespace DPackRx.Features.FileBrowser
 		/// </summary>
 		/// <remarks>Exposed for testing purposes only.</remarks>
 		protected internal int CodeBrowserCommandId { get; set; }
+
+		/// <summary>
+		/// Solution name without extension.
+		/// </summary>
+		/// <remarks>Exposed for testing purposes only.</remarks>
+		protected internal string SolutionName { get; private set; } = string.Empty;
 
 		#endregion
 

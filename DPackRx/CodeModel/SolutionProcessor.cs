@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using DPackRx.Extensions;
@@ -63,6 +64,13 @@ namespace DPackRx.CodeModel
 			ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dte = _shellProjectService.GetDTE() as DTE;
+
+			_log.LogMessage("Resolving solution name");
+
+			var solution = dte.Solution?.FileName;
+			if (!string.IsNullOrEmpty(solution))
+				solution = Path.GetFileNameWithoutExtension(solution);
+			model.SolutionName = solution;
 
 			_log.LogMessage("Collecting solution projects");
 

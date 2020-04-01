@@ -169,7 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeModel\FileModelTests.cs" />
-    <Compile Include="CodeModel\FileCodeModelTests.cs" />
+    <Compile Include="CodeModel\MemberCodeModelTests.cs" />
     <Compile Include="Features\BookmarksFeatureTests.cs" />
     <Compile Include="Features\BookmarksSimpleTaggerTests.cs" />
     <Compile Include="Features\CodeBrowserFeatureTests.cs" />

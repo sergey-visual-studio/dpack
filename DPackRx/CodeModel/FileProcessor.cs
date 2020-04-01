@@ -6,7 +6,6 @@ using System.Xml.XPath;
 
 using DPackRx.Language;
 using DPackRx.Services;
-using DPackFileCodeModel = DPackRx.CodeModel.FileCodeModel;
 
 using EnvDTE;
 using EnvDTE80;
@@ -187,13 +186,13 @@ namespace DPackRx.CodeModel
 		/// <param name="flags">Processor flags.</param>
 		/// <param name="filter">Code model filter.</param>
 		/// <returns>Code members.</returns>
-		public ICollection<DPackFileCodeModel> GetMembers(ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All)
+		public FileCodeModel GetMembers(ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
 			var item = _shellSelectionService.GetActiveItem();
 			if (item == null)
-				return new List<DPackFileCodeModel>();
+				return new FileCodeModel();
 
 			return GetMembers(item, flags, filter);
 		}
@@ -205,13 +204,13 @@ namespace DPackRx.CodeModel
 		/// <param name="flags">Processor flags.</param>
 		/// <param name="filter">Code model filter.</param>
 		/// <returns>Code members.</returns>
-		public ICollection<DPackFileCodeModel> GetMembers(object projectItem, ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All)
+		public FileCodeModel GetMembers(object projectItem, ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			var model = new List<DPackFileCodeModel>(10);
+			var model = new List<MemberCodeModel>(10);
 			GetMembersInternal(projectItem, model, flags, filter);
-			return model;
+			return new FileCodeModel { FileName = _shellProjectService.GetItemFileName(projectItem), Members = model };
 		}
 
 		#endregion
@@ -221,7 +220,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Returns project item code members.
 		/// </summary>
-		private void GetMembersInternal(object projectItem, List<DPackFileCodeModel> model, ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All)
+		private void GetMembersInternal(object projectItem, List<MemberCodeModel> model, ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -271,7 +270,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Recursively processes qualified code elements.
 		/// </summary>
-		private void ProcessCodeElement(ProjectItem item, CodeElement element, List<DPackFileCodeModel> model, ProcessorFlags flags,
+		private void ProcessCodeElement(ProjectItem item, CodeElement element, List<MemberCodeModel> model, ProcessorFlags flags,
 			LanguageSettings languageSet, ICollection<vsCMElement> dteFilter, CodeModelFilterFlags filter, bool parented)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
@@ -345,7 +344,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Creates code model element.
 		/// </summary>
-		private void AddCodeElement(ProjectItem item, CodeElement parentElement, CodeElement element, List<DPackFileCodeModel> model, ProcessorFlags flags,
+		private void AddCodeElement(ProjectItem item, CodeElement parentElement, CodeElement element, List<MemberCodeModel> model, ProcessorFlags flags,
 			LanguageSettings languageSet, ICollection<vsCMElement> dteFilter, CodeModelFilterFlags filter)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
@@ -507,7 +506,7 @@ namespace DPackRx.CodeModel
 								}
 							}
 
-							var modelItem = new DPackFileCodeModel
+							var member = new MemberCodeModel
 							{
 								ProjectItem = element.ProjectItem,
 								Name = name,
@@ -526,7 +525,7 @@ namespace DPackRx.CodeModel
 								XmlDoc = xmlDoc
 							};
 
-							model.Add(modelItem);
+							model.Add(member);
 						}
 						catch (COMException ex)
 						{

@@ -19,6 +19,11 @@ namespace DPackRx.CodeModel
 		#region Properties
 
 		/// <summary>
+		/// Solution file name without extension.
+		/// </summary>
+		public string SolutionName { get; internal set; }
+
+		/// <summary>
 		/// Projects.
 		/// </summary>
 		public ICollection<ProjectModel> Projects { get; } = new List<ProjectModel>(4);

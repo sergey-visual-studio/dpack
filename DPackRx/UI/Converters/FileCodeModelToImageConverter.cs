@@ -13,9 +13,9 @@ using DPackRx.Services;
 namespace DPackRx.UI.Converters
 {
 	/// <summary>
-	/// Converts <see cref="FileCodeModel"/> to <see cref="ImageSource"/> type.
+	/// Converts <see cref="MemberCodeModel"/> to <see cref="ImageSource"/> type.
 	/// </summary>
-	[ValueConversion(typeof(FileCodeModel), typeof(ImageSource))]
+	[ValueConversion(typeof(MemberCodeModel), typeof(ImageSource))]
 	public class FileCodeModelToImageConverter : MarkupExtension, IValueConverter
 	{
 		#region Fields
@@ -39,15 +39,15 @@ namespace DPackRx.UI.Converters
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (!(value is FileCodeModel))
+			if (!(value is MemberCodeModel))
 				return null;
 
 			var imageService = GetImageService();
 			if (imageService == null)
 				return null;
 
-			var fileCodeModel = (FileCodeModel)value;
-			return imageService.GetMemberImage(fileCodeModel.ElementModifier, fileCodeModel.ElementKind, fileCodeModel.IsStatic);
+			var member = (MemberCodeModel)value;
+			return imageService.GetMemberImage(member.ElementModifier, member.ElementKind, member.IsStatic);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -52,9 +52,10 @@
     <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CodeModel\FileCodeModel.cs" />
     <Compile Include="CodeModel\Kind.cs" />
     <Compile Include="CodeModel\Modifier.cs" />
-    <Compile Include="CodeModel\FileCodeModel.cs" />
+    <Compile Include="CodeModel\MemberCodeModel.cs" />
     <Compile Include="CodeModel\FileModel.cs" />
     <Compile Include="CodeModel\IExtensibilityItem.cs" />
     <Compile Include="CodeModel\FileProcessor.cs" />

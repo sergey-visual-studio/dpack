@@ -22,7 +22,7 @@ namespace DPackRx.CodeModel
 		/// <param name="flags">Processor flags.</param>
 		/// <param name="filter">Code model filter.</param>
 		/// <returns>Code members.</returns>
-		ICollection<FileCodeModel> GetMembers(ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All);
+		FileCodeModel GetMembers(ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All);
 
 		/// <summary>
 		/// Returns item code members.
@@ -31,7 +31,7 @@ namespace DPackRx.CodeModel
 		/// <param name="flags">Processor flags.</param>
 		/// <param name="filter">Code model filter.</param>
 		/// <returns>Code members.</returns>
-		ICollection<FileCodeModel> GetMembers(object projectItem, ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All);
+		FileCodeModel GetMembers(object projectItem, ProcessorFlags flags, CodeModelFilterFlags filter = CodeModelFilterFlags.All);
 	}
 
 	#region CodeModelFilterFlags enum

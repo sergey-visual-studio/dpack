@@ -5,19 +5,19 @@ using NUnit.Framework;
 namespace DPackRx.Tests.CodeModel
 {
 	/// <summary>
-	/// FileCodeModel tests.
+	/// <see cref="MemberCodeModel"/> tests.
 	/// </summary>
 	[TestFixture]
-	public class FileCodeModelTests
+	public class MemberCodeModelTests
 	{
 		#region Private Methods
 
 		/// <summary>
 		/// Returns test model instance.
 		/// </summary>
-		private FileCodeModel GetModel()
+		private MemberCodeModel GetModel()
 		{
-			return new FileCodeModel();
+			return new MemberCodeModel();
 		}
 
 		#endregion
