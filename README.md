@@ -33,21 +33,21 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 
 ### Major changes
 
-- Both *File Browser* and *Code Browser* features UI has been revamped completely in WPF
-- *Bookmarks* feature has been rebuilt from the ground using editor taggers
-- *Bookmarks* feature bookmarks are no longer saved with the solution. This might be subject to change in the future
-- *Bookmarks* feature ToolWindow's been deprecated
-- Former browsers *ToolWindow Mode* is no longer available (see the note above on design principals)
-- *Solution Browser* rather infrequently used feature won't be migrated. If you rely on it then consider staying with older DPack extension
-- *Code Navigation* obscure feature won't be migrated either
-- *Surround With* feature has been considerably simplified
+1. Both *File Browser* and *Code Browser* features UI has been revamped completely in WPF
+2. *Bookmarks* feature has been rebuilt from the ground using editor taggers
+3. *Bookmarks* feature bookmarks are no longer saved with the solution. This might be subject to change in the future
+4. *Bookmarks* feature ToolWindow's been deprecated
+5. Former *ToolWindow Mode* used by File, Code and Solution browsers is no longer available (see the note above on design principals)
+6. *Solution Browser* rather infrequently used feature won't be migrated. If you rely on it then consider staying with older DPack extension
+7. *Code Navigation* obscure feature won't be migrated either
+8. *Surround With* feature has been considerably simplified
 
 ### Future plans 
-- ~~CI pipeline setup~~
-- ~~Publish to Visual Studio Gallery~~
-- ~Setup Wiki page~
-- Migrate former DPack *Solution Backup* feature
-- Migrate former DPack *Solution Statistics* feature
+1. ~~CI pipeline setup~~
+2. ~~Publish to Visual Studio Gallery~~
+3. ~Setup Wiki page~
+4. Migrate former DPack *Solution Backup* feature
+5. Migrate former DPack *Solution Statistics* feature
 
 ### Help needed
 
