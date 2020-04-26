@@ -25,18 +25,6 @@ namespace DPackRx.Package
 
 		public FeatureCommand(ILog log, IMenuCommandService menuCommandService, IMessageService messageService, IUtilsService utilsService)
 		{
-			if (log == null)
-				throw new ArgumentNullException(nameof(log));
-
-			if (menuCommandService == null)
-				throw new ArgumentNullException(nameof(menuCommandService));
-
-			if (messageService == null)
-				throw new ArgumentNullException(nameof(messageService));
-
-			if (utilsService == null)
-				throw new ArgumentNullException(nameof(utilsService));
-
 			_log = log;
 			_menuCommandService = menuCommandService;
 			_messageService = messageService;

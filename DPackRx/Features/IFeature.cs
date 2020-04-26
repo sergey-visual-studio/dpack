@@ -75,8 +75,10 @@ namespace DPackRx.Features
 		[Description("Surround With")]
 		SurroundWith,
 
+		//[Description("Solution Statistics")]
 		//SolutionStats,
 
+		//[Description("Solution Backup")]
 		//SolutionBackup,
 	}
 

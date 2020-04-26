@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 
 using Moq;
 using NUnit.Framework;
 
 using DPackRx.Features;
 using DPackRx.Package;
-using DPackRx.Services;
 
 namespace DPackRx.Tests.Package
 {
@@ -19,10 +17,8 @@ namespace DPackRx.Tests.Package
 	{
 		#region Fields
 
-		private Mock<IMenuCommandService> _menuCommandServiceMock;
-		private Mock<ILog> _logMock;
-		private Mock<IMessageService> _messageServiceMock;
-		private Mock<IUtilsService> _utilsServiceMock;
+		private Mock<IServiceProvider> _serviceProviderMock;
+		private Mock<IFeatureCommand> _featureCommandMock;
 
 		#endregion
 
@@ -64,25 +60,18 @@ namespace DPackRx.Tests.Package
 		[SetUp]
 		public void Setup()
 		{
-			_menuCommandServiceMock = new Mock<IMenuCommandService>();
-			_menuCommandServiceMock.Setup(m => m.AddCommand(It.IsAny<MenuCommand>())).Verifiable();
+			_featureCommandMock = new Mock<IFeatureCommand>();
+			_featureCommandMock.Setup(c => c.Initialize(It.IsAny<IFeature>(), It.IsAny<int>())).Verifiable();
 
-			_logMock = new Mock<ILog>();
-			_logMock.Setup(l => l.LogMessage(It.IsAny<string>(), It.IsAny<string>())).Verifiable();
-
-			_messageServiceMock = new Mock<IMessageService>();
-			_messageServiceMock.Setup(m => m.ShowError(It.IsAny<string>(), true)).Verifiable();
-
-			_utilsServiceMock = new Mock<IUtilsService>();
+			_serviceProviderMock = new Mock<IServiceProvider>();
+			_serviceProviderMock.Setup(s => s.GetService(typeof(IFeatureCommand))).Returns(_featureCommandMock.Object).Verifiable();
 		}
 
 		[TearDown]
 		public void TearDown()
 		{
-			_menuCommandServiceMock = null;
-			_logMock = null;
-			_messageServiceMock = null;
-			_utilsServiceMock = null;
+			_serviceProviderMock = null;
+			_featureCommandMock = null;
 		}
 
 		#endregion
@@ -94,15 +83,7 @@ namespace DPackRx.Tests.Package
 		/// </summary>
 		private IFeatureCommandFactory GetService()
 		{
-			return new FeatureCommandFactory(_logMock.Object, _menuCommandServiceMock.Object, _messageServiceMock.Object, _utilsServiceMock.Object);
-		}
-
-		/// <summary>
-		/// Returns command instance.
-		/// </summary>
-		private IFeatureCommand GetCommand()
-		{
-			return new FeatureCommand(_logMock.Object, _menuCommandServiceMock.Object, _messageServiceMock.Object, _utilsServiceMock.Object);
+			return new FeatureCommandFactory(_serviceProviderMock.Object);
 		}
 
 		#endregion
@@ -118,10 +99,8 @@ namespace DPackRx.Tests.Package
 			var command = service.CreateCommand(feature, 123);
 
 			Assert.That(command, Is.Not.Null);
-			Assert.That(command.CommandId, Is.EqualTo(123));
-			Assert.That(command.Feature, Is.EqualTo(KnownFeature.Miscellaneous));
-			Assert.That(command.Initialized, Is.True);
-			_menuCommandServiceMock.Verify(m => m.AddCommand(It.IsNotNull<MenuCommand>()));
+			_serviceProviderMock.Verify(s => s.GetService(typeof(IFeatureCommand)));
+			_featureCommandMock.Verify(c => c.Initialize(feature, 123));
 		}
 
 		#endregion

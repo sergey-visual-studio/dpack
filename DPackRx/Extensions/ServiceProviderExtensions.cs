@@ -25,7 +25,7 @@ namespace DPackRx.Extensions
 				if (throwOnError)
 					throw new ApplicationException($"Service of {typeof(T)} type is not available.");
 				else
-					return default(T);
+					return default;
 			}
 
 			return (T)service;
@@ -47,7 +47,7 @@ namespace DPackRx.Extensions
 				if (throwOnError)
 					throw new ApplicationException($"Service of {typeof(TS)} type is not available.");
 				else
-					return default(T);
+					return default;
 			}
 
 			return (T)service;
@@ -68,7 +68,7 @@ namespace DPackRx.Extensions
 				if (throwOnError)
 					throw new ApplicationException($"Service of {typeof(T)} type is not available.");
 				else
-					return default(T);
+					return default;
 			}
 
 			return (T)service;

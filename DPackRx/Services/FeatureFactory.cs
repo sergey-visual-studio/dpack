@@ -146,6 +146,7 @@ namespace DPackRx.Services
 								_log.LogMessage($"Failed to initialize feature {feature}", ex);
 								errors.Add(GetFeatureName(feature));
 							}
+
 							_features.TryAdd(feature, featureInstance);
 							_log.LogMessage($"Loaded {feature} feature");
 						}

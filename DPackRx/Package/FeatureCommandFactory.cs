@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.Design;
+﻿using System;
 
+using DPackRx.Extensions;
 using DPackRx.Features;
-using DPackRx.Services;
 
 namespace DPackRx.Package
 {
@@ -12,19 +12,13 @@ namespace DPackRx.Package
 	{
 		#region Fields
 
-		private readonly ILog _log;
-		private readonly IMenuCommandService _menuCommandService;
-		private readonly IMessageService _messageService;
-		private readonly IUtilsService _utilsService;
+		private readonly IServiceProvider _serviceProvider;
 
 		#endregion
 
-		public FeatureCommandFactory(ILog log, IMenuCommandService menuCommandService, IMessageService messageService, IUtilsService utilsService)
+		public FeatureCommandFactory(IServiceProvider serviceProvider)
 		{
-			_log = log;
-			_menuCommandService = menuCommandService;
-			_messageService = messageService;
-			_utilsService = utilsService;
+			_serviceProvider = serviceProvider;
 		}
 
 		#region ICommandFactory Members
@@ -34,7 +28,7 @@ namespace DPackRx.Package
 		/// </summary>
 		public IFeatureCommand CreateCommand(IFeature feature, int commandId)
 		{
-			var command = new FeatureCommand(_log, _menuCommandService, _messageService, _utilsService);
+			var command = _serviceProvider.GetService<IFeatureCommand>();
 			command.Initialize(feature, commandId);
 			return command;
 		}
