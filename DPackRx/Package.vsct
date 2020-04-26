@@ -942,12 +942,12 @@
 		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionHasMultipleProjects" />
 		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionHasSingleProject" />
 		<VisibilityItem guid="CommandSet" id="cidProjectHome" context="UICONTEXT_SolutionExists_" />
-		<VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionExists_" />
+    <!-- //TODO: re-enable <VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionExists_" />
 		<VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionHasSingleProject" />
 		<VisibilityItem guid="CommandSet" id="cidCodeStats" context="UICONTEXT_SolutionHasMultipleProjects" />
 		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionExists_" />
 		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasSingleProject" />
-		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasMultipleProjects" />
+		<VisibilityItem guid="CommandSet" id="cidBackup" context="UICONTEXT_SolutionHasMultipleProjects" />-->
 		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionExists_" />
 		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionHasSingleProject" />
 		<VisibilityItem guid="CommandSet" id="cidCollapseSolCtxt" context="UICONTEXT_SolutionHasMultipleProjects" />

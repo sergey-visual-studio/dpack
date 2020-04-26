@@ -221,6 +221,7 @@ namespace DPackRx
 				_container.Register<IOptionsPersistenceService, OptionsPersistenceService>(new PerContainerLifetime());
 				_container.Register<IKeyboardService, KeyboardService>(new PerContainerLifetime());
 				// Per request services
+				_container.Register<IFeatureCommand, FeatureCommand>();
 				_container.Register<IFeatureCommandFactory, FeatureCommandFactory>();
 				_container.Register<IFeatureFactory, FeatureFactory>();
 				_container.Register<IUtilsService, UtilsService>();
