@@ -201,7 +201,7 @@ namespace DPackRx.Features.Bookmarks
 			if (string.IsNullOrEmpty(fileName))
 				return;
 
-			_log?.LogMessage($"File '{fileName}' {type} bookmark {number} change", LOG_CATEGORY);
+			_log?.LogMessage($"File '{fileName}' bookmark {number} change ({type})", LOG_CATEGORY);
 
 			try
 			{
