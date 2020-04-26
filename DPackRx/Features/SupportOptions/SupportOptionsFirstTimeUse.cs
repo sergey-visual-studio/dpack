@@ -21,8 +21,7 @@ namespace DPackRx.Features.SupportOptions
 		private const string WELCOME = "Welcome";
 		private const string WELCOME_TEXT =
 			"Thank you for choosing {0}!  " +
-			"{0} features are accessible from Tools and editor context menu, and can be customized via Options dialog.  " +
-			"Don't hesitate to contact support if you have any questions or run into any issues.";
+			"{0} features are accessible from Tools and editor context menu, and can be customized via Options dialog.";
 
 		#endregion
 
