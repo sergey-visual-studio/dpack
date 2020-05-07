@@ -155,7 +155,7 @@ namespace DPackRx.CodeModel
 			}
 
 			if (!string.IsNullOrEmpty(fileName))
-				_log.LogMessage($"Collecting file code model: {fileName}");
+				_log.LogMessage($"Collecting file code model: {Path.GetFileName(fileName)}");
 
 			if ((languageSet?.Type == LanguageType.Unknown) || string.IsNullOrEmpty(fileName))
 				dteItem = null;
@@ -275,7 +275,9 @@ namespace DPackRx.CodeModel
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			if (element.Kind == vsCMElement.vsCMElementNamespace)
+			var elementKind = element.Kind;
+
+			if (elementKind == vsCMElement.vsCMElementNamespace)
 			{
 				var members = ((CodeNamespace)element).Members;
 
@@ -289,12 +291,12 @@ namespace DPackRx.CodeModel
 			{
 				// Add Class, Interface, Struct, Enum and Delegate name
 				// as 1st level element entry w/o a '.' prefix
-				if ((element.Kind == vsCMElement.vsCMElementClass) ||
-						(element.Kind == vsCMElement.vsCMElementModule) ||
-						(element.Kind == vsCMElement.vsCMElementInterface) ||
-						(element.Kind == vsCMElement.vsCMElementStruct) ||
-						(element.Kind == vsCMElement.vsCMElementEnum) ||
-						(element.Kind == vsCMElement.vsCMElementDelegate))
+				if ((elementKind == vsCMElement.vsCMElementClass) ||
+						(elementKind == vsCMElement.vsCMElementModule) ||
+						(elementKind == vsCMElement.vsCMElementInterface) ||
+						(elementKind == vsCMElement.vsCMElementStruct) ||
+						(elementKind == vsCMElement.vsCMElementEnum) ||
+						(elementKind == vsCMElement.vsCMElementDelegate))
 				{
 					AddCodeElement(item, null, element, model, flags, languageSet, dteFilter, filter);
 				}
@@ -302,17 +304,17 @@ namespace DPackRx.CodeModel
 				// Add members that don't reside in the parented member, 
 				// like class or interface for instance
 				if (!parented && (
-						(element.Kind == vsCMElement.vsCMElementFunction) ||
-						(element.Kind == vsCMElement.vsCMElementProperty) ||
-						(element.Kind == vsCMElement.vsCMElementVariable)))
+						(elementKind == vsCMElement.vsCMElementFunction) ||
+						(elementKind == vsCMElement.vsCMElementProperty) ||
+						(elementKind == vsCMElement.vsCMElementVariable)))
 				{
 					AddCodeElement(item, null, element, model, flags, languageSet, dteFilter, filter);
 				}
 
 				// Don't expand on Enum or Delegate since we don't wanna list its members
 				if (element.IsCodeType &&
-						(element.Kind != vsCMElement.vsCMElementEnum) &&
-						(element.Kind != vsCMElement.vsCMElementDelegate))
+						(elementKind != vsCMElement.vsCMElementEnum) &&
+						(elementKind != vsCMElement.vsCMElementDelegate))
 				{
 					var members = ((CodeType)element).Members;
 					if (members == null)
@@ -320,19 +322,21 @@ namespace DPackRx.CodeModel
 
 					foreach (CodeElement member in members)
 					{
+						var memberKind = member.Kind;
+
 						// Don't add nested Class, Interface or Struct name
 						// It'll be added as part of this method recursive call
-						if ((member.Kind != vsCMElement.vsCMElementClass) &&
-								(member.Kind != vsCMElement.vsCMElementModule) &&
-								(member.Kind != vsCMElement.vsCMElementInterface) &&
-								(member.Kind != vsCMElement.vsCMElementStruct))
+						if ((memberKind != vsCMElement.vsCMElementClass) &&
+								(memberKind != vsCMElement.vsCMElementModule) &&
+								(memberKind != vsCMElement.vsCMElementInterface) &&
+								(memberKind != vsCMElement.vsCMElementStruct))
 						{
 							AddCodeElement(item, element, member, model, flags, languageSet, dteFilter, filter);
 						}
 
 						// Don't expand on Enum or Delegate since we don't wanna list its members
-						if ((member.Kind != vsCMElement.vsCMElementEnum) &&
-								(member.Kind != vsCMElement.vsCMElementDelegate))
+						if ((memberKind != vsCMElement.vsCMElementEnum) &&
+								(memberKind != vsCMElement.vsCMElementDelegate))
 						{
 							ProcessCodeElement(item, member, model, flags, languageSet, dteFilter, filter, true);
 						}
@@ -349,66 +353,26 @@ namespace DPackRx.CodeModel
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			EditPoint editPoint;
-
-			// Line number retrieval uses EditPoints, which is expensive to process
-			try
+			// Check if this code model element belongs to the current project item
+			if (element.ProjectItem != null)
 			{
-				// Not all elements support header part
-				TextPoint startPoint;
-				if ((element.Kind == vsCMElement.vsCMElementClass) ||
-						(element.Kind == vsCMElement.vsCMElementModule) ||
-						(element.Kind == vsCMElement.vsCMElementInterface) ||
-						(element.Kind == vsCMElement.vsCMElementStruct) ||
-						(element.Kind == vsCMElement.vsCMElementEnum) ||
-						(element.Kind == vsCMElement.vsCMElementFunction))
-					startPoint = element.GetStartPoint(vsCMPart.vsCMPartHeader);
-				else
-					startPoint = element.StartPoint;
-
-				if (startPoint == null)
+				var elementItem = element.ProjectItem;
+				if ((item != null) && (item != elementItem))
 				{
-					_log.LogMessage($"{element.Name} element's of {element.Kind} kind StartPoint cannot be determined");
-					return;
-				}
+					var itemFileName = item.get_FileNames(1);
+					var epiFileName = elementItem.get_FileNames(1);
 
-				// Check if this code model element belongs to the current project item
-				if (element.ProjectItem != null)
-				{
-					var elementItem = element.ProjectItem;
-					if ((item != null) && (item != elementItem))
+					if (string.IsNullOrEmpty(itemFileName) ||
+							string.IsNullOrEmpty(epiFileName) ||
+							(string.Compare(itemFileName, epiFileName, StringComparison.OrdinalIgnoreCase) != 0))
 					{
-						string itemFileName = item.get_FileNames(1);
-						string epiFileName = elementItem.get_FileNames(1);
-
-						if (string.IsNullOrEmpty(itemFileName) ||
-								string.IsNullOrEmpty(epiFileName) ||
-								(string.Compare(itemFileName, epiFileName, StringComparison.OrdinalIgnoreCase) != 0))
-						{
-							_log.LogMessage($"Project item mismatch: '{item.Name}' expected but '{elementItem.Name}' found instead - {element.Name}");
-							return;
-						}
-						else
-						{
-							// This is a work around for project item reference change where essentially new reference 
-							// still points at the same file but reference wise these two are no longer equal
-							item = elementItem;
-						}
+						_log.LogMessage($"Project item mismatch: '{item.Name}' expected but '{elementItem.Name}' found instead - {element.Name}");
+						return;
 					}
 				}
-
-				editPoint = startPoint.CreateEditPoint();
-			}
-			catch (Exception ex)
-			{
-				// Swallow C++ exception as some invalid code model functions raise it sometimes
-				if (languageSet?.Language != CodeModelLanguageConstants.vsCMLanguageVC)
-					_log.LogMessage($"Error adding code member: {element.Name}", ex);
-
-				return;
 			}
 
-			var line = editPoint.Line;
+			var elementKind = element.Kind;
 
 			// Decide whether the element is to be filtered out or not
 			bool add;
@@ -418,11 +382,11 @@ namespace DPackRx.CodeModel
 			}
 			else
 			{
-				add = dteFilter.Contains(element.Kind);
+				add = dteFilter.Contains(elementKind);
 				if (!add)
 				{
 					// TODO: resurrect next statement if need be - used to treat read-only fields as properties
-					//if (dteFilter.Contains(vsCMElement.vsCMElementProperty) && (element.Kind == vsCMElement.vsCMElementVariable))
+					//if (dteFilter.Contains(vsCMElement.vsCMElementProperty) && (elementKind == vsCMElement.vsCMElementVariable))
 					//{
 					//	var varElt = (CodeVariable2)element;
 					//	if (varElt.ConstKind == vsCMConstKind.vsCMConstKindReadOnly)
@@ -433,7 +397,37 @@ namespace DPackRx.CodeModel
 
 			if (add)
 			{
-				GetConstructorDestructorInfo(languageSet, parentElement, element, out bool constructor, out bool destructor);
+				// Line number retrieval uses EditPoints, which is expensive to process
+				TextPoint startPoint;
+				try
+				{
+					// Not all elements support header part
+					if ((elementKind == vsCMElement.vsCMElementClass) ||
+							(elementKind == vsCMElement.vsCMElementModule) ||
+							(elementKind == vsCMElement.vsCMElementInterface) ||
+							(elementKind == vsCMElement.vsCMElementStruct) ||
+							(elementKind == vsCMElement.vsCMElementEnum) ||
+							(elementKind == vsCMElement.vsCMElementFunction))
+						startPoint = element.GetStartPoint(vsCMPart.vsCMPartHeader);
+					else
+						startPoint = element.StartPoint;
+
+					if (startPoint == null)
+					{
+						_log.LogMessage($"{element.Name} element's of {elementKind} kind StartPoint cannot be determined");
+						return;
+					}
+				}
+				catch (Exception ex)
+				{
+					// Swallow C++ exception as some invalid code model functions raise it sometimes
+					if (languageSet?.Language != CodeModelLanguageConstants.vsCMLanguageVC)
+						_log.LogMessage($"Error adding code member: {element.Name}", ex);
+
+					return;
+				}
+
+				GetConstructorDestructorInfo(languageSet, parentElement, element, elementKind, out bool constructor, out bool destructor);
 
 				if ((filter != CodeModelFilterFlags.Constructors) ||
 						(filter.HasFlag(CodeModelFilterFlags.Constructors) && (constructor || destructor)))
@@ -454,13 +448,19 @@ namespace DPackRx.CodeModel
 							parentFullName = name;
 					}
 					else
-					if ((parentElement.Kind == vsCMElement.vsCMElementClass) ||
-							(parentElement.Kind == vsCMElement.vsCMElementModule) ||
-							(parentElement.Kind == vsCMElement.vsCMElementInterface) ||
-							(parentElement.Kind == vsCMElement.vsCMElementStruct))
-						parentFullName = parentElement.Name + "." + name;
-					else
-						parentFullName = name;
+					{
+						var parentElementKind = parentElement.Kind;
+
+						if ((parentElementKind == vsCMElement.vsCMElementClass) ||
+								(parentElementKind == vsCMElement.vsCMElementModule) ||
+								(parentElementKind == vsCMElement.vsCMElementInterface) ||
+								(parentElementKind == vsCMElement.vsCMElementStruct))
+							parentFullName = parentElement.Name + "." + name;
+						else
+							parentFullName = name;
+					}
+
+					var line = startPoint.Line;
 
 					// Check for duplicate names
 					if ((languageSet != null) && languageSet.CheckDuplicateNames)
@@ -468,7 +468,7 @@ namespace DPackRx.CodeModel
 						foreach (var modelItem in model)
 						{
 							if ((modelItem.Line == line) &&
-									(modelItem.CodeModelElementKind == (int)element.Kind) &&
+									(modelItem.CodeModelElementKind == (int)elementKind) &&
 									(modelItem.ParentFullName == parentFullName))
 							{
 								// Duplicate found
@@ -481,17 +481,18 @@ namespace DPackRx.CodeModel
 					if (add)
 					{
 						// Setup element's first code line information
+						var editPoint = startPoint.CreateEditPoint();
 						if (editPoint != null)
 						{
-							int lineLength = editPoint.LineLength - editPoint.LineCharOffset + 1;
+							var lineLength = editPoint.LineLength - editPoint.LineCharOffset + 1;
 							if (lineLength > 1)
 								code = editPoint.GetText(lineLength).TrimStart(' ', '\t');
 						}
 
 						try
 						{
-							var returnTypeName = constructor || destructor || (element == null) ? string.Empty : GetElementReturnTypeName(element);
-							var xmlDoc = flags.HasFlag(ProcessorFlags.IncludeMemberXmlDoc) ? GetXmlDoc(element, languageSet) : string.Empty;
+							var returnTypeName = constructor || destructor || (element == null) ? string.Empty : GetElementReturnTypeName(element, elementKind);
+							var xmlDoc = flags.HasFlag(ProcessorFlags.IncludeMemberXmlDoc) ? GetXmlDoc(element, elementKind, languageSet) : string.Empty;
 
 							char? genericSuffix = null;
 							if ((languageSet != null) && languageSet.SupportsGenerics)
@@ -512,7 +513,7 @@ namespace DPackRx.CodeModel
 								Name = name,
 								FullName = fullName,
 								ParentFullName = parentFullName,
-								CodeModelElementKind = (int)element.Kind,
+								CodeModelElementKind = (int)elementKind,
 								ElementKind = _shellCodeModelService.GetElementKind(element),
 								ElementModifier = _shellCodeModelService.GetElementModifier(element),
 								IsConstant = _shellCodeModelService.IsConstant(element),
@@ -581,8 +582,10 @@ namespace DPackRx.CodeModel
 			// Get the first file from the first active project
 			foreach (ProjectItem item in items)
 			{
-				if ((string.Compare(item.Kind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
-						(string.Compare(item.Kind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
+				var itemKind = item.Kind;
+
+				if ((string.Compare(itemKind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
+						(string.Compare(itemKind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
 				{
 					if (item.ProjectItems != null)
 					{
@@ -605,7 +608,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Returns constructor and destructor information for the code elements.
 		/// </summary>
-		private void GetConstructorDestructorInfo(LanguageSettings languageSet, CodeElement parentElement, CodeElement element,
+		private void GetConstructorDestructorInfo(LanguageSettings languageSet, CodeElement parentElement, CodeElement element, vsCMElement elementKind,
 			out bool constructor, out bool destructor)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
@@ -613,13 +616,15 @@ namespace DPackRx.CodeModel
 			constructor = false;
 			destructor = false;
 
-			if (element.Kind == vsCMElement.vsCMElementFunction)
+			if (elementKind == vsCMElement.vsCMElementFunction)
 			{
 				if (parentElement != null)
 				{
-					if ((parentElement.Kind == vsCMElement.vsCMElementClass) ||
-							(parentElement.Kind == vsCMElement.vsCMElementModule) ||
-							(parentElement.Kind == vsCMElement.vsCMElementStruct))
+					var parentElementKind = parentElement.Kind;
+
+					if ((parentElementKind == vsCMElement.vsCMElementClass) ||
+							(parentElementKind == vsCMElement.vsCMElementModule) ||
+							(parentElementKind == vsCMElement.vsCMElementStruct))
 					{
 						if (parentElement.Name == element.Name)
 							constructor = true;
@@ -674,7 +679,7 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Returns element's Xml document information text w/o all supporting/wrapping Xml tags.
 		/// </summary>
-		private string GetXmlDoc(CodeElement element, LanguageSettings languageSet)
+		private string GetXmlDoc(CodeElement element, vsCMElement elementKind, LanguageSettings languageSet)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -689,7 +694,7 @@ namespace DPackRx.CodeModel
 			string xmlDoc;
 			string comment;
 
-			switch (element.Kind)
+			switch (elementKind)
 			{
 				case vsCMElement.vsCMElementVariable:
 					if (!(element is CodeVariable))
@@ -842,14 +847,14 @@ namespace DPackRx.CodeModel
 		/// <summary>
 		/// Returns element's type name declaration.
 		/// </summary>
-		private string GetElementReturnTypeName(CodeElement element)
+		private string GetElementReturnTypeName(CodeElement element, vsCMElement elementKind)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
 			CodeTypeRef typeRef;
 			try
 			{
-				switch (element.Kind)
+				switch (elementKind)
 				{
 					case vsCMElement.vsCMElementFunction:
 						typeRef = ((CodeFunction)element).Type;

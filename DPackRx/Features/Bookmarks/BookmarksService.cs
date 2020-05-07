@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using DPackRx.Services;
@@ -113,7 +114,7 @@ namespace DPackRx.Features.Bookmarks
 				return;
 			}
 
-			_log.LogMessage($"File '{fileName}' registered for bookmarks callback", LOG_CATEGORY);
+			_log.LogMessage($"File '{Path.GetFileName(fileName)}' registered for bookmarks callback", LOG_CATEGORY);
 			_bookmarkCallbacks.Add(fileName, client);
 		}
 
@@ -135,7 +136,7 @@ namespace DPackRx.Features.Bookmarks
 			var fileName = _bookmarkCallbacks.First(b => b.Value == client).Key;
 			if (!string.IsNullOrEmpty(fileName))
 				_bookmarkCallbacks.Remove(fileName);
-			_log.LogMessage($"File '{fileName}' unregistered for bookmarks callback", LOG_CATEGORY);
+			_log.LogMessage($"File '{Path.GetFileName(fileName)}' unregistered for bookmarks callback", LOG_CATEGORY);
 		}
 
 		/// <summary>

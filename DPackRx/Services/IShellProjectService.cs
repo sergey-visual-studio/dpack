@@ -89,5 +89,12 @@
 		/// Returns untyped Project file name.
 		/// </summary>
 		string GetItemFileName(object projectItem);
+
+		/// <summary>
+		/// Returns item's SubType.
+		/// </summary>
+		/// <param name="item">Project item.</param>
+		/// <returns>SubType or null.</returns>
+		string GetProjectItemSubType(object projectItem);
 	}
 }

@@ -73,7 +73,7 @@ namespace DPackRx.Features.CodeBrowser
 		/// <param name="argument">Optional argument.</param>
 		public override void OnInitialize(object argument)
 		{
-			_log.LogMessage(this.Feature, "Initializing...");
+			_log.LogMessage(this.Feature, "initializing...");
 
 			if (!(argument is CodeModelFilterFlags))
 				throw new ArgumentException("Invalid initialization argument", nameof(argument));
@@ -94,7 +94,7 @@ namespace DPackRx.Features.CodeBrowser
 				OnSearch();
 			}
 
-			_log.LogMessage(this.Feature, "Initialized");
+			_log.LogMessage(this.Feature, "initialized");
 		}
 
 		/// <summary>

@@ -75,7 +75,7 @@ namespace DPackRx.CodeModel
 			if (_shellProjectService.IsProjectLoadDeferred(project, out _))
 				return;
 
-			_log.LogMessage($"Collecting '{dteProject.Name}' files");
+			_log.LogMessage($"Collecting '{dteProject.Name}' project files");
 
 			// No need to process project's items if we fail to check its code model
 			// The exception is made for solution folder *if* that's requested
@@ -108,7 +108,7 @@ namespace DPackRx.CodeModel
 				}
 			}
 
-			_log.LogMessage($"Collected {model.Count} '{dteProject.Name}' files");
+			_log.LogMessage($"Collected {model.Count} '{dteProject.Name}' project files");
 		}
 
 		/// <summary>
@@ -122,8 +122,10 @@ namespace DPackRx.CodeModel
 			// Parent item is applicable or meant to be used for actual files only, i.e. file combos like .cs and .designer.cs, etc.
 			if (parentItem != null)
 			{
-				if ((string.Compare(parentItem.Kind, Constants.vsProjectItemKindPhysicalFile, StringComparison.OrdinalIgnoreCase) != 0) &&
-						(string.Compare(parentItem.Kind, Constants.vsProjectItemKindSolutionItems, StringComparison.OrdinalIgnoreCase) != 0))
+				var parentItemKind = parentItem.Kind;
+
+				if ((string.Compare(parentItemKind, Constants.vsProjectItemKindPhysicalFile, StringComparison.OrdinalIgnoreCase) != 0) &&
+						(string.Compare(parentItemKind, Constants.vsProjectItemKindSolutionItems, StringComparison.OrdinalIgnoreCase) != 0))
 					parentItem = null;
 			}
 			var parentSubType = FileSubType.None;
@@ -154,14 +156,16 @@ namespace DPackRx.CodeModel
 				if (isReferences || isReference)
 					continue;
 
+				var projectItemKind = projectItem.Kind;
+
 				// LightSwitch type projects with virtual references node workaround
 				if (!string.IsNullOrEmpty(projectItem.Name) &&
 						projectItem.Name.Equals(REFERENCES_NODE, StringComparison.OrdinalIgnoreCase) &&
-						(string.Compare(projectItem.Kind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
+						(string.Compare(projectItemKind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
 					continue;
 
-				if ((string.Compare(projectItem.Kind, Constants.vsProjectItemKindPhysicalFile, StringComparison.OrdinalIgnoreCase) == 0) ||
-						(string.Compare(projectItem.Kind, Constants.vsProjectItemKindSolutionItems, StringComparison.OrdinalIgnoreCase) == 0))
+				if ((string.Compare(projectItemKind, Constants.vsProjectItemKindPhysicalFile, StringComparison.OrdinalIgnoreCase) == 0) ||
+						(string.Compare(projectItemKind, Constants.vsProjectItemKindSolutionItems, StringComparison.OrdinalIgnoreCase) == 0))
 				{
 					if (!parentSubTypeSet)
 					{
@@ -229,10 +233,10 @@ namespace DPackRx.CodeModel
 							model, flags, filter, languageSet,
 							currentProjectItems, false, ref isRoot, projectItem, parentName);
 				}
-				else
+				else // projectItemKind
 				{
-					if ((string.Compare(projectItem.Kind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
-							(string.Compare(projectItem.Kind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
+					if ((string.Compare(projectItemKind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
+							(string.Compare(projectItemKind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
 					{
 						ProjectItems currentProjectItems = projectItem.ProjectItems;
 						if ((currentProjectItems != null) && (currentProjectItems.Count > 0))
@@ -257,8 +261,10 @@ namespace DPackRx.CodeModel
 			{
 				foreach (ProjectItem projectItem in projectItems)
 				{
-					if ((string.Compare(projectItem.Kind, Constants.vsProjectItemKindPhysicalFile, StringComparison.OrdinalIgnoreCase) == 0) ||
-							(string.Compare(projectItem.Kind, Constants.vsProjectItemKindSolutionItems, StringComparison.OrdinalIgnoreCase) == 0))
+					var projectItemKind = projectItem.Kind;
+
+					if ((string.Compare(projectItemKind, Constants.vsProjectItemKindPhysicalFile, StringComparison.OrdinalIgnoreCase) == 0) ||
+							(string.Compare(projectItemKind, Constants.vsProjectItemKindSolutionItems, StringComparison.OrdinalIgnoreCase) == 0))
 					{
 						languageSet = GetLanguageRecursively(projectItem);
 						if (languageSet?.Type != LanguageType.Unknown)
@@ -271,8 +277,10 @@ namespace DPackRx.CodeModel
 				{
 					foreach (ProjectItem projectItem in projectItems)
 					{
-						if ((string.Compare(projectItem.Kind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
-								(string.Compare(projectItem.Kind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
+						var projectItemKind = projectItem.Kind;
+
+						if ((string.Compare(projectItemKind, Constants.vsProjectItemKindPhysicalFolder, StringComparison.OrdinalIgnoreCase) == 0) ||
+								(string.Compare(projectItemKind, Constants.vsProjectItemKindVirtualFolder, StringComparison.OrdinalIgnoreCase) == 0))
 						{
 							if (projectItem.Name == WEB_APP_CODE)
 							{

@@ -1209,6 +1209,7 @@ namespace DPackRx.Services
 				}
 			}
 
+			_log.LogMessage($"Collected item code model: {dteItem.Name}");
 			return result;
 		}
 
@@ -1304,6 +1305,55 @@ namespace DPackRx.Services
 				return null;
 
 			return dteItem.FileNames[1];
+		}
+
+		/// <summary>
+		/// Returns item's SubType.
+		/// </summary>
+		/// <param name="item">Project item.</param>
+		/// <returns>SubType or null.</returns>
+		public string GetProjectItemSubType(object projectItem)
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			var dteItem = GetProjectItemInternal(projectItem, false);
+			if (dteItem == null)
+				return null;
+
+			var project = dteItem.ContainingProject;
+			if (project == null)
+				return null;
+
+			var fileName = GetItemFileName(dteItem);
+			if (string.IsNullOrEmpty(fileName))
+				return null;
+
+			var solution = _serviceProvider.GetService<IVsSolution, IVsSolution>();
+			if (solution.GetProjectOfUniqueName(project.UniqueName, out IVsHierarchy projectHierarchy) != VSConstants.S_OK)
+			{
+				_log.LogMessage($"Failed to retrieve '{project.UniqueName}' project hierarchy");
+				return null;
+			}
+
+			if (projectHierarchy.ParseCanonicalName(fileName, out uint itemId) != VSConstants.S_OK)
+			{
+				_log.LogMessage($"Failed to parse '{project.UniqueName}' project name");
+				return null;
+			}
+
+			if (projectHierarchy.GetProperty(itemId, (int)__VSHPROPID.VSHPROPID_ItemSubType, out object value) != VSConstants.S_OK)
+			{
+				_log.LogMessage($"'{project.UniqueName}' project {itemId} item sub-type is not available");
+				return null;
+			}
+
+			if (!(value is string))
+			{
+				_log.LogMessage($"'{project.UniqueName}' project {itemId} item sub-type is invalid: {value}");
+				return null;
+			}
+
+			return (string)value;
 		}
 
 		#endregion

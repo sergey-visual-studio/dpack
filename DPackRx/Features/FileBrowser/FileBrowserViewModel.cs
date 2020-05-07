@@ -87,7 +87,7 @@ namespace DPackRx.Features.FileBrowser
 		/// <param name="argument">Optional argument.</param>
 		public override void OnInitialize(object argument)
 		{
-			_log.LogMessage(this.Feature, "Initializing...");
+			_log.LogMessage(this.Feature, "initializing...");
 
 			var model = _solutionProcessor.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles);
 			var files = model.Files;
@@ -113,7 +113,7 @@ namespace DPackRx.Features.FileBrowser
 				OnSearch();
 			}
 
-			_log.LogMessage(this.Feature, "Initialized");
+			_log.LogMessage(this.Feature, "initialized");
 		}
 
 		/// <summary>

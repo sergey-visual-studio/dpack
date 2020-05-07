@@ -30,14 +30,12 @@ namespace DPackRx.CodeModel
 		// "ASPXCodeBehind" - web code file
 		// "Designer" - file containing generic designer - not supported
 		// "Preview" - file containing VC/VB 6 code - not supported
-		private const string SUB_TYPE_CODE = "Code"; // .asax for web
+		// private const string SUB_TYPE_CODE = "Code"; // .asax for web
 		private const string SUB_TYPE_FORM = "Form"; // .aspx for web 
 		private const string SUB_TYPE_COMPONENT = "Component"; // .asax for web
 		private const string SUB_TYPE_USER_CONTROL = "UserControl"; // .ascx for web
-		private const string SUB_TYPE_CODE_BEHIND = "ASPXCodeBehind"; // .aspx and .ascx for web
 
-		private const string PROP_SUB_TYPE = "SubType";
-		private const string PROP_IS_DEPENDENT_FILE = "IsDependentFile";
+		// private const string PROP_IS_DEPENDENT_FILE = "IsDependentFile";
 
 		private const string DESIGNER_EXT = ".designer";
 
@@ -82,6 +80,7 @@ namespace DPackRx.CodeModel
 						_log.LogMessage("Check unnamed project language");
 				}
 
+				var languageSet = LanguageSettings.UnknownLanguage;
 				var language = _shellProjectService.GetProjectLanguage(project);
 				if (language != null)
 				{
@@ -90,7 +89,7 @@ namespace DPackRx.CodeModel
 
 					if (!string.IsNullOrEmpty(language))
 					{
-						var languageSet = _languageService.GetLanguage(language);
+						languageSet = _languageService.GetLanguage(language);
 
 						if (languageSet?.Type != LanguageType.Unknown)
 						{
@@ -98,12 +97,11 @@ namespace DPackRx.CodeModel
 							if (languageSet.Type != LanguageType.CPP)
 								isWebProject = _shellProjectService.IsWebProject(project);
 						}
-
-						return languageSet;
 					}
 				}
 
-				return LanguageSettings.UnknownLanguage;
+				_log.LogMessage($"'{projectName}' project language is {languageSet?.FriendlyName}");
+				return languageSet;
 			}
 			catch (NotImplementedException) // This is an acceptable condition
 			{
@@ -146,7 +144,7 @@ namespace DPackRx.CodeModel
 			if (dteItem == null)
 				return FileSubType.None;
 
-			var extension = Path.GetExtension(dteItem.Name).ToLowerInvariant();
+			var extension = Path.GetExtension(dteItem.Name);
 			return GetExtensionSubType(extension);
 		}
 
@@ -266,23 +264,24 @@ namespace DPackRx.CodeModel
 			// Otherwise we must rely on unconditional file name check
 			if (languageSet.DesignerFiles == LanguageDesignerFiles.FullySupported)
 			{
-				try
-				{
-					// Various files are reported as .Designer - further file name check is required
-					var props = dteItem.Properties;
-					if (props == null)
-						return false;
+				// TODO: revisit when substituted with less performance intensive API
+				//try
+				//{
+				//	// Various files are reported as .Designer - further file name check is required
+				//	var props = dteItem.Properties;
+				//	if (props == null)
+				//		return false;
 
-					var prop = props.Item(PROP_IS_DEPENDENT_FILE);
-					if (prop != null)
-						checkFileName = (bool)prop.Value;
-					else
-						return false;
-				}
-				catch
-				{
-					return false;
-				}
+				//	var prop = props.Item(PROP_IS_DEPENDENT_FILE);
+				//	if (prop != null)
+				//		checkFileName = (bool)prop.Value;
+				//	else
+				//		return false;
+				//}
+				//catch
+				//{
+				//	return false;
+				//}
 			}
 
 			// Check if last part of the file name ends with .Designer
@@ -316,7 +315,7 @@ namespace DPackRx.CodeModel
 				return false;
 
 			var itemSubType = GetSubType(projectItem, languageSet, isWebProject, true);
-			_log.LogMessage($"'{dteItem.Name}' sub-type - {itemSubType}");
+			_log.LogMessage($"'{dteItem.Name}' sub-type is {itemSubType}");
 
 			return IsCodeSubType(itemSubType);
 		}
@@ -390,33 +389,32 @@ namespace DPackRx.CodeModel
 			}
 			else
 			{
-				var fileExt = Path.GetExtension(dteItem.Name).ToLowerInvariant();
+				var fileExt = Path.GetExtension(dteItem.Name);
 				var codeFile = _languageService.IsValidExtension(languageSet, fileExt);
 
 				if (codeFile) // This is a code file of some sort
 				{
 					if (isWebProject) // File is part of web-based project such as web app or web service
 					{
-						fileExt = Path.GetExtension(Path.GetFileNameWithoutExtension(dteItem.Name)).ToLowerInvariant();
+						fileExt = Path.GetExtension(Path.GetFileNameWithoutExtension(dteItem.Name));
 						if (string.IsNullOrEmpty(fileExt))
 							return FileSubType.Code;
 						else
-							switch (fileExt)
-							{
-								case FileType.ASPX:
-									return FileSubType.WebFormCode;
-								case FileType.ASCX:
-									return FileSubType.WebControlCode;
-								case FileType.ASMX:
-								case FileType.ASM:
-									return FileSubType.WebServiceCode;
-								case FileType.ASAX:
-									return FileSubType.WebAppFileCode;
-								case FileType.MASTER_PAGE:
-									return FileSubType.WebMasterPageCode;
-								default:
-									return FileSubType.Code;
-							}
+						{
+							if (fileExt.Equals(FileType.ASPX, StringComparison.OrdinalIgnoreCase))
+								return FileSubType.WebFormCode;
+							else if (fileExt.Equals(FileType.ASCX, StringComparison.OrdinalIgnoreCase))
+								return FileSubType.WebControlCode;
+							else if (fileExt.Equals(FileType.ASMX, StringComparison.OrdinalIgnoreCase) ||
+											 fileExt.Equals(FileType.ASM, StringComparison.OrdinalIgnoreCase))
+								return FileSubType.WebServiceCode;
+							else if (fileExt.Equals(FileType.ASAX, StringComparison.OrdinalIgnoreCase))
+								return FileSubType.WebAppFileCode;
+							else if (fileExt.Equals(FileType.MASTER_PAGE, StringComparison.OrdinalIgnoreCase))
+								return FileSubType.WebMasterPageCode;
+							else
+								return FileSubType.Code;
+						}
 					}
 					else // File is part of non-web project such as win app or assembly
 					{
@@ -459,33 +457,11 @@ namespace DPackRx.CodeModel
 		/// </summary>
 		private string GetProjectItemSubType(ProjectItem projectItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			var subType = _shellProjectService.GetProjectItemSubType(projectItem);
+			if (subType == null)
+				subType = string.Empty;
 
-			try
-			{
-				if (projectItem == null)
-					return string.Empty;
-
-				Properties props = projectItem.Properties;
-				if (props == null)
-					return string.Empty;
-
-				Property prop = props.Item(PROP_SUB_TYPE);
-				if (prop != null)
-				{
-					string itemType = (string) prop.Value;
-					if (itemType == null)
-						return string.Empty;
-					else
-						return itemType;
-				}
-				else
-					return string.Empty;
-			}
-			catch
-			{
-				return string.Empty;
-			}
+			return subType;
 		}
 
 		/// <summary>
@@ -493,68 +469,65 @@ namespace DPackRx.CodeModel
 		/// </summary>
 		private FileSubType GetExtensionSubType(string extension)
 		{
-			switch (extension)
-			{
-				case FileType.ASPX:
-					return FileSubType.WebForm;
-				case FileType.ASCX:
-					return FileSubType.WebControl;
-				case FileType.ASMX:
-				case FileType.ASM:
-					return FileSubType.WebService;
-				case FileType.ASAX:
-					return FileSubType.WebAppFile;
-				case FileType.CONFIG:
-					return FileSubType.ConfigFile;
-				case FileType.RESX:
-				case FileType.RES:
-				case FileType.RC:
-					return FileSubType.ResourceFile;
-				case FileType.BMP:
-					return FileSubType.Bitmap;
-				case FileType.ICO:
-					return FileSubType.Icon;
-				case FileType.CUR:
-					return FileSubType.Cursor;
-				case FileType.JPG:
-				case FileType.JPEG:
-				case FileType.GIF:
-				case FileType.PNG:
-					return FileSubType.ImageFile;
-				case FileType.XML:
-					return FileSubType.XmlFile;
-				case FileType.XML_SCHEMA:
-					return FileSubType.XmlSchema;
-				case FileType.XSL_SCHEMA:
-				case FileType.XSLT_SCHEMA:
-				case FileType.XSX_SCHEMA:
-					return FileSubType.XslFile;
-				case FileType.HTM:
-				case FileType.HTML:
-					return FileSubType.HtmlFile;
-				case FileType.CSS:
-					return FileSubType.StyleSheet;
-				case FileType.ASHX:
-					return FileSubType.WebGenericHandler;
-				case FileType.MASTER_PAGE:
-					return FileSubType.WebMasterPage;
-				case FileType.SITE_MAP:
-					return FileSubType.WebSiteMap;
-				case FileType.JSCRIPT:
-					return FileSubType.JScript;
-				case FileType.WIN_HOST_SCRIPT:
-					return FileSubType.WinHostScript;
-				case FileType.SETTINGS:
-					return FileSubType.Settings;
-				case FileType.CLASS_DIAGRAM:
-					return FileSubType.ClassDiagram;
-				case FileType.XAML:
-					return FileSubType.XamlFile;
-				case FileType.SQL:
-					return FileSubType.SqlFile;
-				default:
-					return FileSubType.Misc;
-			}
+			if (extension.Equals(FileType.ASPX, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebForm;
+			else if (extension.Equals(FileType.ASCX, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebControl;
+			else if (extension.Equals(FileType.ASMX, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.ASM, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebService;
+			else if (extension.Equals(FileType.ASAX, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebAppFile;
+			else if (extension.Equals(FileType.CONFIG, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.ConfigFile;
+			else if (extension.Equals(FileType.RESX, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.RES, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.RC, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.ResourceFile;
+			else if (extension.Equals(FileType.BMP, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.Bitmap;
+			else if (extension.Equals(FileType.ICO, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.Icon;
+			else if (extension.Equals(FileType.CUR, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.Cursor;
+			else if (extension.Equals(FileType.JPG, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.JPEG, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.GIF, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.PNG, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.ImageFile;
+			else if (extension.Equals(FileType.XML, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.XmlFile;
+			else if (extension.Equals(FileType.XML_SCHEMA, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.XmlSchema;
+			else if (extension.Equals(FileType.XSLT_SCHEMA, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.XSLT_SCHEMA, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.XSX_SCHEMA, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.XslFile;
+			else if (extension.Equals(FileType.HTM, StringComparison.OrdinalIgnoreCase) ||
+							 extension.Equals(FileType.HTML, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.HtmlFile;
+			else if (extension.Equals(FileType.CSS, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.StyleSheet;
+			else if (extension.Equals(FileType.ASHX, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebGenericHandler;
+			else if (extension.Equals(FileType.MASTER_PAGE, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebMasterPage;
+			else if (extension.Equals(FileType.SITE_MAP, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WebSiteMap;
+			else if (extension.Equals(FileType.JSCRIPT, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.JScript;
+			else if (extension.Equals(FileType.WIN_HOST_SCRIPT, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.WinHostScript;
+			else if (extension.Equals(FileType.SETTINGS, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.Settings;
+			else if (extension.Equals(FileType.CLASS_DIAGRAM, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.ClassDiagram;
+			else if (extension.Equals(FileType.XAML, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.XamlFile;
+			else if (extension.Equals(FileType.SQL, StringComparison.OrdinalIgnoreCase))
+				return FileSubType.SqlFile;
+			else
+				return FileSubType.Misc;
 		}
 
 		/// <summary>
@@ -596,23 +569,20 @@ namespace DPackRx.CodeModel
 				case eFileType.eFileTypeCppWebService:
 					return FileSubType.WebServiceCode;
 				case eFileType.eFileTypeDocument:
-					string fileExt = file.Extension.ToLowerInvariant();
-					switch (fileExt)
-					{
-						case FileType.INLINE:
-							return FileSubType.Code;
-						case FileType.CONFIG:
-							return FileSubType.ConfigFile;
-						case FileType.CUR:
-							return FileSubType.Cursor;
-						case FileType.JPG:
-						case FileType.JPEG:
-						case FileType.GIF:
-						case FileType.PNG:
-							return FileSubType.ImageFile;
-						default:
-							return FileSubType.Misc;
-					}
+					string fileExt = file.Extension;
+					if (fileExt.Equals(FileType.INLINE, StringComparison.OrdinalIgnoreCase))
+						return FileSubType.Code;
+					else if (fileExt.Equals(FileType.CONFIG, StringComparison.OrdinalIgnoreCase))
+						return FileSubType.ConfigFile;
+					else if (fileExt.Equals(FileType.CUR, StringComparison.OrdinalIgnoreCase))
+						return FileSubType.Cursor;
+					else if (fileExt.Equals(FileType.JPG, StringComparison.OrdinalIgnoreCase) ||
+									 fileExt.Equals(FileType.JPEG, StringComparison.OrdinalIgnoreCase) ||
+									 fileExt.Equals(FileType.GIF, StringComparison.OrdinalIgnoreCase) ||
+									 fileExt.Equals(FileType.PNG, StringComparison.OrdinalIgnoreCase))
+						return FileSubType.ImageFile;
+					else
+						return FileSubType.Misc;
 				case eFileType.eFileTypeResx:
 				case eFileType.eFileTypeRC:
 				case eFileType.eFileTypeRES:

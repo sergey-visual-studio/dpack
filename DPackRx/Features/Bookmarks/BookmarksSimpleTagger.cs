@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 using DPackRx.Extensions;
@@ -201,7 +202,7 @@ namespace DPackRx.Features.Bookmarks
 			if (string.IsNullOrEmpty(fileName))
 				return;
 
-			_log?.LogMessage($"File '{fileName}' bookmark {number} change ({type})", LOG_CATEGORY);
+			_log?.LogMessage($"File '{Path.GetFileName(fileName)}' bookmark {number} change ({type})", LOG_CATEGORY);
 
 			try
 			{

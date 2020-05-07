@@ -21,7 +21,7 @@ namespace DPackRx.Services
 		/// <summary>
 		/// Minimum delay that is not perceived as long wait.
 		/// </summary>
-		private const double DELAY_MSCES = 750;
+		private const double DELAY_MSCES = 1250;
 
 		#endregion
 

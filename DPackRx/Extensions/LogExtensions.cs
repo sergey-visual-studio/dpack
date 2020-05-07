@@ -31,7 +31,7 @@ namespace DPackRx.Extensions
 		/// </summary>
 		public static void LogMessage(this ILog log, KnownFeature feature, string message, Exception ex)
 		{
-			var featureMessage = feature.ToString() + Log.INDENT;
+			var featureMessage = $"{feature}:{Log.INDENT}";
 			message = string.IsNullOrEmpty(message) ? featureMessage : featureMessage + message;
 
 			log.LogMessage(message, ex);
