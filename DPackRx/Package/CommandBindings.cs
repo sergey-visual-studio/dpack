@@ -23,20 +23,22 @@ namespace DPackRx.Package
 			{
 				if (_commands == null)
 				{
-					_commands = new List<CommandNameAttribute>();
-					_commands.Add(new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidWindowsFormsDesigner));
-					_commands.Add(new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidHTMLSourceView));
-					_commands.Add(new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidTextEditor));
-					_commands.Add(new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidWindowsFormsDesigner));
-					_commands.Add(new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidHTMLSourceView));
-					_commands.Add(new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidTextEditor));
-					_commands.Add(new CommandNameAttribute("EditorContextMenus.CodeWindow.RemoveAndSort", "Global::Ctrl+Shift+Alt+U"));
-					_commands.Add(new CommandNameAttribute("View.FindResults1", "Global::Ctrl+K, Ctrl+1"));
-					_commands.Add(new CommandNameAttribute("View.FindResults2", "Global::Ctrl+K, Ctrl+2"));
+					_commands = new List<CommandNameAttribute>
+					{
+						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidWindowsFormsDesigner),
+						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidHTMLSourceView),
+						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidTextEditor),
+						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidWindowsFormsDesigner),
+						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidHTMLSourceView),
+						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidTextEditor),
+						new CommandNameAttribute("EditorContextMenus.CodeWindow.RemoveAndSort", "Ctrl+Shift+Alt+U"),
+						new CommandNameAttribute("View.FindResults1", "Ctrl+K, Ctrl+1"),
+						new CommandNameAttribute("View.FindResults2", "Ctrl+K, Ctrl+2"),
 
-					// Fix bookmark shortcut collisions
-					_commands.Add(new CommandNameAttribute("Edit.GoToMember", "Global::Ctrl+Shift+M"));
-					_commands.Add(new CommandNameAttribute("Edit.GoToType", "Global::Ctrl+Shift+T"));
+						// Fix bookmark shortcut collisions
+						new CommandNameAttribute("Edit.GoToMember", "Ctrl+Shift+M"),
+						new CommandNameAttribute("Edit.GoToType", "Ctrl+Shift+T")
+					};
 				}
 
 				return _commands;
