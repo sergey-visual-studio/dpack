@@ -110,7 +110,7 @@ namespace DPackRx.Features.Bookmarks
 
 			if (_bookmarkCallbacks.ContainsKey(fileName) || _bookmarkCallbacks.ContainsValue(client))
 			{
-				_log.LogMessage("Callback client has already been registered", LOG_CATEGORY);
+				_log.LogMessage($"Callback client has already been registered: {Path.GetFileName(fileName)}", LOG_CATEGORY);
 				return;
 			}
 
@@ -251,7 +251,11 @@ namespace DPackRx.Features.Bookmarks
 				return false;
 
 			if (!_bookmarks.ContainsKey(fileName))
+			{
+				_shellStatusBarService.SetStatusBarText($"Bookmark {number} not found");
+				_log.LogMessage($"Bookmark # {number} is not found", LOG_CATEGORY);
 				return false;
+			}
 
 			_log.LogMessage($"Looking for '{fileName}' bookmark # {number}", LOG_CATEGORY);
 			var bookmarks = _bookmarks[fileName];
