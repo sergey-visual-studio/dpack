@@ -17,7 +17,7 @@ namespace DPackRx.Options
 	/// <summary>
 	/// General Tools|Options page.
 	/// </summary>
-	[Guid(GUIDs.OptionsGeneral)]
+	[Guid(GUIDs.OPTIONS_GENERAL)]
 	[ComVisible(true)]
 	[ClassInterface(ClassInterfaceType.AutoDual)]
 	[ToolboxItem(false)]
@@ -169,7 +169,7 @@ namespace DPackRx.Options
 
 		private void OnLogging(object obj)
 		{
-			this.OptionsService.SetBoolOption(this.Feature, "Logging", obj != null ? Convert.ToBoolean(obj) : false);
+			this.OptionsService.SetBoolOption(this.Feature, "Logging", obj != null && Convert.ToBoolean(obj));
 		}
 
 		private void OnLogFolder(object obj)

@@ -378,7 +378,6 @@ namespace DPackRx.Tests.Features
 
 		[TestCase(null)]
 		[TestCase("")]
-		[TestCase("bad")]
 		public void GoToBookmark_NoFile(string fileName)
 		{
 			var service = GetService();
@@ -426,6 +425,18 @@ namespace DPackRx.Tests.Features
 			_shellSelectionServiceMock.Verify(s => s.GetActiveFileName());
 			_shellSelectionServiceMock.Verify(s => s.GetActiveFilePosition());
 			_shellSelectionServiceMock.Verify(s => s.SetActiveFilePosition(It.IsAny<int>(), It.IsAny<int>()));
+			_shellStatusBarServiceMock.Verify(s => s.SetStatusBarText(It.IsNotNull<string>()));
+		}
+
+		[Test]
+		public void GoToBookmark_NoFileBookmarks()
+		{
+			var service = GetService();
+
+			var result = service.GoToBookmark(1);
+
+			Assert.That(result, Is.False);
+			_shellSelectionServiceMock.Verify(s => s.GetActiveFileName());
 			_shellStatusBarServiceMock.Verify(s => s.SetStatusBarText(It.IsNotNull<string>()));
 		}
 

@@ -356,7 +356,7 @@ namespace DPackRx.Tests.Features
 			var selection = new List<FileModel>();
 			viewModel.OpenFilesCommand.Execute(selection);
 
-			Assert.That(viewModel.SelectionCode, Is.EqualTo(controlKeyDown ? false : true));
+			Assert.That(viewModel.SelectionCode, Is.EqualTo(!controlKeyDown));
 			Assert.That(viewModel.Selection, Is.EqualTo(selection));
 			Assert.That(viewModel.CloseWindow, Is.True);
 			_utilsServiceMock.Verify(u => u.ControlKeyDown());

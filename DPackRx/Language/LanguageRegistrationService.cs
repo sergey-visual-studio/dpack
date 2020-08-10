@@ -32,6 +32,8 @@ namespace DPackRx.Language
 		private const string PARENTLESS_FULL_NAME = "ParentlessFullName";
 		private const string SURROUND_WITH_NAME = "SurroundWith";
 
+		private const string LOG_CATEGORY = "Language Registry";
+
 		#endregion
 
 		public LanguageRegistrationService(ILog log, IPackageService packageService)
@@ -111,7 +113,7 @@ namespace DPackRx.Language
 					}
 					if (string.IsNullOrEmpty(friendlyName))
 					{
-						_log.LogMessage($"Skipped language {id} definition w/o a friendly name");
+						_log.LogMessage($"Skipped language {id} definition w/o a friendly name", LOG_CATEGORY);
 						continue;
 					}
 					var webNames = !string.IsNullOrEmpty(webName) ? webName.Split(',') : new string[0];

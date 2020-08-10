@@ -63,6 +63,7 @@
     <Compile Include="CodeModel\IFileTypeResolver.cs" />
     <Compile Include="CodeModel\ProjectModel.cs" />
     <Compile Include="CodeModel\SolutionModel.cs" />
+    <Compile Include="Extensions\KnownFeatureExtensions.cs" />
     <Compile Include="Extensions\LogExtensions.cs" />
     <Compile Include="Features\Bookmarks\IBookmarksSimpleTagger.cs" />
     <Compile Include="Features\Bookmarks\BookmarksSimpleTagger.cs" />

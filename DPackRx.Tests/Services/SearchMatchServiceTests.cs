@@ -86,25 +86,27 @@ namespace DPackRx.Tests.Services
 
 		private static List<IMatchItem> GetItems(bool matched = false, int rank = 0)
 		{
-			var items = new List<IMatchItem>();
-			items.Add(new TestMatchItem
+			var items = new List<IMatchItem>
 			{
-				ItemSubType = FileSubType.None,
-				Data = "TestFile1.txt",
-				PascalCasedData = "TF1",
-				DataEndingIndex = 9,
-				Matched = matched,
-				Rank = rank
-			});
-			items.Add(new TestMatchItem
-			{
-				ItemSubType = FileSubType.Code,
-				Data = "TestCodeFile2.cs",
-				PascalCasedData = "TCF2",
-				DataEndingIndex = 13,
-				Matched = matched,
-				Rank = rank
-			});
+				new TestMatchItem
+				{
+					ItemSubType = FileSubType.None,
+					Data = "TestFile1.txt",
+					PascalCasedData = "TF1",
+					DataEndingIndex = 9,
+					Matched = matched,
+					Rank = rank
+				},
+				new TestMatchItem
+				{
+					ItemSubType = FileSubType.Code,
+					Data = "TestCodeFile2.cs",
+					PascalCasedData = "TCF2",
+					DataEndingIndex = 13,
+					Matched = matched,
+					Rank = rank
+				}
+			};
 			return items;
 		}
 

@@ -10,7 +10,6 @@ namespace DPackRx.Features.SupportOptions
 	{
 		#region Fields
 
-		private readonly ILog _log;
 		private readonly IOptionsService _optionsService;
 		private readonly IPackageService _packageService;
 		private readonly IShellHelperService _shellHelperService;
@@ -25,13 +24,10 @@ namespace DPackRx.Features.SupportOptions
 
 		#endregion
 
-		public SupportOptionsFirstTimeUse(ILog log, IOptionsService optionsService,
+		public SupportOptionsFirstTimeUse(IOptionsService optionsService,
 			IPackageService packageService, IShellHelperService shellHelperService, IShellInfoBarService shellInfoBarService,
 			IMessageService messageService)
 		{
-			if (log == null)
-				throw new ArgumentNullException(nameof(log));
-
 			if (optionsService == null)
 				throw new ArgumentNullException(nameof(optionsService));
 
@@ -41,7 +37,6 @@ namespace DPackRx.Features.SupportOptions
 			if (messageService == null)
 				throw new ArgumentNullException(nameof(messageService));
 
-			_log = log;
 			_optionsService = optionsService;
 			_packageService = packageService;
 			_shellHelperService = shellHelperService;

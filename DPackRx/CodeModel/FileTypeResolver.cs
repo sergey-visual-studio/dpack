@@ -21,6 +21,8 @@ namespace DPackRx.CodeModel
 		private readonly ILanguageService _languageService;
 		private readonly IShellProjectService _shellProjectService;
 
+		private const string LOG_CATEGORY = "Resolver";
+
 		// DTE "SubType" values:
 		// "" - miscellaneous file of unknown type
 		// "Code" - code file
@@ -31,7 +33,7 @@ namespace DPackRx.CodeModel
 		// "Designer" - file containing generic designer - not supported
 		// "Preview" - file containing VC/VB 6 code - not supported
 		// private const string SUB_TYPE_CODE = "Code"; // .asax for web
-		private const string SUB_TYPE_FORM = "Form"; // .aspx for web 
+		private const string SUB_TYPE_FORM = "Form"; // .aspx for web
 		private const string SUB_TYPE_COMPONENT = "Component"; // .asax for web
 		private const string SUB_TYPE_USER_CONTROL = "UserControl"; // .ascx for web
 
@@ -75,9 +77,9 @@ namespace DPackRx.CodeModel
 				if (projectName != null)
 				{
 					if (!string.IsNullOrEmpty(projectName))
-						_log.LogMessage($"Check '{projectName}' project language");
+						_log.LogMessage($"Check '{projectName}' project language", LOG_CATEGORY);
 					else
-						_log.LogMessage("Check unnamed project language");
+						_log.LogMessage("Check unnamed project language", LOG_CATEGORY);
 				}
 
 				var languageSet = LanguageSettings.UnknownLanguage;
@@ -100,17 +102,17 @@ namespace DPackRx.CodeModel
 					}
 				}
 
-				_log.LogMessage($"'{projectName}' project language is {languageSet?.FriendlyName}");
+				_log.LogMessage($"'{projectName}' project language is {languageSet?.FriendlyName}", LOG_CATEGORY);
 				return languageSet;
 			}
 			catch (NotImplementedException) // This is an acceptable condition
 			{
-				_log.LogMessage("Project doesn't implement code model");
+				_log.LogMessage("Project doesn't implement code model", LOG_CATEGORY);
 				return LanguageSettings.UnknownLanguage;
 			}
 			catch (Exception ex) // But this is a legit problem - raise an exception
 			{
-				_log.LogMessage("Failed to check project language", ex);
+				_log.LogMessage("Failed to check project language", ex, LOG_CATEGORY);
 				throw;
 			}
 		}
@@ -315,7 +317,7 @@ namespace DPackRx.CodeModel
 				return false;
 
 			var itemSubType = GetSubType(projectItem, languageSet, isWebProject, true);
-			_log.LogMessage($"'{dteItem.Name}' sub-type is {itemSubType}");
+			_log.LogMessage($"'{dteItem.Name}' sub-type is {itemSubType}", LOG_CATEGORY);
 
 			return IsCodeSubType(itemSubType);
 		}

@@ -24,6 +24,8 @@ namespace DPackRx.CodeModel
 		private readonly IShellProjectService _shellProjectService;
 		private readonly IProjectProcessor _projectProcessor;
 
+		private const string LOG_CATEGORY = "Solution Processor";
+
 		#endregion
 
 		public SolutionProcessor(ILog log, ILanguageService languageService, IShellProjectService shellProjectService,
@@ -65,14 +67,14 @@ namespace DPackRx.CodeModel
 
 			var dte = _shellProjectService.GetDTE() as DTE;
 
-			_log.LogMessage("Resolving solution name");
+			_log.LogMessage("Resolving solution name", LOG_CATEGORY);
 
 			var solution = dte.Solution?.FileName;
 			if (!string.IsNullOrEmpty(solution))
 				solution = Path.GetFileNameWithoutExtension(solution);
 			model.SolutionName = solution;
 
-			_log.LogMessage("Collecting solution projects");
+			_log.LogMessage("Collecting solution projects", LOG_CATEGORY);
 
 			var projects = dte.Solution.Projects;
 			for (int index = 1; index <= projects.Count; index++)
@@ -114,7 +116,7 @@ namespace DPackRx.CodeModel
 				}
 			}
 
-			_log.LogMessage($"Collected {model.Projects.Count} solution projects");
+			_log.LogMessage($"Collected {model.Projects.Count} solution projects", LOG_CATEGORY);
 		}
 
 		/// <summary>
@@ -151,12 +153,12 @@ namespace DPackRx.CodeModel
 			catch (NotImplementedException) // This is an acceptable condition - keep on going
 			{
 				process = false;
-				_log.LogMessage($"Project '{project?.Name}' doesn't implement code model");
+				_log.LogMessage($"Project '{project?.Name}' doesn't implement code model", LOG_CATEGORY);
 			}
 			catch (Exception ex) // But this is a legit problem - keep on going anyways
 			{
 				process = false;
-				_log.LogMessage("Failed to retrieve project code model / language", ex);
+				_log.LogMessage("Failed to retrieve project code model / language", ex, LOG_CATEGORY);
 			}
 
 			string projectFullName = string.Empty;
@@ -166,7 +168,7 @@ namespace DPackRx.CodeModel
 				if ((string.IsNullOrEmpty(projectPath) || string.IsNullOrEmpty(projectFullName)) && _shellProjectService.IsProject(project))
 				{
 					process = false;
-					_log.LogMessage($"Project '{project?.Name}' path is not available");
+					_log.LogMessage($"Project '{project?.Name}' path is not available", LOG_CATEGORY);
 				}
 			}
 

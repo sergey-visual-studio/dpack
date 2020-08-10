@@ -21,6 +21,8 @@ namespace DPackRx.Package
 		private readonly IUtilsService _utilsService;
 		private IFeature _feature;
 
+		private const string LOG_CATEGORY = "Command";
+
 		#endregion
 
 		public FeatureCommand(ILog log, IMenuCommandService menuCommandService, IMessageService messageService, IUtilsService utilsService)
@@ -94,7 +96,7 @@ namespace DPackRx.Package
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage(ex);
+				_log.LogMessage(ex, LOG_CATEGORY);
 				return false;
 			}
 		}
@@ -165,7 +167,7 @@ namespace DPackRx.Package
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage(ex);
+				_log.LogMessage(ex, LOG_CATEGORY);
 			}
 		}
 

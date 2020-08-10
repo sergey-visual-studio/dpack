@@ -24,7 +24,7 @@ namespace DPackRx.Features.SupportOptions
 		private readonly IMessageService _messageService;
 		private SupportOptionsFirstTimeUse _firstTimeUse;
 
-		private const string EMAIL = "mailto:{0}?subject={1} v{2} for {3}" + 
+		private const string EMAIL = "mailto:{0}?subject={1} v{2} for {3}" +
 			"&body=Please include extension log file when submitting a problem report.";
 
 		#endregion
@@ -67,7 +67,7 @@ namespace DPackRx.Features.SupportOptions
 		{
 			base.Initialize();
 
-			_firstTimeUse = new SupportOptionsFirstTimeUse(this.Log, this.OptionsService, _packageService, _shellHelperService, _shellInfoBarService, _messageService);
+			_firstTimeUse = new SupportOptionsFirstTimeUse(this.OptionsService, _packageService, _shellHelperService, _shellInfoBarService, _messageService);
 			_shellEventsService.SubscribeSolutionEvents(_firstTimeUse);
 		}
 

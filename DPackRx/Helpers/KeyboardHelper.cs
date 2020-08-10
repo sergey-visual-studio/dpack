@@ -20,8 +20,7 @@ namespace DPackRx.Helpers
 		private const int VKEY_SHIFT_MASK = 0x0100;
 		private const int VKEY_CHAR_MASK = 0x00FF;
 
-		private const int INPUT_MOUSE = 0;
-		private const int INPUT_KEYBOARD = 1;
+		private const int INPUT_KEYBOARD = 1; // INPUT_MOUSE = 0;
 
 		private const int KEY_EVENT_EXTENDED_KEY = 0x0001;
 		private const int KEY_EVENT_KEY_UP = 0x0002;
@@ -140,7 +139,7 @@ namespace DPackRx.Helpers
 				}
 			}
 
-			Thread.Sleep(250);
+			Thread.Sleep(200);
 		}
 
 		/// <summary>

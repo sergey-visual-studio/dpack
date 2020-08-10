@@ -10,7 +10,7 @@ namespace DPackRx.Options
 	/// <summary>
 	/// File Browser Tools|Options page.
 	/// </summary>
-	[Guid(Package.GUIDs.OptionsFileBrowser)]
+	[Guid(Package.GUIDs.OPTIONS_FILE_BROWSER)]
 	[ComVisible(true)]
 	[ClassInterface(ClassInterfaceType.AutoDual)]
 	[ToolboxItem(false)]

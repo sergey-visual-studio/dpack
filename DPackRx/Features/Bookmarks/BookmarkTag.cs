@@ -1,10 +1,13 @@
-﻿using Microsoft.VisualStudio.Text.Editor;
+﻿using System.Diagnostics;
+
+using Microsoft.VisualStudio.Text.Editor;
 
 namespace DPackRx.Features.Bookmarks
 {
 	/// <summary>
 	/// Bookmark glyph tag.
 	/// </summary>
+	[DebuggerDisplay("{Number} - {Type}")]
 	public class BookmarkTag : IGlyphTag
 	{
 		public BookmarkTag(int number, BookmarkType type)
