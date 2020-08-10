@@ -19,13 +19,15 @@ namespace DPackRx.Services
 		private readonly IPackageService _packageService;
 		private FileStream _fileStream;
 		private StreamWriter _file;
-		private object _threadSafeLock = new object();
+		private readonly object _threadSafeLock = new object();
 		private bool _enabled;
 
+		private const string LOG_CATEGORY = "Initialization";
 		private const int MAX_FILE_NAME_TRY = 20;
 		private const long MAX_FILE_SIZE = 1024 * 1024 * 10; // in Mb
+		private const int CATEGORY_LENGTH = 18;
 		protected internal const string INDENT = "  ";
-		protected internal const string CATEGORY_INDENT = ":  ";
+		protected internal const string CATEGORY_INDENT = "  ";
 
 		#endregion
 
@@ -39,7 +41,7 @@ namespace DPackRx.Services
 		/// <summary>
 		/// Tracks whether Dispose has been called.
 		/// </summary>
-		private bool disposed = false;
+		private bool _disposed = false;
 
 		/// <summary>
 		/// Called upon IDE shutdown.
@@ -61,7 +63,7 @@ namespace DPackRx.Services
 		private void Dispose(bool disposing)
 		{
 			// Check to see if Dispose() has already been called
-			if (!disposed)
+			if (!_disposed)
 			{
 				// Dispose all managed and unmanaged resources
 				if (disposing)
@@ -74,7 +76,7 @@ namespace DPackRx.Services
 				}
 			}
 
-			disposed = true;
+			_disposed = true;
 		}
 
 		~Log()
@@ -213,14 +215,14 @@ namespace DPackRx.Services
 				_file.AutoFlush = true;
 
 				InternalWriteMessage("*** Start logging ***");
-				InternalWriteMessage($"Date: {DateTime.Now.ToString("M/d/yy")}");
-				InternalWriteMessage($"Version: {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
+				InternalWriteMessage($"Date: {DateTime.Now:M/d/yy}", null, LOG_CATEGORY);
+				InternalWriteMessage($"Version: {Assembly.GetExecutingAssembly().GetName().Version}", null, LOG_CATEGORY);
 #if BETA
-				InternalWriteMessage($"Beta expires on: {Beta.ExpirationDate.ToShortDateString()}");
+				InternalWriteMessage($"Beta expires on: {Beta.ExpirationDate.ToShortDateString()}", null, LOG_CATEGORY);
 #endif
-				InternalWriteMessage($"Visual Studio: {_packageService.VSVersion}");
-				InternalWriteMessage($"OS: {Environment.OSVersion.Version}");
-				InternalWriteMessage($"Process Id: {Process.GetCurrentProcess().Id}");
+				InternalWriteMessage($"Visual Studio: {_packageService.VSVersion}", null, LOG_CATEGORY);
+				InternalWriteMessage($"OS: {Environment.OSVersion.Version}", null, LOG_CATEGORY);
+				InternalWriteMessage($"Process Id: {Process.GetCurrentProcess().Id}", null, LOG_CATEGORY);
 			}
 		}
 
@@ -298,13 +300,13 @@ namespace DPackRx.Services
 		{
 			if (timeStamp)
 			{
-				_file.Write(DateTime.Now.ToString("HH:mm:ss.fff"));
+				_file.Write($"{DateTime.Now:HH:mm:ss.fff}");
 				_file.Write(INDENT);
 			}
 
 			if (!string.IsNullOrEmpty(category))
 			{
-				_file.Write(category);
+				_file.Write($"{category,-CATEGORY_LENGTH}");
 				_file.Write(CATEGORY_INDENT);
 			}
 

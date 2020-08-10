@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
+using DPackRx.Extensions;
 using DPackRx.Features;
 
 namespace DPackRx.Services
@@ -21,6 +21,8 @@ namespace DPackRx.Services
 		private readonly ConcurrentDictionary<KnownFeature, IFeature> _features = new ConcurrentDictionary<KnownFeature, IFeature>();
 		private bool _initialized;
 
+		private const string LOG_CATEGORY = "Feature Factory";
+
 		#endregion
 
 		public FeatureFactory(IServiceProvider serviceProvider, ILog log, IMessageService messageService)
@@ -35,7 +37,7 @@ namespace DPackRx.Services
 		/// <summary>
 		/// Tracks whether Dispose has been called.
 		/// </summary>
-		private bool disposed = false;
+		private bool _disposed = false;
 
 		public void Dispose()
 		{
@@ -54,7 +56,7 @@ namespace DPackRx.Services
 		private void Dispose(bool disposing)
 		{
 			// Check to see if Dispose() has already been called
-			if (!disposed)
+			if (!_disposed)
 			{
 				// Dispose all managed and unmanaged resources
 				// Called upon IDE shutdown
@@ -64,7 +66,7 @@ namespace DPackRx.Services
 				}
 			}
 
-			disposed = true;
+			_disposed = true;
 		}
 
 		#endregion
@@ -78,9 +80,7 @@ namespace DPackRx.Services
 		/// <returns>Feature name.</returns>
 		public string GetFeatureName(KnownFeature feature)
 		{
-			var attribs = typeof(KnownFeature).GetField(feature.ToString())?.GetCustomAttributes(typeof(DescriptionAttribute), false);
-			var name = (attribs == null) || (attribs.Length == 0) ? feature.ToString() : ((DescriptionAttribute)attribs[0]).Description;
-			return name;
+			return feature.GetDescription();
 		}
 
 		/// <summary>
@@ -132,7 +132,7 @@ namespace DPackRx.Services
 						var feature = ((KnownFeatureAttribute)attribs[0]).Feature;
 						if (!_features.ContainsKey(feature))
 						{
-							_log.LogMessage($"Loading {feature} feature");
+							_log.LogMessage($"Loading {feature} feature", LOG_CATEGORY);
 							var featureInstance = (IFeature)_serviceProvider.GetService(type);
 							try
 							{
@@ -143,12 +143,12 @@ namespace DPackRx.Services
 							}
 							catch (Exception ex)
 							{
-								_log.LogMessage($"Failed to initialize feature {feature}", ex);
+								_log.LogMessage($"Failed to initialize feature {feature}", ex, LOG_CATEGORY);
 								errors.Add(GetFeatureName(feature));
 							}
 
 							_features.TryAdd(feature, featureInstance);
-							_log.LogMessage($"Loaded {feature} feature");
+							_log.LogMessage($"Loaded {feature} feature", LOG_CATEGORY);
 						}
 					}
 				}

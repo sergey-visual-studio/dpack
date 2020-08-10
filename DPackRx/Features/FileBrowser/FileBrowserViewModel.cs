@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -87,7 +86,7 @@ namespace DPackRx.Features.FileBrowser
 		/// <param name="argument">Optional argument.</param>
 		public override void OnInitialize(object argument)
 		{
-			_log.LogMessage(this.Feature, "initializing...");
+			_log.LogMessage(this.Feature, "Initializing...");
 
 			var model = _solutionProcessor.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles);
 			var files = model.Files;
@@ -113,7 +112,7 @@ namespace DPackRx.Features.FileBrowser
 				OnSearch();
 			}
 
-			_log.LogMessage(this.Feature, "initialized");
+			_log.LogMessage(this.Feature, "Initialized");
 		}
 
 		/// <summary>

@@ -24,7 +24,7 @@ namespace DPackRx.Features.Bookmarks
 		private ILog _log;
 		private readonly Dictionary<Bookmark, TrackingTagSpan<BookmarkTag>> _bookmarkSpans = new Dictionary<Bookmark, TrackingTagSpan<BookmarkTag>>(10);
 
-		private const string LOG_CATEGORY = "Tagger";
+		private const string LOG_CATEGORY = "Bookmark Tagger";
 
 		#endregion
 

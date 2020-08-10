@@ -44,6 +44,7 @@ namespace DPackRx.Services
 		private readonly bool _webInteropAvailable;
 		private readonly bool _cppInteropAvailable;
 
+		private const string LOG_CATEGORY = "Shell";
 		internal const int DEFAULT_WAIT_MSECS = 1000;
 		internal const string PROJECT_ITEM_KIND_SETUP = "{54435603-DBB4-11D2-8724-00A0C9A8B90C}";
 		internal const string TEXT_DOCUMENT = "TextDocument";
@@ -77,7 +78,7 @@ namespace DPackRx.Services
 			{
 				_webInteropAvailable = false;
 
-				_log.LogMessage("Web Interop is not available");
+				_log.LogMessage("Web Interop is not available", LOG_CATEGORY);
 			}
 
 			try
@@ -89,7 +90,7 @@ namespace DPackRx.Services
 			{
 				_cppInteropAvailable = false;
 
-				_log.LogMessage("C++ Interop is not available");
+				_log.LogMessage("C++ Interop is not available", LOG_CATEGORY);
 			}
 		}
 
@@ -179,7 +180,7 @@ namespace DPackRx.Services
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage(ex);
+				_log.LogMessage(ex, LOG_CATEGORY);
 				return null;
 			}
 		}
@@ -214,7 +215,7 @@ namespace DPackRx.Services
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			_log.LogMessage("Collapse all projects - enter");
+			_log.LogMessage("Collapse all projects - enter", LOG_CATEGORY);
 
 			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
 			try
@@ -223,12 +224,12 @@ namespace DPackRx.Services
 				var solution = dte.Solution;
 				var solutionName = GetSolutionName(solution);
 
-				_log.LogMessage($"Collapse all projects - solution {solutionName}");
+				_log.LogMessage($"Collapse all projects - solution {solutionName}", LOG_CATEGORY);
 
 				var solutionWindow = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);
 				if (solutionWindow == null)
 				{
-					_log.LogMessage("Collapse all projects - failed to retrieve Solution Explorer window");
+					_log.LogMessage("Collapse all projects - failed to retrieve Solution Explorer window", LOG_CATEGORY);
 					return;
 				}
 
@@ -256,7 +257,7 @@ namespace DPackRx.Services
 					}
 					else
 					{
-						_log.LogMessage("Collapse all projects - no solution items detected");
+						_log.LogMessage("Collapse all projects - no solution items detected", LOG_CATEGORY);
 					}
 				}
 			}
@@ -265,7 +266,7 @@ namespace DPackRx.Services
 				System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
 			}
 
-			_log.LogMessage("Collapse all projects - exit");
+			_log.LogMessage("Collapse all projects - exit", LOG_CATEGORY);
 		}
 
 		/// <summary>
@@ -288,6 +289,7 @@ namespace DPackRx.Services
 			if (textView.SetCaretPos(line - 1, column - 1) != VSConstants.S_OK) // text view coordinates are 0-based
 				return false;
 
+			textView.CenterLines(line - 1, 1);
 			return true;
 		}
 
@@ -331,6 +333,14 @@ namespace DPackRx.Services
 			try
 			{
 				var dte = GetDTEInternal();
+
+				var scope = GetGlobalScopeName(dte);
+				if (string.IsNullOrEmpty(scope))
+				{
+					_log.LogMessage("Failed to retrieve global scope name", LOG_CATEGORY);
+					return false;
+				}
+
 				var fields = typeof(CommandIDs).GetFields(BindingFlags.Public | BindingFlags.Static).ToList();
 				var attribs = new List<CommandNameAttribute>(fields.Count);
 				fields.ForEach(f => attribs.Add((CommandNameAttribute)f.GetCustomAttribute(typeof(CommandNameAttribute))));
@@ -343,13 +353,13 @@ namespace DPackRx.Services
 						{
 							var command = dte.Commands.Item(attrib.Name, 1);
 							if (command != null)
-								command.Bindings = attrib.Binding;
+								command.Bindings = $"{scope}::{attrib.Binding}";
 							else
-								_log.LogMessage($"Command {attrib.Name} is not available");
+								_log.LogMessage($"Command {attrib.Name} is not available", LOG_CATEGORY);
 						}
 						catch (Exception ex)
 						{
-							_log.LogMessage($"Error assigning shortcut for {attrib.Name} command and {attrib.Binding} binding", ex);
+							_log.LogMessage($"Error assigning shortcut for {attrib.Name} command and {attrib.Binding} binding", ex, LOG_CATEGORY);
 						}
 					}
 				}
@@ -381,13 +391,13 @@ namespace DPackRx.Services
 									if (!string.IsNullOrEmpty(resolvedBinding))
 									{
 										scopes.Add(attrib.Scope, resolvedBinding);
-										_log.LogMessage($"VS command {attrib.Name} - resolved {attrib.Scope} scope to {resolvedBinding}");
+										_log.LogMessage($"VS command {attrib.Name} - resolved {attrib.Scope} scope to {resolvedBinding}", LOG_CATEGORY);
 									}
 								}
 
 								if (string.IsNullOrEmpty(resolvedBinding))
 								{
-									_log.LogMessage($"VS command {attrib.Name} - could not resolve {attrib.Scope} scope");
+									_log.LogMessage($"VS command {attrib.Name} - could not resolve {attrib.Scope} scope", LOG_CATEGORY);
 									continue;
 								}
 
@@ -397,20 +407,20 @@ namespace DPackRx.Services
 							command.Bindings = binding;
 						}
 						else
-							_log.LogMessage($"VS command {attrib.Name} is not available");
+							_log.LogMessage($"VS command {attrib.Name} is not available", LOG_CATEGORY);
 					}
 					catch (Exception ex)
 					{
-						_log.LogMessage($"Error assigning shortcut for VS {attrib.Name} command and {attrib.Binding} binding", ex);
+						_log.LogMessage($"Error assigning shortcut for VS {attrib.Name} command and {attrib.Binding} binding", ex, LOG_CATEGORY);
 					}
 				}
 
-				_log.LogMessage("Assigned shortcuts");
+				_log.LogMessage("Assigned shortcuts", LOG_CATEGORY);
 				return true;
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage($"Error assigning shortcuts: {ex.Message}", ex);
+				_log.LogMessage($"Error assigning shortcuts: {ex.Message}", ex, LOG_CATEGORY);
 				return false;
 			}
 			finally
@@ -447,7 +457,7 @@ namespace DPackRx.Services
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage($"Error executing {command} command: {ex.Message}", ex);
+				_log.LogMessage($"Error executing {command} command: {ex.Message}", ex, LOG_CATEGORY);
 			}
 		}
 
@@ -542,7 +552,7 @@ namespace DPackRx.Services
 					}
 					catch (Exception ex)
 					{
-						_log.LogMessage($"Error referencing project: {projectName}", ex);
+						_log.LogMessage($"Error referencing project: {projectName}", ex, LOG_CATEGORY);
 
 						return false;
 					}
@@ -572,7 +582,7 @@ namespace DPackRx.Services
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage($"Error referencing project assembly: {fileName}", ex);
+				_log.LogMessage($"Error referencing project assembly: {fileName}", ex, LOG_CATEGORY);
 				throw;
 			}
 		}
@@ -613,13 +623,13 @@ namespace DPackRx.Services
 				case ContextType.HTMLSourceEditor:
 					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidHTMLSourceEditor));
 				case ContextType.XamlEditor:
-					return IsContextActiveInternal(new Guid(GUIDs.GUID_XamlLanguageService));
+					return IsContextActiveInternal(new Guid(GUIDs.GUID_XAML_LANGUAGE_SERVICE));
 				case ContextType.NewXamlEditor:
-					return IsContextActiveInternal(new Guid(GUIDs.GUID_NewXamlLanguageService));
+					return IsContextActiveInternal(new Guid(GUIDs.GUID_NEW_XAML_LANGUAGE_SERVICE));
 				case ContextType.XamlDesigner:
-					return IsContextActiveInternal(new Guid(GUIDs.GUID_XamlDesigner));
+					return IsContextActiveInternal(new Guid(GUIDs.GUID_XAML_DESIGNER));
 				default:
-					_log.LogMessage($"Invalid selection context: {context}");
+					_log.LogMessage($"Invalid selection context: {context}", LOG_CATEGORY);
 					return false;
 			}
 		}
@@ -728,21 +738,21 @@ namespace DPackRx.Services
 		/// <summary>
 		/// Sets active document's cursor position.
 		/// </summary>
-		public bool SetActiveFilePosition(int row, int column)
+		public bool SetActiveFilePosition(int line, int column)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			if ((row <= 0) || (column <= 0))
+			if ((line <= 0) || (column <= 0))
 				return false;
 
 			var textManager = _serviceProvider.GetService<IVsTextManager, SVsTextManager>();
 			if (textManager.GetActiveView(Convert.ToInt32(true), null, out IVsTextView textView) != VSConstants.S_OK)
 				return false;
 
-			if (textView.SetCaretPos(row - 1, column - 1) != VSConstants.S_OK) // text view coordinates are 0-based
+			if (textView.SetCaretPos(line - 1, column - 1) != VSConstants.S_OK) // text view coordinates are 0-based
 				return false;
 
-			textView.CenterLines(row - 1, 1);
+			textView.CenterLines(line - 1, 1);
 			return true;
 		}
 
@@ -823,7 +833,7 @@ namespace DPackRx.Services
 					!(deferred is bool) || !(bool)deferred)
 				return false;
 
-			_log.LogMessage($"Project '{dteProject?.Name}' load is deferred");
+			_log.LogMessage($"Project '{dteProject?.Name}' load is deferred", LOG_CATEGORY);
 
 			if (hierarchy.GetGuidProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ProjectIDGuid, out Guid projectGuid) != VSConstants.S_OK)
 				return false;
@@ -832,11 +842,11 @@ namespace DPackRx.Services
 			if (result == VSConstants.S_OK)
 			{
 				loaded = true;
-				_log.LogMessage($"Deferred project '{dteProject?.Name}' is loaded");
+				_log.LogMessage($"Deferred project '{dteProject?.Name}' is loaded", LOG_CATEGORY);
 			}
 			else
 			{
-				_log.LogMessage($"Failed to load deferred project '{dteProject?.Name}' - error {result}");
+				_log.LogMessage($"Failed to load deferred project '{dteProject?.Name}' - error {result}", LOG_CATEGORY);
 				return true;
 			}
 
@@ -946,7 +956,7 @@ namespace DPackRx.Services
 			}
 			else
 			{
-				// Don't even attempt getting full name on projects that don't support extensibility 
+				// Don't even attempt getting full name on projects that don't support extensibility
 				// code model. Those include DB projects, Script debug time projects, etc.
 				if (dteProject.Kind != EnvDTE.Constants.vsProjectKindUnmodeled)
 				{
@@ -1046,11 +1056,11 @@ namespace DPackRx.Services
 			{
 				if (ex is NotImplementedException) // This is an acceptable condition
 				{
-					_log.LogMessage($"Project '{dteProject.Name}' doesn't implement code model");
+					_log.LogMessage($"Project '{dteProject.Name}' doesn't implement code model", LOG_CATEGORY);
 					return string.Empty;
 				}
 
-				_log.LogMessage($"Project '{dteProject.Name}' code model is not yet available");
+				_log.LogMessage($"Project '{dteProject.Name}' code model is not yet available", LOG_CATEGORY);
 
 				// Project could still be loading
 				System.Threading.Thread.Sleep(DEFAULT_WAIT_MSECS);
@@ -1060,7 +1070,7 @@ namespace DPackRx.Services
 
 			if ((codeModel == null) && IsWebProject(dteProject))
 			{
-				_log.LogMessage($"Loading web project: {dteProject.Name}");
+				_log.LogMessage($"Loading web project: {dteProject.Name}", LOG_CATEGORY);
 
 				try
 				{
@@ -1070,12 +1080,12 @@ namespace DPackRx.Services
 				}
 				catch (Exception ex)
 				{
-					_log.LogMessage($"Project '{dteProject.Name}' code model is not available", ex);
+					_log.LogMessage($"Project '{dteProject.Name}' code model is not available", ex, LOG_CATEGORY);
 					return string.Empty;
 				}
 
 				if (codeModel == null)
-					_log.LogMessage($"Project '{dteProject.Name}' code model is not available");
+					_log.LogMessage($"Project '{dteProject.Name}' code model is not available", LOG_CATEGORY);
 			}
 
 			if ((codeModel != null) && (codeModel.Language != null))
@@ -1170,7 +1180,7 @@ namespace DPackRx.Services
 			EnvDTE.FileCodeModel result;
 			try
 			{
-				_log.LogMessage($"Collecting item code model: {dteItem.Name}");
+				_log.LogMessage($"Collecting item code model: {dteItem.Name}", LOG_CATEGORY);
 
 				result = dteItem.FileCodeModel;
 			}
@@ -1179,19 +1189,19 @@ namespace DPackRx.Services
 				// File/directory missing means that file is not available
 				if ((ex is DirectoryNotFoundException) || (ex is FileNotFoundException))
 				{
-					_log.LogMessage($"File is not on disk: {dteItem.Name}");
+					_log.LogMessage($"File is not on disk: {dteItem.Name}", LOG_CATEGORY);
 					result = null;
 				}
 				else
 				{
-					_log.LogMessage($"File code model access error: {dteItem.Name}");
+					_log.LogMessage($"File code model access error: {dteItem.Name}", LOG_CATEGORY);
 					throw;
 				}
 			}
 
 			if ((result == null) && IsWebProjectItem(projectItem))
 			{
-				_log.LogMessage($"Loading web item: {dteItem.Name}");
+				_log.LogMessage($"Loading web item: {dteItem.Name}", LOG_CATEGORY);
 
 				try
 				{
@@ -1204,12 +1214,12 @@ namespace DPackRx.Services
 				}
 				catch (Exception ex)
 				{
-					_log.LogMessage($"File '{dteItem.Name}' code model is not available", ex);
+					_log.LogMessage($"File '{dteItem.Name}' code model is not available", ex, LOG_CATEGORY);
 					result = null;
 				}
 			}
 
-			_log.LogMessage($"Collected item code model: {dteItem.Name}");
+			_log.LogMessage($"Collected item code model: {dteItem.Name}", LOG_CATEGORY);
 			return result;
 		}
 
@@ -1239,7 +1249,7 @@ namespace DPackRx.Services
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage("Error retrieving build action", ex);
+				_log.LogMessage("Error retrieving build action", ex, LOG_CATEGORY);
 				return false;
 			}
 		}
@@ -1331,25 +1341,25 @@ namespace DPackRx.Services
 			var solution = _serviceProvider.GetService<IVsSolution, IVsSolution>();
 			if (solution.GetProjectOfUniqueName(project.UniqueName, out IVsHierarchy projectHierarchy) != VSConstants.S_OK)
 			{
-				_log.LogMessage($"Failed to retrieve '{project.UniqueName}' project hierarchy");
+				_log.LogMessage($"Failed to retrieve '{project.UniqueName}' project hierarchy", LOG_CATEGORY);
 				return null;
 			}
 
 			if (projectHierarchy.ParseCanonicalName(fileName, out uint itemId) != VSConstants.S_OK)
 			{
-				_log.LogMessage($"Failed to parse '{project.UniqueName}' project name");
+				_log.LogMessage($"Failed to parse '{project.UniqueName}' project name", LOG_CATEGORY);
 				return null;
 			}
 
 			if (projectHierarchy.GetProperty(itemId, (int)__VSHPROPID.VSHPROPID_ItemSubType, out object value) != VSConstants.S_OK)
 			{
-				_log.LogMessage($"'{project.UniqueName}' project {itemId} item sub-type is not available");
+				_log.LogMessage($"'{project.UniqueName}' project {itemId} item sub-type is not available", LOG_CATEGORY);
 				return null;
 			}
 
 			if (!(value is string))
 			{
-				_log.LogMessage($"'{project.UniqueName}' project {itemId} item sub-type is invalid: {value}");
+				_log.LogMessage($"'{project.UniqueName}' project {itemId} item sub-type is invalid: {value}", LOG_CATEGORY);
 				return null;
 			}
 
@@ -1804,27 +1814,27 @@ namespace DPackRx.Services
 
 			if (solution == null)
 			{
-				_log.LogMessage("Failed to retrieve solution service");
+				_log.LogMessage("Failed to retrieve solution service", LOG_CATEGORY);
 				return false;
 			}
 
 			if ((selectedItems == null) || (selectedItems.Count == 0))
 			{
-				_log.LogMessage("Selection is empty");
+				_log.LogMessage("Selection is empty", LOG_CATEGORY);
 				return false;
 			}
 
 			var hierarchy = GetSelectionHierarchy();
 			if (hierarchy == null)
 			{
-				_log.LogMessage("Failed to retrieve selection");
+				_log.LogMessage("Failed to retrieve selection", LOG_CATEGORY);
 				return false;
 			}
 
 			project = GetProjectFromHierarchy(hierarchy);
 			if (project == null)
 			{
-				_log.LogMessage("Failed to retrieve selected project");
+				_log.LogMessage("Failed to retrieve selected project", LOG_CATEGORY);
 				return false;
 			}
 
@@ -1982,7 +1992,7 @@ namespace DPackRx.Services
 			var result = uiShell.FindToolWindow(0, ref solutionExplorerGuid, out IVsWindowFrame solutionExplorerFrame);
 			if ((result != VSConstants.S_OK) || (solutionExplorerFrame == null))
 			{
-				_log.LogMessage("Failed to retrieve Solution Explorer toolwindow");
+				_log.LogMessage("Failed to retrieve Solution Explorer toolwindow", LOG_CATEGORY);
 				return false;
 			}
 
@@ -1993,7 +2003,7 @@ namespace DPackRx.Services
 			result = solutionExplorerFrame.GetProperty((int)__VSFPROPID.VSFPROPID_DocView, out object obj);
 			if (result != VSConstants.S_OK)
 			{
-				_log.LogMessage("Failed to retrieve Solution Explorer hierarchy window");
+				_log.LogMessage("Failed to retrieve Solution Explorer hierarchy window", LOG_CATEGORY);
 				return false;
 			}
 
@@ -2014,7 +2024,7 @@ namespace DPackRx.Services
 				{
 					result = solutionExplorerWindow.ExpandItem(uiHierarchy, itemId, EXPANDFLAGS.EXPF_SelectItem);
 
-					_log.LogMessage($"Selected '{item.Name}' item: result - {result}");
+					_log.LogMessage($"Selected '{item.Name}' item: result - {result}", LOG_CATEGORY);
 
 					if (result == VSConstants.S_OK)
 						return true;
@@ -2022,7 +2032,7 @@ namespace DPackRx.Services
 			}
 			else
 			{
-				_log.LogMessage("File must be a part of currently opened solution");
+				_log.LogMessage("File must be a part of currently opened solution", LOG_CATEGORY);
 			}
 
 			return false;
@@ -2071,9 +2081,9 @@ namespace DPackRx.Services
 						}
 
 						if (projectName != null)
-							_log.LogMessage($"Collapse all projects - project {projectName} won't be processed any further");
+							_log.LogMessage($"Collapse all projects - project {projectName} won't be processed any further", LOG_CATEGORY);
 						else
-							_log.LogMessage("Collapse all projects - project won't be processed any further");
+							_log.LogMessage("Collapse all projects - project won't be processed any further", LOG_CATEGORY);
 					}
 				}
 			} // project check
@@ -2101,9 +2111,9 @@ namespace DPackRx.Services
 						}
 
 						if (itemName != null)
-							_log.LogMessage($"Collapse all projects - error processing {itemName} item");
+							_log.LogMessage($"Collapse all projects - error processing {itemName} item", LOG_CATEGORY);
 						else
-							_log.LogMessage("Collapse all projects - error processing item");
+							_log.LogMessage("Collapse all projects - error processing item", LOG_CATEGORY);
 
 						throw;
 					}
@@ -2173,11 +2183,11 @@ namespace DPackRx.Services
 			{
 				if (ex is NotImplementedException) // This is an acceptable condition
 				{
-					_log.LogMessage("Project doesn't implement code model");
+					_log.LogMessage("Project doesn't implement code model", LOG_CATEGORY);
 					return string.Empty;
 				}
 
-				_log.LogMessage($"Project '{project.Name}' code model is not yet available.");
+				_log.LogMessage($"Project '{project.Name}' code model is not yet available.", LOG_CATEGORY);
 
 				// Project could still be loading
 				if (waitMSecs > 0)
@@ -2188,7 +2198,7 @@ namespace DPackRx.Services
 
 			if ((codeModel == null) && IsWebProject(project))
 			{
-				_log.LogMessage($"Loading web project: {project.Name}");
+				_log.LogMessage($"Loading web project: {project.Name}", LOG_CATEGORY);
 
 				try
 				{
@@ -2198,12 +2208,12 @@ namespace DPackRx.Services
 				}
 				catch (Exception ex)
 				{
-					_log.LogMessage($"Project '{project.Name}' code model is not available.", ex);
+					_log.LogMessage($"Project '{project.Name}' code model is not available.", ex, LOG_CATEGORY);
 					return string.Empty;
 				}
 
 				if (codeModel == null)
-					_log.LogMessage($"Project '{project.Name}' code model is not available.");
+					_log.LogMessage($"Project '{project.Name}' code model is not available.", LOG_CATEGORY);
 			}
 
 			if ((codeModel != null) && (codeModel.Language != null))
@@ -2381,7 +2391,7 @@ namespace DPackRx.Services
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage($"File '{item.Name}' is not found", ex);
+				_log.LogMessage($"File '{item.Name}' is not found", ex, LOG_CATEGORY);
 				return;
 			}
 
@@ -2440,6 +2450,38 @@ namespace DPackRx.Services
 
 			var textView = VsShellUtilities.GetTextView(windowFrame);
 			return textView;
+		}
+
+		/// <summary>
+		/// Use a well know command in the Global scope to resolve scope's localized name.
+		/// </summary>
+		private string GetGlobalScopeName(DTE dte)
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			var scopeCommand = dte.Commands.Item("File.Exit", 1);
+			if (scopeCommand == null)
+			{
+				_log.LogMessage("Failed to retrieve scope command", LOG_CATEGORY);
+				return null;
+			}
+
+			var scopes = (object[])scopeCommand.Bindings;
+			if ((scopes == null) || (scopes.Length == 0))
+			{
+				_log.LogMessage("Scope command has no bindings", LOG_CATEGORY);
+				return null;
+			}
+
+			var rawScope = scopes[0]?.ToString();
+			if (rawScope == null)
+			{
+				_log.LogMessage("Scope command binding cannot be determined", LOG_CATEGORY);
+				return null;
+			}
+
+			var scope = rawScope.Substring(0, rawScope.IndexOf("::"));
+			return scope;
 		}
 
 		#endregion

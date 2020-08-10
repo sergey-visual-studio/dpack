@@ -22,7 +22,6 @@ namespace DPackRx.Services
 		#region Fields
 
 		private readonly IServiceProvider _serviceProvider;
-		private readonly ILog _log;
 		private readonly IPackageService _packageService;
 		private readonly IShellProjectService _shellProjectService;
 		private readonly IShellStatusBarService _shellStatusBarService;
@@ -38,11 +37,10 @@ namespace DPackRx.Services
 
 		#endregion
 
-		public ShellEventsService(IServiceProvider serviceProvider, ILog log, IPackageService packageService,
+		public ShellEventsService(IServiceProvider serviceProvider, IPackageService packageService,
 			IShellProjectService shellProjectService, IShellStatusBarService shellStatusBarService)
 		{
 			_serviceProvider = serviceProvider;
-			_log = log;
 			_packageService = packageService;
 			_shellProjectService = shellProjectService;
 			_shellStatusBarService = shellStatusBarService;
@@ -294,7 +292,7 @@ namespace DPackRx.Services
 			return VSConstants.S_OK;
 		}
 
-		public int OnQueryChangeProjectParent(IVsHierarchy pHierarchy, IVsHierarchy pNewParentHier, 
+		public int OnQueryChangeProjectParent(IVsHierarchy pHierarchy, IVsHierarchy pNewParentHier,
 			ref int pfCancel)
 		{
 			pfCancel = Convert.ToInt32(false);
@@ -354,13 +352,13 @@ namespace DPackRx.Services
 
 		#region IVsRunningDocTableEvents3 - documents selection changes
 
-		public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, 
+		public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType,
 			uint dwReadLocksRemaining, uint dwEditLocksRemaining)
 		{
 			return VSConstants.S_OK;
 		}
 
-		public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, 
+		public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType,
 			uint dwReadLocksRemaining, uint dwEditLocksRemaining)
 		{
 			return VSConstants.S_OK;
@@ -408,8 +406,8 @@ namespace DPackRx.Services
 			return VSConstants.S_OK;
 		}
 
-		public int OnAfterAttributeChangeEx(uint docCookie, uint grfAttribs, 
-			IVsHierarchy pHierOld, uint itemidOld, string pszMkDocumentOld, 
+		public int OnAfterAttributeChangeEx(uint docCookie, uint grfAttribs,
+			IVsHierarchy pHierOld, uint itemidOld, string pszMkDocumentOld,
 			IVsHierarchy pHierNew, uint itemidNew, string pszMkDocumentNew)
 		{
 			return VSConstants.S_OK;
@@ -432,7 +430,7 @@ namespace DPackRx.Services
 		#region Files
 
 		public int OnQueryAddFiles(IVsProject pProject, int cFiles, string[] rgpszMkDocuments,
-			VSQUERYADDFILEFLAGS[] rgFlags, VSQUERYADDFILERESULTS[] pSummaryResult, 
+			VSQUERYADDFILEFLAGS[] rgFlags, VSQUERYADDFILERESULTS[] pSummaryResult,
 			VSQUERYADDFILERESULTS[] rgResults)
 		{
 			return VSConstants.S_OK;
@@ -655,7 +653,7 @@ namespace DPackRx.Services
 			ThreadHelper.ThrowIfNotOnUIThread();
 
 			// Work around for file's code model changed event not being raised for web project
-			// when file is closed w/o saving changes. Thus, FileChanged change type needs to be 
+			// when file is closed w/o saving changes. Thus, FileChanged change type needs to be
 			// processed for web projects only
 			if ((document != null) && IsSolutionOpen())
 			{
@@ -680,8 +678,8 @@ namespace DPackRx.Services
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			// Work around for file's code model changed event not being raised when 
-			// code member line # is changed. Thus, FileChanged change type needs to be 
+			// Work around for file's code model changed event not being raised when
+			// code member line # is changed. Thus, FileChanged change type needs to be
 			// processed to force the code model refresh
 			if ((document != null) && IsSolutionOpen())
 			{

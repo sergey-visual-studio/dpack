@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
+using DPackRx.Extensions;
 using DPackRx.Options;
 using DPackRx.Package;
 using DPackRx.Services;
@@ -142,7 +143,7 @@ namespace DPackRx.Features.Miscellaneous
 		/// </summary>
 		private bool CopyReferences(bool copyAll)
 		{
-			this.Log.LogMessage($"Copy references - check selection - {copyAll}");
+			this.Log.LogMessage(this.KnownFeature, $"Copy references - check selection - {copyAll}");
 
 			var references = _shellReferenceService.GetProjectReferences(!copyAll);
 			var referenceCount = 0;
@@ -172,7 +173,7 @@ namespace DPackRx.Features.Miscellaneous
 
 			_shellStatusBarService.SetStatusBarText($"Copied {referenceCount} references");
 
-			this.Log.LogMessage($"Copy references - copied selection - {copyAll} - {referenceCount}");
+			this.Log.LogMessage(this.KnownFeature, $"Copy references - copied selection - {copyAll} - {referenceCount}");
 			return true;
 		}
 
@@ -181,7 +182,7 @@ namespace DPackRx.Features.Miscellaneous
 		/// </summary>
 		private bool PasteReferences()
 		{
-			this.Log.LogMessage("Paste references - check selection");
+			this.Log.LogMessage(this.KnownFeature, "Paste references - check selection");
 
 			if (!_utilsService.GetClipboardData(out string refs) || string.IsNullOrEmpty(refs))
 				return false;
@@ -274,7 +275,7 @@ namespace DPackRx.Features.Miscellaneous
 
 					if (invalidFileName)
 					{
-						this.Log.LogMessage($"Paste references - ignored invalid file name - {fileName}");
+						this.Log.LogMessage(this.KnownFeature, $"Paste references - ignored invalid file name - {fileName}");
 						continue;
 					}
 
@@ -291,7 +292,7 @@ namespace DPackRx.Features.Miscellaneous
 
 			_shellStatusBarService.SetStatusBarText($"Pasted {referenceCount} reference(s)");
 
-			this.Log.LogMessage($"Paste references - pasted - {referenceCount}");
+			this.Log.LogMessage(this.KnownFeature, $"Paste references - pasted - {referenceCount}");
 			return true;
 		}
 
@@ -325,7 +326,7 @@ namespace DPackRx.Features.Miscellaneous
 			}
 			if (string.IsNullOrEmpty(commandToolsPath) || !File.Exists(commandToolsPath))
 			{
-				this.Log.LogMessage($"Command Prompt - failed to find command tools: {commandToolsPath}");
+				this.Log.LogMessage(this.KnownFeature, $"Command Prompt - failed to find command tools: {commandToolsPath}");
 				return false;
 			}
 
@@ -334,7 +335,7 @@ namespace DPackRx.Features.Miscellaneous
 				startInfo.Verb = "runas";
 
 			if (Process.Start(startInfo) != null)
-				this.Log.LogMessage($"Command Prompt - failed to start: {startInfo.Arguments}");
+				this.Log.LogMessage(this.KnownFeature, $"Command Prompt - failed to start: {startInfo.Arguments}");
 
 			return true;
 		}

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
+using DPackRx.Extensions;
 using DPackRx.Options;
 using DPackRx.Services;
 
@@ -29,10 +29,8 @@ namespace DPackRx.Features
 			if (feature == null)
 				throw new ApplicationException($"Invalid feature {this.GetType()}");
 
-			var attribs = typeof(KnownFeature).GetField(feature.Feature.ToString())?.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
 			this.KnownFeature = feature.Feature;
-			this.Name = (attribs == null) || (attribs.Length == 0) ? feature.ToString() : ((DescriptionAttribute)attribs[0]).Description;
+			this.Name = this.KnownFeature.GetDescription();
 		}
 
 		#region Properties
@@ -92,7 +90,7 @@ namespace DPackRx.Features
 		/// <returns>Command status.</returns>
 		public virtual bool IsValidContext(int commandId)
 		{
-			this.Log.LogMessage($"Feature {this.Name} - unknown command Id {commandId}");
+			this.Log.LogMessage($"Feature {this.Name} - unknown command Id {commandId}", this.KnownFeature.GetDescription());
 			return false;
 		}
 
@@ -103,7 +101,7 @@ namespace DPackRx.Features
 		/// <returns>Execution status.</returns>
 		public virtual bool Execute(int commandId)
 		{
-			this.Log.LogMessage($"Feature {this.Name} - unknown command Id {commandId}");
+			this.Log.LogMessage($"Feature {this.Name} - unknown command Id {commandId}", this.KnownFeature.GetDescription());
 			return false;
 		}
 

@@ -24,28 +24,28 @@ namespace DPackRx.Language
 
 			switch (this.Language)
 			{
-				case LanguageConsts.vsCMLanguageCSharp:
+				case LanguageConsts.VS_CM_LANGUAGE_CSHARP:
 					this.Type = LanguageType.CSharp;
 					this.SupportsCompileBuildAction = true;
 					this.SupportsGenerics = true;
 					break;
-				case LanguageConsts.vsCMLanguageVB:
+				case LanguageConsts.VS_CM_LANGUAGE_VB:
 					this.Type = LanguageType.VB;
 					this.SupportsCompileBuildAction = true;
 					this.SupportsGenerics = true;
 					break;
-				case LanguageConsts.vsCMLanguageVC:
+				case LanguageConsts.VS_CM_LANGUAGE_VC:
 					this.Type = LanguageType.CPP;
 					break;
-				case LanguageConsts.vsLanguageJavaScript:
+				case LanguageConsts.VS_LANGUAGE_JAVA_SCRIPT:
 					this.Type = LanguageType.JavaScript;
 					this.SupportsStatistics = false;
 					break;
-				case LanguageConsts.vsLanguageXml:
+				case LanguageConsts.VS_LANGUAGE_XML:
 					this.Type = LanguageType.Xml;
 					this.SupportsStatistics = false;
 					break;
-				case LanguageConsts.vsLanguageSolutionItems:
+				case LanguageConsts.VS_LANGUAGE_SOLUTION_ITEMS:
 					this.Type = LanguageType.SolutionItems;
 					break;
 				default:

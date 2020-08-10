@@ -20,6 +20,8 @@ namespace DPackRx.Options
 		private readonly ILog _log;
 		private readonly IPackageService _packageService;
 
+		private const string LOG_CATEGORY = "Options Persister";
+
 		#endregion
 
 		public OptionsPersistenceService(ILog log, IPackageService packageService)
@@ -65,7 +67,7 @@ namespace DPackRx.Options
 			}
 			else
 			{
-				_log.LogMessage($"No {feature} options to load");
+				_log.LogMessage($"No {feature} options to load", LOG_CATEGORY);
 			}
 
 			return options;
@@ -92,7 +94,7 @@ namespace DPackRx.Options
 			}
 			if (featureKey == null)
 			{
-				_log.LogMessage($"Failed to saved {feature} options");
+				_log.LogMessage($"Failed to saved {feature} options", LOG_CATEGORY);
 				return;
 			}
 

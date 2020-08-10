@@ -24,6 +24,7 @@ namespace DPackRx.Services
 		private uint _cookie;
 		private Action _action;
 
+		private const string LOG_CATEGORY = "Shell Info";
 		private const string CONTEXT_ACTION = "action";
 		private const string CONTEXT_OPTIONS = "options";
 
@@ -62,7 +63,7 @@ namespace DPackRx.Services
 
 			if (_cookie > 0)
 			{
-				_log.LogMessage($"InfoBar is already in use: {_cookie}");
+				_log.LogMessage($"InfoBar is already in use: {_cookie}", LOG_CATEGORY);
 				return;
 			}
 
@@ -72,7 +73,7 @@ namespace DPackRx.Services
 			var host = obj as IVsInfoBarHost;
 			if (host == null)
 			{
-				_log.LogMessage("InfoBar host is not available");
+				_log.LogMessage("InfoBar host is not available", LOG_CATEGORY);
 				return;
 			}
 
@@ -93,7 +94,7 @@ namespace DPackRx.Services
 			host.AddInfoBar(element);
 			_action = action;
 
-			_log.LogMessage($"InfoBar is set: {_cookie}");
+			_log.LogMessage($"InfoBar is set: {_cookie}", LOG_CATEGORY);
 		}
 
 		#endregion
@@ -127,7 +128,7 @@ namespace DPackRx.Services
 				}
 				else
 				{
-					_log.LogMessage($"InfoBar invalid context: {context}");
+					_log.LogMessage($"InfoBar invalid context: {context}", LOG_CATEGORY);
 				}
 			}
 			catch (Exception ex)

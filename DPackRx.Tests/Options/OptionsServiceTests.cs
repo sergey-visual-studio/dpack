@@ -358,6 +358,7 @@ namespace DPackRx.Tests.Options
 
 			Assert.That(changed, Is.True);
 			_optionsPersistenceServiceMock.Verify(o => o.SaveOptions(KnownFeature.SupportOptions, It.IsAny<IDictionary<string, object>>()));
+			_logMock.Verify(l => l.LogMessage(It.IsNotNull<string>(), It.IsNotNull<string>()));
 		}
 
 		[Test]
@@ -421,6 +422,7 @@ namespace DPackRx.Tests.Options
 			_optionsPersistenceServiceMock.Verify(o => o.LoadOptions(KnownFeature.SupportOptions), Times.Never);
 			_optionsPersistenceServiceMock.Verify(o => o.LoadDefaultOptions(KnownFeature.SupportOptions), Times.Once);
 			_optionsPersistenceServiceMock.Verify(o => o.DeleteOptions(KnownFeature.SupportOptions), Times.Once);
+			_logMock.Verify(l => l.LogMessage(It.IsNotNull<string>(), It.IsNotNull<string>()));
 			Assert.That(changed, Is.True);
 			Assert.That(reset, Is.True);
 			Assert.That(service.GetOption(KnownFeature.SupportOptions, "test"), Is.EqualTo(789));

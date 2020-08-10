@@ -18,6 +18,8 @@ namespace DPackRx.Options
 		private readonly ConcurrentDictionary<KnownFeature, IDictionary<string, object>> _options = new ConcurrentDictionary<KnownFeature, IDictionary<string, object>>();
 		private readonly ConcurrentDictionary<KnownFeature, IList<string>> _deletedOptions = new ConcurrentDictionary<KnownFeature, IList<string>>();
 
+		private const string LOG_CATEGORY = "Options";
+
 		#endregion
 
 		public OptionsService(ILog log, IOptionsPersistenceService optionsPersistenceService)
@@ -82,7 +84,7 @@ namespace DPackRx.Options
 			if (options == null)
 				return false;
 
-			return string.IsNullOrEmpty(name) ? false : options.ContainsKey(name);
+			return !string.IsNullOrEmpty(name) && options.ContainsKey(name);
 		}
 
 		/// <summary>
@@ -299,6 +301,8 @@ namespace DPackRx.Options
 				RaiseChanged(feature);
 				RaiseReset(feature);
 			}
+
+			_log.LogMessage("Reset all options", LOG_CATEGORY);
 		}
 
 		#endregion
@@ -355,6 +359,7 @@ namespace DPackRx.Options
 			}
 
 			_optionsPersistenceService.SaveOptions(feature, _options[feature]);
+			_log.LogMessage("Options saved", LOG_CATEGORY);
 
 			return true;
 		}

@@ -19,7 +19,6 @@ namespace DPackRx.Tests.Features
 	{
 		#region Fields
 
-		private Mock<ILog> _logMock;
 		private Mock<IOptionsService> _optionsServiceMock;
 		private Mock<IPackageService> _packageServiceMock;
 		private Mock<IShellHelperService> _shellHelperServiceMock;
@@ -33,9 +32,6 @@ namespace DPackRx.Tests.Features
 		[SetUp]
 		public void Setup()
 		{
-			_logMock = new Mock<ILog>();
-			_logMock.Setup(l => l.LogMessage(It.IsAny<string>(), It.IsAny<string>())).Verifiable();
-
 			_optionsServiceMock = new Mock<IOptionsService>();
 			_optionsServiceMock.Setup(o => o.GetBoolOption(It.IsAny<KnownFeature>(), It.IsAny<string>(), false)).Returns(false).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetBoolOption(It.IsAny<KnownFeature>(), It.IsAny<string>(), true)).Verifiable();
@@ -57,7 +53,6 @@ namespace DPackRx.Tests.Features
 		[TearDown]
 		public void TearDown()
 		{
-			_logMock = null;
 			_optionsServiceMock = null;
 			_packageServiceMock = null;
 			_shellHelperServiceMock = null;
@@ -73,7 +68,7 @@ namespace DPackRx.Tests.Features
 		/// </summary>
 		private ISolutionEvents GetFeature()
 		{
-			return new SupportOptionsFirstTimeUse(_logMock.Object, _optionsServiceMock.Object,
+			return new SupportOptionsFirstTimeUse(_optionsServiceMock.Object,
 				_packageServiceMock.Object, _shellHelperServiceMock.Object, _shellInfoBarServiceMock.Object,
 				_messageServiceMock.Object);
 		}

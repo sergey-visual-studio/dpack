@@ -25,6 +25,8 @@ namespace DPackRx.Language
 		private readonly Dictionary<string, LanguageSettings> _languageFromDenormalizedExtension =
 			new Dictionary<string, LanguageSettings>(StringComparer.OrdinalIgnoreCase);
 
+		private const string LOG_CATEGORY = "Language";
+
 		#endregion
 
 		public LanguageService(ILog log, ILanguageRegistrationService languageRegistrationService)
@@ -250,7 +252,7 @@ namespace DPackRx.Language
 				if (_languageFromId.Count == 0)
 					throw new ApplicationException("No language definitions were found");
 
-				_log.LogMessage($"Cached {_languageFromId.Count} language definitions");
+				_log.LogMessage($"Cached {_languageFromId.Count} language definitions", LOG_CATEGORY);
 			} // lock
 		}
 

@@ -33,7 +33,7 @@ namespace DPackRx
 	#region Package Attributes
 	[PackageRegistration(UseManagedResourcesOnly = true, RegisterUsing = RegistrationMethod.CodeBase, AllowsBackgroundLoading = true)]
 	[InstalledProductRegistrationEx("#101", "#102", 400)] // Help|About information
-	[Guid(GUIDs.ProductID)]
+	[Guid(GUIDs.PRODUCT_ID)]
 	[ProvideMenuResource("Menus.ctmenu", 1)]
 	// Auto-load context
 	[ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
@@ -56,16 +56,18 @@ namespace DPackRx
 		Comments = new[] { "//", "/*" }, XmlDoc = "/summary,", XmlDocSurround = true,
 		CheckDuplicateNames = true, IgnoreCodeType = true, ParentlessFullName = true, SurroundWith = true)]
 	[ProvideLanguage(
-		"#101", LanguageConsts.vsLanguageJavaScript, "JavaScript", new[] { "js", "aspx", "ascx", "html", "htm", "asp", "master", "cshtml", "vbhtml" },
+		"#101", LanguageConsts.VS_LANGUAGE_JAVA_SCRIPT, "JavaScript", new[] { "js", "aspx", "ascx", "html", "htm", "asp", "master", "cshtml", "vbhtml" },
 		Comments = new[] { "//", "/*" }, SmartFormat = false)]
-	[ProvideLanguage("#101", LanguageConsts.vsLanguageXml, "Xml", new[] { "xml", "config", "targets", "vsct" }, Comments = new[] { "!--" })]
-	[ProvideLanguage("#101", LanguageConsts.vsLanguageSolutionItems, "Solution Items", new string[0])]
+	[ProvideLanguage("#101", LanguageConsts.VS_LANGUAGE_XML, "Xml", new[] { "xml", "config", "targets", "vsct" }, Comments = new[] { "!--" })]
+	[ProvideLanguage("#101", LanguageConsts.VS_LANGUAGE_SOLUTION_ITEMS, "Solution Items", new string[0])]
 	#endregion
 	public sealed class DPackRx : AsyncPackage
 	{
 		#region Fields
 
 		private IServiceContainer _container;
+
+		private const string LOG_CATEGORY = "Package";
 
 		[Import]
 		private ISharedServiceProvider _sharedServiceProvider = null;
@@ -127,7 +129,7 @@ namespace DPackRx
 			catch (Exception ex)
 			{
 				var log = _container.TryGetInstance<ILog>();
-				log?.LogMessage($"{nameof(InitializeAsync)} error", ex);
+				log?.LogMessage($"{nameof(InitializeAsync)} error", ex, LOG_CATEGORY);
 			}
 		}
 
@@ -151,7 +153,7 @@ namespace DPackRx
 			finally
 			{
 				var log = _container.TryGetInstance<ILog>();
-				log?.LogMessage("Preloaded references");
+				log?.LogMessage("Preloaded select references", LOG_CATEGORY);
 			}
 		}
 

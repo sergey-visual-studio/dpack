@@ -28,6 +28,7 @@ namespace DPackRx.CodeModel
 		private readonly IShellCodeModelService _shellCodeModelService;
 		private readonly IFileTypeResolver _fileTypeResolver;
 
+		private const string LOG_CATEGORY = "File Processor";
 		private const string UNNAMED_NAME = "<Unnamed>";
 		private const string DESTRUCTOR_PREFIX = "~";
 		private const string DOC_TAG = "doc";
@@ -155,7 +156,7 @@ namespace DPackRx.CodeModel
 			}
 
 			if (!string.IsNullOrEmpty(fileName))
-				_log.LogMessage($"Collecting file code model: {Path.GetFileName(fileName)}");
+				_log.LogMessage($"Collecting file code model: {Path.GetFileName(fileName)}", LOG_CATEGORY);
 
 			if ((languageSet?.Type == LanguageType.Unknown) || string.IsNullOrEmpty(fileName))
 				dteItem = null;
@@ -228,7 +229,7 @@ namespace DPackRx.CodeModel
 			if (dteItem == null)
 				throw new ArgumentNullException(nameof(projectItem));
 
-			_log.LogMessage($"Collecting code members for '{dteItem.Name}'");
+			_log.LogMessage($"Collecting code members for '{dteItem.Name}'", LOG_CATEGORY);
 
 			var languageSet = _fileTypeResolver.GetCurrentLanguage(dteItem.ContainingProject, out _);
 
@@ -239,13 +240,13 @@ namespace DPackRx.CodeModel
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage($"Error collecting code members for '{dteItem.Name}': {ex.Message}", ex);
+				_log.LogMessage($"Error collecting code members for '{dteItem.Name}': {ex.Message}", ex, LOG_CATEGORY);
 				throw;
 			}
 
 			if (elements == null)
 			{
-				_log.LogMessage($"Code member information is not available for '{dteItem.Name}'");
+				_log.LogMessage($"Code member information is not available for '{dteItem.Name}'", LOG_CATEGORY);
 				return;
 			}
 
@@ -260,11 +261,11 @@ namespace DPackRx.CodeModel
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage("Error refreshing code model for '{dteItem.Name}'", ex);
+				_log.LogMessage($"Error refreshing code model for '{dteItem.Name}'", ex, LOG_CATEGORY);
 				return;
 			}
 
-			_log.LogMessage($"Collected {model.Count} '{dteItem.Name}' code members");
+			_log.LogMessage($"Collected {model.Count} '{dteItem.Name}' code members", LOG_CATEGORY);
 		}
 
 		/// <summary>
@@ -301,7 +302,7 @@ namespace DPackRx.CodeModel
 					AddCodeElement(item, null, element, model, flags, languageSet, dteFilter, filter);
 				}
 
-				// Add members that don't reside in the parented member, 
+				// Add members that don't reside in the parented member,
 				// like class or interface for instance
 				if (!parented && (
 						(elementKind == vsCMElement.vsCMElementFunction) ||
@@ -366,7 +367,7 @@ namespace DPackRx.CodeModel
 							string.IsNullOrEmpty(epiFileName) ||
 							(string.Compare(itemFileName, epiFileName, StringComparison.OrdinalIgnoreCase) != 0))
 					{
-						_log.LogMessage($"Project item mismatch: '{item.Name}' expected but '{elementItem.Name}' found instead - {element.Name}");
+						_log.LogMessage($"Project item mismatch: '{item.Name}' expected but '{elementItem.Name}' found instead - {element.Name}", LOG_CATEGORY);
 						return;
 					}
 				}
@@ -408,13 +409,13 @@ namespace DPackRx.CodeModel
 							(elementKind == vsCMElement.vsCMElementStruct) ||
 							(elementKind == vsCMElement.vsCMElementEnum) ||
 							(elementKind == vsCMElement.vsCMElementFunction))
-						startPoint = element.GetStartPoint(vsCMPart.vsCMPartHeader);
+						startPoint = element.GetStartPoint(vsCMPart.vsCMPartHeader); // could use vsCMPartBody to jump to code declaration
 					else
 						startPoint = element.StartPoint;
 
 					if (startPoint == null)
 					{
-						_log.LogMessage($"{element.Name} element's of {elementKind} kind StartPoint cannot be determined");
+						_log.LogMessage($"{element.Name} element's of {elementKind} kind StartPoint cannot be determined", LOG_CATEGORY);
 						return;
 					}
 				}
@@ -422,7 +423,7 @@ namespace DPackRx.CodeModel
 				{
 					// Swallow C++ exception as some invalid code model functions raise it sometimes
 					if (languageSet?.Language != CodeModelLanguageConstants.vsCMLanguageVC)
-						_log.LogMessage($"Error adding code member: {element.Name}", ex);
+						_log.LogMessage($"Error adding code member: {element.Name}", ex, LOG_CATEGORY);
 
 					return;
 				}
@@ -530,7 +531,7 @@ namespace DPackRx.CodeModel
 						}
 						catch (COMException ex)
 						{
-							_log.LogMessage($"Ignored COM code model error for {name}", ex);
+							_log.LogMessage($"Ignored COM code model error for {name}", ex, LOG_CATEGORY);
 						}
 					} // if (add)
 				} // if (memberFilter)
@@ -878,7 +879,7 @@ namespace DPackRx.CodeModel
 			}
 			catch (Exception ex)
 			{
-				_log.LogMessage($"Error collecting {element.Name} return type", ex);
+				_log.LogMessage($"Error collecting {element.Name} return type", ex, LOG_CATEGORY);
 				typeRef = null;
 			}
 

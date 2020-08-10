@@ -24,6 +24,7 @@ namespace DPackRx.CodeModel
 		private readonly IFileTypeResolver _fileTypeResolver;
 		private readonly IFileProcessor _fileProcessor;
 
+		private const string LOG_CATEGORY = "Project Processor";
 		private const string WEB_APP_CODE = "App_Code";
 		private const string REFERENCES_NODE = "References";
 
@@ -75,7 +76,7 @@ namespace DPackRx.CodeModel
 			if (_shellProjectService.IsProjectLoadDeferred(project, out _))
 				return;
 
-			_log.LogMessage($"Collecting '{dteProject.Name}' project files");
+			_log.LogMessage($"Collecting '{dteProject.Name}' project files", LOG_CATEGORY);
 
 			// No need to process project's items if we fail to check its code model
 			// The exception is made for solution folder *if* that's requested
@@ -85,14 +86,14 @@ namespace DPackRx.CodeModel
 			{
 				if (flags.HasFlag(ProcessorFlags.IncludeSolutionFolderFiles) && (dteProject.Kind == Constants.vsProjectKindSolutionItems))
 				{
-					_log.LogMessage($"Allow '{dteProject.Name}' solution folder processing");
+					_log.LogMessage($"Allow '{dteProject.Name}' solution folder processing", LOG_CATEGORY);
 					process = true;
 				}
 			}
 
 			if (!process && !flags.HasFlag(ProcessorFlags.KnownProjectsOnly) && _shellProjectService.IsProject(project))
 			{
-				_log.LogMessage($"Allow '{dteProject.Name}' unknown project type processing");
+				_log.LogMessage($"Allow '{dteProject.Name}' unknown project type processing", LOG_CATEGORY);
 				process = true;
 			}
 
@@ -108,7 +109,7 @@ namespace DPackRx.CodeModel
 				}
 			}
 
-			_log.LogMessage($"Collected {model.Count} '{dteProject.Name}' project files");
+			_log.LogMessage($"Collected {model.Count} '{dteProject.Name}' project files", LOG_CATEGORY);
 		}
 
 		/// <summary>
