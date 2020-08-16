@@ -14,7 +14,7 @@ namespace DPackRx.Features.Bookmarks
 	/// Creates bookmark tagger.
 	/// </summary>
 	[Export(typeof(ITaggerProvider))]
-	[ContentType("any")]
+	[ContentType("text")]
 	[Order(Before = Priority.Default)]
 	[TextViewRole(PredefinedTextViewRoles.Document)]
 	[TagType(typeof(BookmarkTag))]
