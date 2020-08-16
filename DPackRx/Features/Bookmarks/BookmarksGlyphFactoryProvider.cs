@@ -20,7 +20,7 @@ namespace DPackRx.Features.Bookmarks
 
 		public IGlyphFactory GetGlyphFactory(IWpfTextView view, IWpfTextViewMargin margin)
 		{
-			return new BookmarksGlyphFactory();
+			return new BookmarksGlyphFactory(margin);
 		}
 
 		#endregion

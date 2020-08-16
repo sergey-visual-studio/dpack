@@ -15,9 +15,14 @@ namespace DPackRx.Features.Bookmarks
 	{
 		#region Fields
 
-		private const string IMAGE_RESOURCE = "pack://application:,,,/DPackRx;component/Features/Bookmarks/Images/{0}Bookmark{1}.png";
+		private readonly IWpfTextViewMargin _margin;
 
 		#endregion
+
+		public BookmarksGlyphFactory(IWpfTextViewMargin margin)
+		{
+			_margin = margin;
+		}
 
 		#region IGlyphFactory Members
 
@@ -27,11 +32,29 @@ namespace DPackRx.Features.Bookmarks
 				return null;
 
 			var bookmarkTag = (BookmarkTag)tag;
-			var prefix = bookmarkTag.Type == BookmarkType.Global ? "Global" : string.Empty;
 
 			var image = new Image { Width = 16, Height = 16 };
-			image.Source = new BitmapImage(new Uri(string.Format(IMAGE_RESOURCE, prefix, bookmarkTag.Number)));
+			image.Source = new BitmapImage(GetImageUri(bookmarkTag));
+			image.ToolTip = GetDisplayName(bookmarkTag);
 			return image;
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		private Uri GetImageUri(BookmarkTag bookmarkTag)
+		{
+			var prefix = bookmarkTag.Type == BookmarkType.Global ? "Global" : string.Empty;
+			return new Uri($"pack://application:,,,/DPackRx;component/Features/Bookmarks/Images/{prefix}Bookmark{bookmarkTag.Number}.png");
+		}
+
+		private string GetDisplayName(BookmarkTag bookmarkTag)
+		{
+			if (bookmarkTag.Type == BookmarkType.Local)
+				return $"Bookmark {bookmarkTag.Number}";
+			else
+				return $"Global bookmark {bookmarkTag.Number}";
 		}
 
 		#endregion
