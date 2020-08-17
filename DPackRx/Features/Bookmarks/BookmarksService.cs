@@ -220,7 +220,7 @@ namespace DPackRx.Features.Bookmarks
 					bookmark.Line = position.Line;
 					bookmark.Column = position.Column;
 
-					_shellStatusBarService.SetStatusBarText($"Set bookmark {number}");
+					_shellStatusBarService.SetStatusBarText($"Updated bookmark {number}");
 					_log.LogMessage($"Bookmark # {number} updated", LOG_CATEGORY);
 				}
 			}
@@ -349,7 +349,7 @@ namespace DPackRx.Features.Bookmarks
 						bookmarks.Add(bookmark);
 					}
 
-					_shellStatusBarService.SetStatusBarText($"Set global bookmark {number}");
+					_shellStatusBarService.SetStatusBarText($"Updated global bookmark {number}");
 					_log.LogMessage($"Global bookmark # {number} updated", LOG_CATEGORY);
 				}
 			}

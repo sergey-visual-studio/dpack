@@ -220,7 +220,8 @@ namespace DPackRx.Features.Bookmarks
 						{
 							_log?.LogMessage($"Removed changed {changedBookmark.Type} bookmark {changedBookmark.Number} tag", LOG_CATEGORY);
 
-							RemoveTagSpan(_bookmarkSpans[changedBookmark]);
+							if (!RemoveTagSpan(_bookmarkSpans[changedBookmark]))
+								_log?.LogMessage($"Failed to remove changed {changedBookmark.Type} bookmark {changedBookmark.Number} tag span", LOG_CATEGORY);
 							_bookmarkSpans.Remove(changedBookmark);
 						}
 					}
@@ -248,7 +249,8 @@ namespace DPackRx.Features.Bookmarks
 					{
 						_log?.LogMessage($"Removed deleted {b.Type} bookmark {b.Number} tag", LOG_CATEGORY);
 
-						RemoveTagSpan(_bookmarkSpans[b]);
+						if (!RemoveTagSpan(_bookmarkSpans[b]))
+							_log?.LogMessage($"Failed to remove deleted {b.Type} bookmark {b.Number} tag span", LOG_CATEGORY);
 						_bookmarkSpans.Remove(b);
 					});
 				}
