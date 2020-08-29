@@ -65,6 +65,7 @@
     <Compile Include="CodeModel\SolutionModel.cs" />
     <Compile Include="Extensions\KnownFeatureExtensions.cs" />
     <Compile Include="Extensions\LogExtensions.cs" />
+    <Compile Include="Extensions\UIExtensions.cs" />
     <Compile Include="Features\Bookmarks\IBookmarksSimpleTagger.cs" />
     <Compile Include="Features\Bookmarks\BookmarksSimpleTagger.cs" />
     <Compile Include="Features\Bookmarks\IBookmarkCallbackClient.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="UI\Behaviors\TextBoxSelectAllOnFocus.cs" />
     <Compile Include="UI\Commands\RelayCommand.cs" />
     <Compile Include="UI\Commands\RelayCommandT.cs" />
+    <Compile Include="UI\SharedResourceDictionary.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +503,10 @@
     <Page Include="Options\OptionsGeneralControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Properties\DesignTimeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Styles\OptionsDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
