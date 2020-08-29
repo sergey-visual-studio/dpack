@@ -236,10 +236,40 @@ namespace DPackRx.UI.Behaviors
 										viewItemIndex = control.SelectedIndex;
 									}
 									break;
-								// TODO: would like to Page Up/Down via ScrollViewer but couldn't figure out how to change the selection accordingly
-								// case Key.PageUp:
-								// case Key.PageDown:
-							}
+								case Key.PageUp:
+								case Key.PageDown:
+									var scrollViewer = control.GetChild<ScrollViewer>();
+									if (scrollViewer != null)
+									{
+										redirected = true;
+										if (e.Key == Key.PageUp)
+											scrollViewer.PageUp();
+										else
+											scrollViewer.PageDown();
+										control.UpdateLayout(); // the only way I could figure out for page up/down to register
+
+										var panel = control.GetChild<VirtualizingStackPanel>();
+										if (panel != null)
+										{
+											viewItemIndex = (int)panel.VerticalOffset;
+
+											if (e.Key == Key.PageUp)
+											{
+												if (viewItemIndex == control.SelectedIndex)
+													viewItemIndex = 0;
+											}
+											else
+											{
+												if (viewItemIndex <= control.SelectedIndex)
+													viewItemIndex = control.Items.Count - 1;
+											}
+
+											if ((viewItemIndex >= 0) && (viewItemIndex <= control.Items.Count - 1))
+												control.SelectedIndex = viewItemIndex;
+										}
+									}
+									break;
+							} // switch
 
 							if (redirected && (viewItemIndex >= 0) && (viewItemIndex <= control.Items.Count - 1))
 								control.ScrollIntoView(control.Items[viewItemIndex]);
@@ -263,8 +293,9 @@ namespace DPackRx.UI.Behaviors
 
 									if ((utilsService != null) && (shellStatusBarService != null))
 									{
-										utilsService.SetClipboardData(item.Name);
-										shellStatusBarService.SetStatusBarText($"{Path.GetFileName(item.Name)} name copied to the clipboard");
+										var name = Path.GetFileName(item.Name);
+										utilsService.SetClipboardData(name);
+										shellStatusBarService.SetStatusBarText($"'{name}' copied to the clipboard");
 
 										redirected = true;
 										e.Handled = redirected;
