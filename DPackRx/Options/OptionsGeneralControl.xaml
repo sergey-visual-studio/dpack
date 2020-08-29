@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DPackRx.Options"
+             xmlns:ui="clr-namespace:DPackRx.UI"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="400">
 
@@ -11,7 +12,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- Must reference resource via pack syntax due to host being VS -->
-                <ResourceDictionary Source="pack://application:,,,/DPackRx;component/UI/Styles/OptionsDictionary.xaml" />
+                <ui:SharedResourceDictionary Source="pack://application:,,,/DPackRx;component/UI/Styles/OptionsDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

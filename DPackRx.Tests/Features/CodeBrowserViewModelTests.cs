@@ -137,12 +137,32 @@ namespace DPackRx.Tests.Features
 			Assert.That(viewModel.FilteredMembers.Count, Is.EqualTo(expectedCount));
 			Assert.That(viewModel.Search, Is.EqualTo(search));
 			Assert.That(viewModel.Filter, Is.EqualTo(flags));
+			Assert.That(viewModel.SameType, Is.True);
+			Assert.That(viewModel.FileName, Is.EqualTo("test"));
+			Assert.That(viewModel.Title, Is.Not.Null.And.Not.Empty);
+			Assert.That(viewModel.Title, Contains.Substring(" - test"));
 			_fileProcessorMock.Verify(p => p.GetMembers(ProcessorFlags.IncludeFileCodeModel, It.IsAny<CodeModelFilterFlags>()));
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "File", string.Empty));
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty));
 			_optionsServiceMock.Verify(o => o.GetIntOption(viewModel.Feature, "Filter", (int)flags));
 			_optionsServiceMock.Verify(o => o.GetBoolOption(viewModel.Feature, "XmlDoc", false));
 			_searchMatchServiceMock.Verify(s => s.MatchItems(search, It.IsAny<IEnumerable<IMatchItem>>()), Times.Once);
+		}
+
+		[Test]
+		public void OnInitialize_NotSameType()
+		{
+			_members.Clear();
+			_members.AddRange(new[]
+			{
+				new MemberCodeModel { Name = "Test1", FullName = "Test1", ElementKind = Kind.Class, Rank = 0, Matched = false },
+				new MemberCodeModel { Name = "Test2", FullName = "Test2", ElementKind = Kind.Class, Rank = 0, Matched = false },
+			});
+			var viewModel = GetViewModel();
+
+			viewModel.OnInitialize(CodeModelFilterFlags.All);
+
+			Assert.That(viewModel.SameType, Is.False);
 		}
 
 		[Test]
