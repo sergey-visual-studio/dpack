@@ -25,11 +25,14 @@
   <PropertyGroup>
     <_AssemblyInfoEx>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)AssemblyInfoEx.cs</_AssemblyInfoEx>
     <_AssemblyFileVersion Condition=" '$(_AssemblyFileVersion)'=='' ">true</_AssemblyFileVersion>
+    <_CreateVsix>true</_CreateVsix>
+    <_CreateVsix Condition=" '$(Configuration)' == 'Debug' AND '$(BuildingInsideVisualStudio)' == 'true' ">false</_CreateVsix>
   </PropertyGroup>
 
 
   <!-- Retrieve VSIX manifest version -->
-  <Target Name="ResolveVsixVersion">
+  <Target Name="ResolveVsixVersion"
+	      Condition=" '$(_CreateVsix)' == 'true' ">
     <XmlPeek Namespaces="&lt;Namespace Prefix='pkg' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011'/&gt;"
              XmlInputPath="$(MSBuildProjectDirectory)\source.extension.vsixmanifest" 
              Query="/pkg:PackageManifest/pkg:Metadata/pkg:Identity/@Version">
@@ -48,6 +51,7 @@
 
   <!-- Generate AssemblyInfoEx.cs using VSIX manifest version -->
   <Target Name="UpdateAssemblyInfoExFromVsix"
+          Condition=" '$(_CreateVsix)' == 'true' "
           Inputs="$(MSBuildProjectDirectory)\source.extension.vsixmanifest"
           Outputs="$(_AssemblyInfoEx)">
     <CreateItem Include="System.Reflection.AssemblyVersionAttribute"
@@ -74,7 +78,8 @@
 
   <!-- Copy VSIX package to project output folder with an extra file name's version suffix -->
   <!-- Add copied file name to auto-clean file -->
-  <Target Name="CopyVsixPackageWithVersion">
+  <Target Name="CopyVsixPackageWithVersion"
+          Condition=" '$(_CreateVsix)' == 'true' ">
     <ItemGroup>
       <_GeneratedVSIXPackage Include="$(TargetVsixContainerName)" />
       <_SourceVSIXPackage Include="@(_GeneratedVSIXPackage->'$(TargetDir)%(Filename)%(Extension)')" />
