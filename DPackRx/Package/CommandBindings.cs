@@ -25,10 +25,8 @@ namespace DPackRx.Package
 				{
 					_commands = new List<CommandNameAttribute>
 					{
-						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidWindowsFormsDesigner),
 						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidHTMLSourceView),
 						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidTextEditor),
-						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidWindowsFormsDesigner),
 						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidHTMLSourceView),
 						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidTextEditor),
 						new CommandNameAttribute("EditorContextMenus.CodeWindow.RemoveAndSort", "Ctrl+Shift+Alt+U"),

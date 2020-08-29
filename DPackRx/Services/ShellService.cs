@@ -378,40 +378,46 @@ namespace DPackRx.Services
 							var binding = attrib.Binding;
 
 							// Resolve optional scope binding
-							if (!string.IsNullOrEmpty(attrib.Scope))
+							if (string.IsNullOrEmpty(attrib.Scope))
 							{
-								var resolvedBinding = string.Empty;
+								binding = $"{scope}::{binding}";
+							}
+							else
+							{
+								var resolvedScope = string.Empty;
 
 								if (scopes.ContainsKey(attrib.Scope))
-									resolvedBinding = scopes[attrib.Scope];
+									resolvedScope = scopes[attrib.Scope];
 								else
 								{
 									var bindingGuide = new Guid(attrib.Scope);
-									resolvedBinding = shell.GetKeyBindingScope(ref bindingGuide);
-									if (!string.IsNullOrEmpty(resolvedBinding))
+									resolvedScope = shell.GetKeyBindingScope(ref bindingGuide);
+									if (!string.IsNullOrEmpty(resolvedScope))
 									{
-										scopes.Add(attrib.Scope, resolvedBinding);
-										_log.LogMessage($"VS command {attrib.Name} - resolved {attrib.Scope} scope to {resolvedBinding}", LOG_CATEGORY);
+										scopes.Add(attrib.Scope, resolvedScope);
+										_log.LogMessage($"VS command {attrib.Name} - resolved {attrib.Scope} scope to {resolvedScope}", LOG_CATEGORY);
 									}
 								}
 
-								if (string.IsNullOrEmpty(resolvedBinding))
+								if (string.IsNullOrEmpty(resolvedScope))
 								{
 									_log.LogMessage($"VS command {attrib.Name} - could not resolve {attrib.Scope} scope", LOG_CATEGORY);
 									continue;
 								}
 
-								binding = $"{resolvedBinding}::{binding}";
+								binding = $"{resolvedScope}::{binding}";
 							}
 
 							command.Bindings = binding;
 						}
 						else
+						{
 							_log.LogMessage($"VS command {attrib.Name} is not available", LOG_CATEGORY);
+						}
 					}
 					catch (Exception ex)
 					{
-						_log.LogMessage($"Error assigning shortcut for VS {attrib.Name} command and {attrib.Binding} binding", ex, LOG_CATEGORY);
+						_log.LogMessage($"Error assigning shortcut for VS {attrib.Name} command and {attrib.Binding} binding with {attrib.Scope} scope", ex, LOG_CATEGORY);
 					}
 				}
 
