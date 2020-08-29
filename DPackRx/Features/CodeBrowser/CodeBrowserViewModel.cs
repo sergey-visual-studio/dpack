@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -35,7 +36,9 @@ namespace DPackRx.Features.CodeBrowser
 		private readonly IShellImageService _shellImageService;
 		private readonly ObservableCollection<MemberCodeModel> _sourceMembers;
 		private readonly CollectionViewSource _members;
+		private string _title;
 		private string _search = string.Empty;
+		private bool _sameType;
 
 		#endregion
 
@@ -79,6 +82,7 @@ namespace DPackRx.Features.CodeBrowser
 				throw new ArgumentException("Invalid initialization argument", nameof(argument));
 
 			this.FileName = _optionsService.GetStringOption(this.Feature, "File", this.FileName);
+			this.Title = $"USysWare Code Browser - {Path.GetFileName(this.FileName)}";
 			_search = _optionsService.GetStringOption(this.Feature, "Search", _search);
 			this.Filter = (CodeModelFilterFlags)argument;
 			var filter = (CodeModelFilterFlags)_optionsService.GetIntOption(this.Feature, "Filter", (int)this.Filter);
@@ -138,6 +142,16 @@ namespace DPackRx.Features.CodeBrowser
 
 		#region Properties
 
+		public string Title
+		{
+			get { return _title; }
+			set
+			{
+				_title = value;
+				RaisePropertyChanged(nameof(this.Title));
+			}
+		}
+
 		/// <summary>
 		/// Search text.
 		/// </summary>
@@ -165,6 +179,19 @@ namespace DPackRx.Features.CodeBrowser
 		public ICollectionView Members
 		{
 			get { return _members?.View; }
+		}
+
+		/// <summary>
+		/// Whether all code model members are from the same type declaration.
+		/// </summary>
+		public bool SameType
+		{
+			get { return _sameType; }
+			set
+			{
+				_sameType = value;
+				RaisePropertyChanged(nameof(this.SameType));
+			}
 		}
 
 		/// <summary>
@@ -227,6 +254,8 @@ namespace DPackRx.Features.CodeBrowser
 			var model = _fileProcessor.GetMembers(flags, this.Filter);
 			var members = model.Members;
 			var fileName = model.FileName;
+			this.SameType = model.Members.Count(
+				m => (m.ElementKind == Kind.Class) || (m.ElementKind == Kind.Interface) || (m.ElementKind == Kind.Struct) || (m.ElementKind == Kind.Enum)) <= 1;
 
 			// Reset search on new file
 			if (!string.IsNullOrEmpty(this.FileName) && !string.IsNullOrEmpty(fileName) && !fileName.Equals(this.FileName, StringComparison.OrdinalIgnoreCase))
