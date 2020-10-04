@@ -102,15 +102,15 @@ namespace DPackRx.Tests.Features
 
 		#region Tests
 
-		[TestCase("test", CodeModelFilterFlags.All, 2)]
-		[TestCase("test", CodeModelFilterFlags.Methods, 1)]
-		[TestCase("test", CodeModelFilterFlags.Properties, 1)]
-		[TestCase("test", CodeModelFilterFlags.ClassesInterfaces, 0)]
-		[TestCase("", CodeModelFilterFlags.All, 4)]
-		[TestCase("", CodeModelFilterFlags.Methods, 2)]
-		[TestCase("", CodeModelFilterFlags.Properties, 2)]
-		[TestCase("", CodeModelFilterFlags.ClassesInterfaces, 0)]
-		public void OnInitialize(string search, CodeModelFilterFlags flags, int expectedCount)
+		[TestCase("test", CodeModelFilterFlags.All, 2, null)]
+		[TestCase("test", CodeModelFilterFlags.Methods, 1, "methods")]
+		[TestCase("test", CodeModelFilterFlags.Properties, 1, "properties")]
+		[TestCase("test", CodeModelFilterFlags.ClassesInterfaces, 0, "classes and interfaces")]
+		[TestCase("", CodeModelFilterFlags.All, 4, null)]
+		[TestCase("", CodeModelFilterFlags.Methods, 2, "methods")]
+		[TestCase("", CodeModelFilterFlags.Properties, 2, "properties")]
+		[TestCase("", CodeModelFilterFlags.ClassesInterfaces, 0, "classes and interfaces")]
+		public void OnInitialize(string search, CodeModelFilterFlags flags, int expectedCount, string expectedTitle)
 		{
 			var viewModel = GetViewModel();
 
@@ -141,6 +141,8 @@ namespace DPackRx.Tests.Features
 			Assert.That(viewModel.FileName, Is.EqualTo("test"));
 			Assert.That(viewModel.Title, Is.Not.Null.And.Not.Empty);
 			Assert.That(viewModel.Title, Contains.Substring(" - test"));
+			if (!string.IsNullOrEmpty(expectedTitle))
+				Assert.That(viewModel.Title, Contains.Substring($" - {expectedTitle}"));
 			_fileProcessorMock.Verify(p => p.GetMembers(ProcessorFlags.IncludeFileCodeModel, It.IsAny<CodeModelFilterFlags>()));
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "File", string.Empty));
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty));

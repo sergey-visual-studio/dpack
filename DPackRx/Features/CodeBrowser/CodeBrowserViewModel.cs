@@ -82,7 +82,6 @@ namespace DPackRx.Features.CodeBrowser
 				throw new ArgumentException("Invalid initialization argument", nameof(argument));
 
 			this.FileName = _optionsService.GetStringOption(this.Feature, "File", this.FileName);
-			this.Title = $"USysWare Code Browser - {Path.GetFileName(this.FileName)}";
 			_search = _optionsService.GetStringOption(this.Feature, "Search", _search);
 			this.Filter = (CodeModelFilterFlags)argument;
 			var filter = (CodeModelFilterFlags)_optionsService.GetIntOption(this.Feature, "Filter", (int)this.Filter);
@@ -261,6 +260,17 @@ namespace DPackRx.Features.CodeBrowser
 			if (!string.IsNullOrEmpty(this.FileName) && !string.IsNullOrEmpty(fileName) && !fileName.Equals(this.FileName, StringComparison.OrdinalIgnoreCase))
 				_search = string.Empty;
 			this.FileName = fileName;
+
+			string filter = null;
+			if (this.Filter == CodeModelFilterFlags.All)
+				filter = string.Empty;
+			else if (this.Filter.HasFlag(CodeModelFilterFlags.ClassesInterfaces))
+				filter = "classes and interfaces";
+			else if (this.Filter.HasFlag(CodeModelFilterFlags.Methods))
+				filter = "methods";
+			else if (this.Filter.HasFlag(CodeModelFilterFlags.Properties))
+				filter = "properties";
+			this.Title = $"USysWare Code Browser {(string.IsNullOrEmpty(filter) ? string.Empty : $"- {filter} ")}- {Path.GetFileName(this.FileName)}";
 
 			_sourceMembers.Clear();
 			_sourceMembers.AddRange(members); // causes filter to be evaluated
