@@ -161,7 +161,9 @@ namespace DPackRx.Package
 			get
 			{
 				var version = Assembly.GetExecutingAssembly().GetName().Version;
-				if (version.Revision == 0)
+				if (version.Major == 0)
+					return string.Empty; // debugging scenario
+				else if (version.Revision == 0)
 					return version.ToString(3); // w/o revision
 				else
 					return version.ToString(); // full version

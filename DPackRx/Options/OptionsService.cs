@@ -359,7 +359,7 @@ namespace DPackRx.Options
 			}
 
 			_optionsPersistenceService.SaveOptions(feature, _options[feature]);
-			_log.LogMessage("Options saved", LOG_CATEGORY);
+			_log.LogMessage($"Options saved: {feature.GetDescription()}", LOG_CATEGORY);
 
 			return true;
 		}
