@@ -3,17 +3,13 @@
 
 [[What is DPack Rx]](#what-is-dpack-rx) [[What's included]](#what-features-are-included-so-far) [[Major changes]](#major-changes) [[Future plans]](#future-plans) [[Contribute]](#help-needed) [[Donate]](#donate)
 
-# DPack is in BETA!
-
-Please be aware that [DPack Rx](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPackRx) currently is and will remain for a while in **BETA** status. Tread carefully and report any issues you might find. Thanks!
-
 ### DPack Rx (former DPack)
 
 FREE tools collection designed to greatly increase developer's productivity, automate repetitive processes and expand upon some of Microsoft Visual Studio features. Visual Studio 2017 and 2019 are supported.
 
 ### What is DPack Rx?
 
-DPack Rx is an effort to remedy former [DPack](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPack-16348) limitations: bring it under OSS umbrella, upgrade it for more modern Visual Studio integration, and apply more modern technology and development practices. I also felt the effort needed a new product name.
+[DPack Rx](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPackRx) is an effort to remedy former [DPack](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPack-16348) limitations: bring it under OSS umbrella, upgrade it for more modern Visual Studio integration, and apply more modern technology and development practices. I also felt the effort needed a new product name.
 
 Driving principal behind DPack design is fire-and-forget user experience with minimal impact on the development environment. To adhere to that principal most of the major features are invoked on demand, present a dialog (if applicable), which goes away once user interaction ends. Little to no impact on the development environment is expected from thereafter. Taking all that into account, features such as ToolWindow support don't fit well into that design paradigm.
 
@@ -51,7 +47,6 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 
 ### Help needed
 
-- Testing the latest beta on VS 2017 and 2019
 - Graphics for DPack's menu items
 
 Thanks and enjoy.
