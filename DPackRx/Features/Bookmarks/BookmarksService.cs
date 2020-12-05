@@ -114,7 +114,7 @@ namespace DPackRx.Features.Bookmarks
 				return;
 			}
 
-			_log.LogMessage($"File '{Path.GetFileName(fileName)}' registered for bookmarks callback", LOG_CATEGORY);
+			_log.LogMessage($"Registered for bookmarks callback: {Path.GetFileName(fileName)}", LOG_CATEGORY);
 			_bookmarkCallbacks.Add(fileName, client);
 		}
 
@@ -136,7 +136,7 @@ namespace DPackRx.Features.Bookmarks
 			var fileName = _bookmarkCallbacks.First(b => b.Value == client).Key;
 			if (!string.IsNullOrEmpty(fileName))
 				_bookmarkCallbacks.Remove(fileName);
-			_log.LogMessage($"File '{Path.GetFileName(fileName)}' unregistered for bookmarks callback", LOG_CATEGORY);
+			_log.LogMessage($"Unregistered for bookmarks callback: {Path.GetFileName(fileName)}", LOG_CATEGORY);
 		}
 
 		/// <summary>
@@ -189,7 +189,7 @@ namespace DPackRx.Features.Bookmarks
 			if (position.IsEmpty())
 				return false;
 
-			_log.LogMessage($"Setting '{fileName}' bookmark # {number}", LOG_CATEGORY);
+			_log.LogMessage($"Setting bookmark # {number}: {fileName}", LOG_CATEGORY);
 			List<Bookmark> bookmarks;
 			if (_bookmarks.ContainsKey(fileName))
 			{
@@ -257,7 +257,7 @@ namespace DPackRx.Features.Bookmarks
 				return false;
 			}
 
-			_log.LogMessage($"Looking for '{fileName}' bookmark # {number}", LOG_CATEGORY);
+			_log.LogMessage($"Looking for bookmark # {number}: {fileName}", LOG_CATEGORY);
 			var bookmarks = _bookmarks[fileName];
 			var bookmark = bookmarks.FirstOrDefault(b => (b.Number == number) && (b.Type == BookmarkType.Local));
 			if (bookmark != null)
@@ -315,7 +315,7 @@ namespace DPackRx.Features.Bookmarks
 				}
 			}
 
-			_log.LogMessage($"Setting '{fileName}' global bookmark # {number}", LOG_CATEGORY);
+			_log.LogMessage($"Setting global bookmark # {number}: {fileName}", LOG_CATEGORY);
 			List<Bookmark> bookmarks;
 			if (_bookmarks.ContainsKey(fileName))
 			{
@@ -416,7 +416,7 @@ namespace DPackRx.Features.Bookmarks
 			if (_bookmarks.ContainsKey(fileName))
 				_bookmarks.Remove(fileName);
 			_shellStatusBarService.SetStatusBarText("Cleared all file bookmarks");
-			_log.LogMessage($"Cleared all '{fileName}' bookmarks", LOG_CATEGORY);
+			_log.LogMessage($"Cleared all bookmarks: {fileName}", LOG_CATEGORY);
 
 			DoChanged(fileName, 0, BookmarkType.Any);
 			return true;
