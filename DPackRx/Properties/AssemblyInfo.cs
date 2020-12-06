@@ -2,13 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("USysWare DPack Rx")]
-[assembly: AssemblyCompany("USysWare, Inc.")]
-[assembly: AssemblyCopyright("Copyright © 2004-2020 USysWare, Inc.")]
-[assembly: AssemblyTrademark("USysWare, Inc.")]
+[assembly: AssemblyTitle("DPack Rx")]
+[assembly: AssemblyCopyright("Copyright © 2004-2020 Sergey Mishkovskiy")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyProduct("DPack Rx")]
-[assembly: AssemblyDescription("USysWare DPack Rx for Visual Studio")]
+[assembly: AssemblyDescription("DPack Rx for Visual Studio")]
 [assembly: ComVisible(true)]
 
 [assembly: InternalsVisibleTo("DPackRx.Tests")]

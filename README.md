@@ -51,7 +51,7 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 
 Thanks and enjoy.
 
-Sergey @ USysWare
+Sergey Mishkovskiy
 
 ### Donate
 
