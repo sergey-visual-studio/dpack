@@ -30,11 +30,6 @@ namespace DPackRx.Package
 		string ProductName { get; }
 
 		/// <summary>
-		/// Product company name.
-		/// </summary>
-		string CompanyName { get; }
-
-		/// <summary>
 		/// Product version.
 		/// </summary>
 		string Version { get; }

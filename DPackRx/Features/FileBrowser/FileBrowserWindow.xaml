@@ -11,7 +11,7 @@
         d:DataContext="{d:DesignInstance Type=local:FileBrowserViewModel, IsDesignTimeCreatable=True}"
         Icon="Images/FileBrowser.ico"
         Height="400" Width="600" MinHeight="200" MinWidth="400"
-        Title="USysWare File Browser" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False"
+        Title="File Browser" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False"
         behaviors:WindowCloseOnEsc.Enabled="True"
         behaviors:WindowClose.DialogResult="{Binding CloseWindow}">
 

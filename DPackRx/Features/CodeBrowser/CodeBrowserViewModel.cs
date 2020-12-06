@@ -270,7 +270,7 @@ namespace DPackRx.Features.CodeBrowser
 				filter = "methods";
 			else if (this.Filter.HasFlag(CodeModelFilterFlags.Properties))
 				filter = "properties";
-			this.Title = $"USysWare Code Browser {(string.IsNullOrEmpty(filter) ? string.Empty : $"- {filter} ")}- {Path.GetFileName(this.FileName)}";
+			this.Title = $"Code Browser {(string.IsNullOrEmpty(filter) ? string.Empty : $"- {filter} ")}- {Path.GetFileName(this.FileName)}";
 
 			_sourceMembers.Clear();
 			_sourceMembers.AddRange(members); // causes filter to be evaluated

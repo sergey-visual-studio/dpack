@@ -146,14 +146,6 @@ namespace DPackRx.Package
 		}
 
 		/// <summary>
-		/// Product company name.
-		/// </summary>
-		public string CompanyName
-		{
-			get { return GetResourceString(IDs.COMPANY); }
-		}
-
-		/// <summary>
 		/// Product version.
 		/// </summary>
 		public string Version

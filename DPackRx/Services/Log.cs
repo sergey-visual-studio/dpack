@@ -153,17 +153,14 @@ namespace DPackRx.Services
 			if (_file != null)
 				return;
 
-			var attrib = (AssemblyCompanyAttribute)Attribute.GetCustomAttribute(
-				this.GetType().Assembly, typeof(AssemblyCompanyAttribute), false);
-			var attribs = attrib.Company.Split(' ');
-			var companyName = attribs[0];
-			if (companyName.EndsWith(",", StringComparison.OrdinalIgnoreCase))
-				companyName = companyName.Substring(0, companyName.Length - 1);
+			var attrib = (AssemblyProductAttribute)Attribute.GetCustomAttribute(
+				this.GetType().Assembly, typeof(AssemblyProductAttribute), false);
+			var product = attrib.Product;
 
 			var logFullName = Path.Combine(
 				Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-				companyName,
-				$"DPack for VS {_packageService.VSKnownVersion}",
+				product,
+				$"VS {_packageService.VSKnownVersion}",
 				this.GetType().Assembly.GetName().Name + ".log");
 
 			var dirName = Path.GetDirectoryName(logFullName);
