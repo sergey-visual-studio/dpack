@@ -1,6 +1,4 @@
-Please be aware that DPack Rx currently is and will remain for a while in **BETA** status.
-
-DPack Rx is a free collection of solution, project and file navigation and productivity tools for Visual Studio. DPack Rx is an evolution of the [original DPack](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPack-16348), built as an OS project. It's currently in _BETA_.
+DPack Rx is a free collection of solution, project and file navigation and productivity tools for Visual Studio. DPack Rx is an evolution of the [original DPack](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPack-16348), built as an OS project.
 
 DPack Rx includes various navigation tools (aka browsers) that allow the developer to quickly find solution files, types, particular type code members, methods or properties for instance. DPack Rx also includes greatly enhanced numbered bookmarks feature, and much more.
 

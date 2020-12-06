@@ -46,7 +46,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DefineConstants Condition=" '$(BETA)' != '' ">$(DefineConstants);BETA</DefineConstants>
+    <DefineConstants Condition=" '$(BETA)' == 'true' ">$(DefineConstants);BETA</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet>
