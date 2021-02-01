@@ -3,7 +3,7 @@ name: Bug report
 about: Create a bug report
 title: ''
 labels: ''
-assignees: usysware
+assignees: sergey-visual-studio
 
 ---
 
