@@ -218,6 +218,14 @@ namespace DPackRx.Features.CodeBrowser
 		}
 
 		/// <summary>
+		/// Image for help button.
+		/// </summary>
+		public ImageSource ImageSearchHelp
+		{
+			get { return _shellImageService.GetWellKnownImage(WellKnownImage.Info); }
+		}
+
+		/// <summary>
 		/// Image for Show All Members button state.
 		/// </summary>
 		public ImageSource ImageShowAllMembers

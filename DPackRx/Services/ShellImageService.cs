@@ -174,6 +174,9 @@ namespace DPackRx.Services
 				case WellKnownImage.Properties:
 					id = KnownImageIds.PropertyPublic;
 					break;
+				case WellKnownImage.Info:
+					id = KnownImageIds.StatusInformationOutline;
+					break;
 				default:
 					throw new ApplicationException($"Unknown image {knownImage}");
 			}

@@ -59,7 +59,7 @@
 
                 <Separator DockPanel.Dock="Right" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-                <Button DockPanel.Dock="Right" Command="{Binding ShowFilesCommand}">
+                <Button DockPanel.Dock="Right" Margin="12,0,0,0" Command="{Binding ShowFilesCommand}">
                     <!-- Conditional tooltip -->
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SearchButton}">
@@ -90,20 +90,23 @@
                     </Image>
                 </Button>
 
-                <TextBox behaviors:TextBoxSelectAllOnFocus.Enabled="True"
-                         behaviors:TextBoxInputRedirectToListView.Control="items"
-                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource SearchTextBox}">
-                    <TextBox.ToolTip>
+                <Button DockPanel.Dock="Right" Style="{StaticResource SearchButton}">
+                    <Button.ToolTip>
                         <TextBlock>
                             Open file(s) in:
-                            <LineBreak /><LineBreak />
+                            <LineBreak />
                             edit view - <TextBlock FontWeight="Bold">Enter</TextBlock>
                             <LineBreak />
                             design view - <TextBlock FontWeight="Bold">Ctrl+Enter</TextBlock>
                         </TextBlock>
-                    </TextBox.ToolTip>
-                </TextBox>
+                    </Button.ToolTip>
+                    <Image Width="16" Height="16" Source="{Binding ImageSearchHelp, Mode=OneTime}" />
+                </Button>
+
+                <TextBox behaviors:TextBoxSelectAllOnFocus.Enabled="True"
+                         behaviors:TextBoxInputRedirectToListView.Control="items"
+                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource SearchTextBox}" />
             </DockPanel>
         </Border>
 
