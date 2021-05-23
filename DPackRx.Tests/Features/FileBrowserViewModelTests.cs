@@ -419,6 +419,20 @@ namespace DPackRx.Tests.Features
 		}
 
 		[Test]
+		public void ImageSearchHelp()
+		{
+			var viewModel = GetViewModel();
+			var image = new BitmapImage();
+
+			_shellImageServiceMock.Setup(s => s.GetWellKnownImage(WellKnownImage.Info)).Returns(image).Verifiable();
+
+			var result = viewModel.ImageSearchHelp;
+
+			Assert.That(result, Is.EqualTo(image));
+			_shellImageServiceMock.Verify(s => s.GetWellKnownImage(WellKnownImage.Info));
+		}
+
+		[Test]
 		public void ImageShowAllFiles()
 		{
 			var viewModel = GetViewModel();

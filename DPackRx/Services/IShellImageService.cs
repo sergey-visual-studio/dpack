@@ -45,7 +45,8 @@ namespace DPackRx.Services
 		Members,
 		Classes,
 		Methods,
-		Properties
+		Properties,
+		Info
 	}
 
 	#endregion

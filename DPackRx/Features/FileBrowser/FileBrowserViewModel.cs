@@ -233,6 +233,14 @@ namespace DPackRx.Features.FileBrowser
 		}
 
 		/// <summary>
+		/// Image for help button.
+		/// </summary>
+		public ImageSource ImageSearchHelp
+		{
+			get { return _shellImageService.GetWellKnownImage(WellKnownImage.Info); }
+		}
+
+		/// <summary>
 		/// Image for Show All Files button state.
 		/// </summary>
 		public ImageSource ImageShowAllFiles

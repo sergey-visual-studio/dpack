@@ -303,8 +303,15 @@ namespace DPackRx.Services
 
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			var lastFile = files.Last();
-			files.ForEach(f => ActivateItem(f, f == lastFile, false));
+			if (files.Count() > 1)
+			{
+				files.ForEach(f => ActivateItem(f, false, false));
+				ActivateWindow(files.First(), false);
+			}
+			else
+			{
+				ActivateItem(files.First(), true, false);
+			}
 		}
 
 		/// <summary>
@@ -317,8 +324,15 @@ namespace DPackRx.Services
 
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			var lastFile = files.Last();
-			files.ForEach(f => ActivateItem(f, f == lastFile, true));
+			if (files.Count() > 1)
+			{
+				files.ForEach(f => ActivateItem(f, false, true));
+				ActivateWindow(files.First(), true);
+			}
+			else
+			{
+				ActivateItem(files.First(), true, true);
+			}
 		}
 
 		/// <summary>

@@ -25,23 +25,26 @@
 
         <Border DockPanel.Dock="Top" BorderThickness="0,1,0,1">
             <DockPanel>
-                <Button DockPanel.Dock="Right" ToolTip="Show all members (Alt+A)"
+                <Button DockPanel.Dock="Right" Margin="12,0,0,0" ToolTip="Show all members (Alt+A)"
                         Command="{Binding ShowAllMembersCommand}"
                         Visibility="{Binding ShowAllMembers, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource SearchButton}">
                     <Image Width="16" Height="16" Source="{Binding ImageShowAllMembers, Mode=OneTime}" />
                 </Button>
 
-                <TextBox behaviors:TextBoxSelectAllOnFocus.Enabled="True"
-                         behaviors:TextBoxInputRedirectToListView.Control="items"
-                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource SearchTextBox}">
-                    <TextBox.ToolTip>
+                <Button DockPanel.Dock="Right" Style="{StaticResource SearchButton}">
+                    <Button.ToolTip>
                         <TextBlock>
                             Select member - <TextBlock FontWeight="Bold">Enter</TextBlock>
                         </TextBlock>
-                    </TextBox.ToolTip>
-                </TextBox>
+                    </Button.ToolTip>
+                    <Image Width="16" Height="16" Source="{Binding ImageSearchHelp, Mode=OneTime}" />
+                </Button>
+
+                <TextBox behaviors:TextBoxSelectAllOnFocus.Enabled="True"
+                         behaviors:TextBoxInputRedirectToListView.Control="items"
+                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource SearchTextBox}" />
             </DockPanel>
         </Border>
 

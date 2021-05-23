@@ -2,7 +2,7 @@
 using System.Reflection;
 
 [assembly: AssemblyTitle("DPack Rx Tests")]
-[assembly: AssemblyCopyright("Copyright © 2004-2020 Sergey Mishkovskiy")]
+[assembly: AssemblyCopyright("Copyright © 2004-2021 Sergey Mishkovskiy")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyProduct("DPack Rx")]
 [assembly: AssemblyDescription("DPack Rx Tests")]
