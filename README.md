@@ -1,5 +1,4 @@
 [![Build Status](https://dev.azure.com/sergey-visual-studio/dpack/_apis/build/status/sergey-visual-studio.dpack?branchName=master)](https://dev.azure.com/sergey-visual-studio/dpack/_build/latest?definitionId=1&branchName=master)
-![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/sergey-visual-studio/dpack/1/master)
 
 [[What is DPack Rx]](#what-is-dpack-rx) [[What's included]](#what-features-are-included-so-far) [[Major changes]](#major-changes) [[Future plans]](#future-plans) [[Contribute]](#help-needed) [[Donate]](#donate)
 
