@@ -631,17 +631,17 @@ namespace DPackRx.Services
 				case ContextType.CodeWindow:
 					return IsContextActiveInternal(VSConstants.UICONTEXT_CodeWindow);
 				case ContextType.TextEditor:
-					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidTextEditor));
+					return IsContextActiveInternal(new Guid(GUIDs.vsContextGuidTextEditor));
 				case ContextType.XMLTextEditor:
-					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidXMLTextEditor));
+					return IsContextActiveInternal(new Guid(GUIDs.vsContextGuidXMLTextEditor));
 				case ContextType.CSSTextEditor:
-					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidCSSTextEditor));
+					return IsContextActiveInternal(new Guid(GUIDs.vsContextGuidCSSTextEditor));
 				case ContextType.HTMLCodeView:
-					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidHTMLCodeView));
+					return IsContextActiveInternal(new Guid(GUIDs.vsContextGuidHTMLCodeView));
 				case ContextType.HTMLSourceView:
-					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidHTMLSourceView));
+					return IsContextActiveInternal(new Guid(GUIDs.vsContextGuidHTMLSourceView));
 				case ContextType.HTMLSourceEditor:
-					return IsContextActiveInternal(new Guid(ContextGuids.vsContextGuidHTMLSourceEditor));
+					return IsContextActiveInternal(new Guid(GUIDs.vsContextGuidHTMLSourceEditor));
 				case ContextType.XamlEditor:
 					return IsContextActiveInternal(new Guid(GUIDs.GUID_XAML_LANGUAGE_SERVICE));
 				case ContextType.NewXamlEditor:

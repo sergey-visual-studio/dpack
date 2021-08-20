@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using EnvDTE80;
-
 namespace DPackRx.Package
 {
 	/// <summary>
@@ -25,10 +23,10 @@ namespace DPackRx.Package
 				{
 					_commands = new List<CommandNameAttribute>
 					{
-						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidHTMLSourceView),
-						new CommandNameAttribute("View.ViewCode", "F7", ContextGuids.vsContextGuidTextEditor),
-						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidHTMLSourceView),
-						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidTextEditor),
+						new CommandNameAttribute("View.ViewCode", "F7", GUIDs.vsContextGuidHTMLSourceView),
+						new CommandNameAttribute("View.ViewCode", "F7", GUIDs.vsContextGuidTextEditor),
+						new CommandNameAttribute("View.ViewDesigner", "F7", GUIDs.vsContextGuidHTMLSourceView),
+						new CommandNameAttribute("View.ViewDesigner", "F7", GUIDs.vsContextGuidTextEditor),
 						new CommandNameAttribute("EditorContextMenus.CodeWindow.RemoveAndSort", "Ctrl+Shift+Alt+U"),
 						new CommandNameAttribute("View.FindResults1", "Ctrl+K, Ctrl+1"),
 						new CommandNameAttribute("View.FindResults2", "Ctrl+K, Ctrl+2"),
