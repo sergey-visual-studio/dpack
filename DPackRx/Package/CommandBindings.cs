@@ -30,6 +30,7 @@ namespace DPackRx.Package
 						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidHTMLSourceView),
 						new CommandNameAttribute("View.ViewDesigner", "F7", ContextGuids.vsContextGuidTextEditor),
 						new CommandNameAttribute("EditorContextMenus.CodeWindow.RemoveAndSort", "Ctrl+Shift+Alt+U"),
+						new CommandNameAttribute("Edit.RemoveAndSort", "Ctrl+Shift+Alt+U"),
 						new CommandNameAttribute("View.FindResults1", "Ctrl+K, Ctrl+1"),
 						new CommandNameAttribute("View.FindResults2", "Ctrl+K, Ctrl+2"),
 
