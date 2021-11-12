@@ -10,6 +10,7 @@ namespace DPackRx.Tests.Services
 	/// UtilsService tests.
 	/// </summary>
 	[TestFixture]
+	[NonParallelizable]
 	public class UtilsServiceTests
 	{
 		#region Private Methods

@@ -31,7 +31,7 @@ namespace DPackRx
 	/// Main package.
 	/// </summary>
 	#region Package Attributes
-	[PackageRegistration(UseManagedResourcesOnly = true, RegisterUsing = RegistrationMethod.CodeBase, AllowsBackgroundLoading = true)]
+	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
 	[InstalledProductRegistrationEx("#101", "#102", 400)] // Help|About information
 	[Guid(GUIDs.PRODUCT_ID)]
 	[ProvideMenuResource("Menus.ctmenu", 1)]

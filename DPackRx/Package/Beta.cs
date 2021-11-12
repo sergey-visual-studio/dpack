@@ -8,7 +8,7 @@ namespace DPackRx.Package
 	/// </summary>
 	internal static class Beta
 	{
-		public static readonly DateTime ExpirationDate = new DateTime(2021, 12, 7).AddHours(12);
+		public static readonly DateTime ExpirationDate = new DateTime(2022, 1, 17).AddHours(12);
 	}
 #endif
 }

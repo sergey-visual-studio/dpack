@@ -17,7 +17,6 @@ using EnvDTE;
 using EnvDTE80;
 
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.VCProjectEngine;
@@ -101,7 +100,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetDTE()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return GetDTEInternal();
 		}
@@ -111,7 +110,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetSelectedItemPath()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dte = GetDTEInternal();
 
@@ -168,7 +167,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetCurrentProjectPath()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!GetSelectionProject(out Project project, out _, out _, out _) ||
 					(project == null))
@@ -190,7 +189,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool SelectSolutionExplorerDocument(out string documentName)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteDocument = GetActiveDocument() as Document;
 			if (dteDocument == null)
@@ -213,7 +212,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public void CollapseAllProjects()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			_log.LogMessage("Collapse all projects - enter", LOG_CATEGORY);
 
@@ -280,7 +279,7 @@ namespace DPackRx.Services
 			if ((line <= 0) || (column <= 0))
 				return false;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var textView = GetTextView(fileName);
 			if (textView == null)
@@ -301,7 +300,7 @@ namespace DPackRx.Services
 			if ((files == null) || (files.Count() == 0))
 				return;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (files.Count() > 1)
 			{
@@ -322,7 +321,7 @@ namespace DPackRx.Services
 			if ((files == null) || (files.Count() == 0))
 				return;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (files.Count() > 1)
 			{
@@ -340,7 +339,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool AssignShortcuts()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var oldCursor = Mouse.OverrideCursor;
 			Mouse.SetCursor(Cursors.Wait);
@@ -468,7 +467,7 @@ namespace DPackRx.Services
 			if (string.IsNullOrEmpty(command))
 				throw new ArgumentNullException(nameof(command));
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dte = GetDTEInternal();
 			try
@@ -493,7 +492,7 @@ namespace DPackRx.Services
 			if (string.IsNullOrEmpty(text))
 				return;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			GetDTEInternal().StatusBar.Text = text;
 		}
@@ -507,7 +506,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public ICollection<ProjectReference> GetProjectReferences(bool selectedOnly)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!GetSelectionProject(out _, out VSProject vsProject, out _, out SelectedItems selectedItems))
 				return null;
@@ -554,7 +553,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool AddProjectReference(string projectName)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!GetSelectionProject(out Project project, out _, out IVsSolution solution, out _))
 				return false;
@@ -587,7 +586,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool AddAssemblyReference(string fileName)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!GetSelectionProject(out Project project, out _, out _, out _))
 				return false;
@@ -616,7 +615,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsContextActive(ContextType context)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			switch (context)
 			{
@@ -659,7 +658,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetActiveProject()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			Document document = GetActiveDocument() as Document;
 			if (document == null)
@@ -673,7 +672,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetActiveItem()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			Document document = GetActiveDocument() as Document;
 			if (document == null)
@@ -687,7 +686,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetActiveDocument()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			try
 			{
@@ -706,7 +705,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetActiveWindow()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteDocument = GetActiveDocument() as Document;
 			if (dteDocument == null)
@@ -729,7 +728,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetActiveFileName()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var document = GetActiveDocument() as Document;
 			if (document != null)
@@ -743,7 +742,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public Position GetActiveFilePosition()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var textManager = _serviceProvider.GetService<IVsTextManager, SVsTextManager>();
 			if (textManager.GetActiveView(Convert.ToInt32(true), null, out IVsTextView textView) != VSConstants.S_OK)
@@ -760,7 +759,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool SetActiveFilePosition(int line, int column)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if ((line <= 0) || (column <= 0))
 				return false;
@@ -785,7 +784,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsProject(object project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = GetProjectInternal(project, false);
 
@@ -800,7 +799,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsWebProject(object project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return _webInteropAvailable && IsWebProjectInternal(GetProjectInternal(project));
 		}
@@ -810,17 +809,19 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsWebProjectItem(object projectItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return _webInteropAvailable && IsWebProjectItemInternal(GetProjectItemInternal(projectItem));
 		}
 
+		// TODO: re-evaluate for removal as deffered loading's been deprecated and it's obsolete now
+#pragma warning disable CS0618
 		/// <summary>
 		/// Checks whether untyped Project instance project load's deferred, ie project hasn't been fully loaded yet.
 		/// </summary>
 		public bool IsProjectLoadDeferred(object project, out bool loaded)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			loaded = false;
 
@@ -833,7 +834,7 @@ namespace DPackRx.Services
 			if (dteProject.Kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 				return false;
 
-			var serviceProvider = new ServiceProvider(GetDTEInternal() as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
+			var serviceProvider = new Microsoft.VisualStudio.Shell.ServiceProvider(GetDTEInternal() as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
 			if (serviceProvider == null)
 				return false;
 
@@ -872,13 +873,14 @@ namespace DPackRx.Services
 
 			return false;
 		}
+#pragma warning restore CS0618
 
 		/// <summary>
 		/// Checks whether untyped ProjectItem instance is a qualified C++ project item.
 		/// </summary>
 		public bool IsCppFile(object projectItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (_cppInteropAvailable)
 				return IsCppFileInternal(projectItem);
@@ -891,7 +893,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetFriendlyProjectName(object project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = GetProjectInternal(project);
 			string result;
@@ -964,7 +966,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public void GetProjectPath(object project, out string projectPath, out string projectFullName)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = GetProjectInternal(project);
 			var projectName = GetFriendlyProjectName(project);
@@ -1033,7 +1035,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsCodeModelProject(object project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = GetProjectInternal(project);
 
@@ -1050,7 +1052,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetProjectLanguage(object project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = GetProjectInternal(project);
 
@@ -1119,7 +1121,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetNoCodeModelProjectLanguage(object project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = GetProjectInternal(project);
 
@@ -1181,7 +1183,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetHierarchyProject(object hierarchy)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return GetProjectFromHierarchy(hierarchy as IVsHierarchy);
 		}
@@ -1191,7 +1193,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetFileCodeModel(object projectItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = projectItem as ProjectItem;
 			if (dteItem == null)
@@ -1248,7 +1250,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool CompileBuildAction(object projectItemOrProject)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			try
 			{
@@ -1279,7 +1281,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetDocumentProject(object document)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteDocument = document as Document;
 			if (document != null)
@@ -1302,7 +1304,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public object GetDocumentProjectItem(object document)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteDocument = document as Document;
 			if (document != null)
@@ -1325,7 +1327,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetItemFileName(object projectItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = GetProjectItemInternal(projectItem, false);
 			if (dteItem == null)
@@ -1344,7 +1346,7 @@ namespace DPackRx.Services
 		/// <returns>SubType or null.</returns>
 		public string GetProjectItemSubType(object projectItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = GetProjectItemInternal(projectItem, false);
 			if (dteItem == null)
@@ -1395,7 +1397,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsConstant(object element)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteElement = element as CodeElement;
 			if (dteElement == null)
@@ -1415,7 +1417,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public bool IsStatic(object element)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteElement = element as CodeElement;
 			if (dteElement == null)
@@ -1461,7 +1463,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetGenericsSuffix(object element)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteElement = element as CodeElement;
 			if (dteElement == null)
@@ -1525,7 +1527,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public Modifier GetElementModifier(object element)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteElement = element as CodeElement;
 			if (dteElement == null)
@@ -1600,7 +1602,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public Kind GetElementKind(object element)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteElement = element as CodeElement;
 			if (dteElement == null)
@@ -1638,7 +1640,7 @@ namespace DPackRx.Services
 		/// </summary>
 		public string GetElementKindName(object element)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			switch (GetElementKind(element))
 			{
@@ -1682,7 +1684,7 @@ namespace DPackRx.Services
 			if (_dte != null)
 				return _dte;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			_dte = _serviceProvider.GetService<DTE>(false);
 			return _dte;
@@ -1723,7 +1725,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool IsWebProjectInternal(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return (project?.Object != null) && (project.Object is VSWebSite);
 		}
@@ -1733,14 +1735,14 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool IsWebProjectItemInternal(ProjectItem item)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return (item?.Object != null) && (item.Object is VSWebProjectItem);
 		}
 
 		private bool WebItemLoad(ProjectItem item)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (item?.Object is VSWebProjectItem)
 			{
@@ -1758,7 +1760,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool WebItemUnload(ProjectItem item)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (item?.Object is VSWebProjectItem)
 			{
@@ -1775,7 +1777,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private string GetSolutionName(Solution solution)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var solutionName = solution.Properties.Item("Name").Value as string;
 			return solutionName;
@@ -1786,7 +1788,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private Project GetProjectInternal(object project, bool throwOnError = true)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteProject = project as Project;
 			if (dteProject == null)
@@ -1805,7 +1807,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private ProjectItem GetProjectItemInternal(object item, bool throwOnError = true)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = item as ProjectItem;
 			if (dteItem == null)
@@ -1825,7 +1827,7 @@ namespace DPackRx.Services
 		private bool GetSelectionProject(out Project project, out VSProject vsProject,
 			out IVsSolution solution, out SelectedItems selectedItems)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			project = null;
 			vsProject = null;
@@ -1867,7 +1869,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private IVsHierarchy GetSelectionHierarchy()
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var monitorSelection = _serviceProvider.GetService<IVsMonitorSelection>();
 
@@ -1887,7 +1889,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private Project GetProjectFromHierarchy(IVsHierarchy hierarchy)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (hierarchy != null)
 			{
@@ -1904,11 +1906,11 @@ namespace DPackRx.Services
 		/// </summary>
 		private IVsHierarchy GetVsHierarchy(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (project != null)
 			{
-				var serviceProvider = new ServiceProvider(project.DTE as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
+				var serviceProvider = new Microsoft.VisualStudio.Shell.ServiceProvider(project.DTE as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
 				if (serviceProvider != null)
 				{
 					var solution = serviceProvider.GetService<IVsSolution>(false);
@@ -1928,7 +1930,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private IVsProject GetVsProject(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return GetVsHierarchy(project) as IVsProject;
 		}
@@ -1979,7 +1981,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private ProjectItem GetDocumentProjectItem(Document document)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (document != null)
 			{
@@ -2001,7 +2003,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool SelectSolutionExplorerItem(ProjectItem item)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (item == null)
 				return false;
@@ -2063,7 +2065,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private void CollapseAllRecursively(UIHierarchy hierarchy, UIHierarchyItem parentItem)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var parentItems = parentItem.UIHierarchyItems;
 			if ((parentItems == null) || (parentItems.Count == 0))
@@ -2165,7 +2167,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool IsKnownNoCodeModelProject(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if ((!IsWebProject(project)) && (project.Kind == PROJECT_ITEM_KIND_SETUP))
 				return true;
@@ -2179,7 +2181,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private string GetProjectLanguage(Project project, int waitMSecs)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			// C++ project check, which may not have its code model fully loaded
 			if (IsCppProject(project))
@@ -2247,7 +2249,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private void WebProjectLoad(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (_webInteropAvailable)
 				WebProjectLoadInternal(project);
@@ -2258,7 +2260,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private void WebProjectLoadInternal(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if ((project?.Object != null) && (project.Object is VSWebSite))
 			{
@@ -2272,7 +2274,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool IsCppProject(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (_cppInteropAvailable)
 				return IsCppProjectInternal(project);
@@ -2285,14 +2287,14 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool IsCppProjectInternal(Project project)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			return (project != null) && (project.Object is VCProject);
 		}
 
 		private static bool IsCppFileInternal(object item)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = item as ProjectItem;
 			return (dteItem != null) && (dteItem.Object is VCFile);
@@ -2303,7 +2305,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private bool IsContextActiveInternal(Guid contextGuid)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var monitorSelection = _serviceProvider.GetService<IVsMonitorSelection, SVsShellMonitorSelection>();
 			if (monitorSelection.GetCmdUIContextCookie(ref contextGuid, out uint contextCookie) != VSConstants.S_OK)
@@ -2321,7 +2323,7 @@ namespace DPackRx.Services
 			if (item == null)
 				return;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = GetProjectItemInternal(item.ProjectItem);
 			if (dteItem == null)
@@ -2368,7 +2370,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private void ActivateWindow(IExtensibilityItem item, bool alternativeView)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dteItem = GetProjectItemInternal(item.ProjectItem);
 			if (dteItem == null)
@@ -2426,7 +2428,7 @@ namespace DPackRx.Services
 			if (window == null)
 				return;
 
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			window.Activate();
 
@@ -2458,7 +2460,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private IVsTextView GetTextView(string fileName)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var viewGuid = VSConstants.LOGVIEWID_Primary;
 			var openDocument = _serviceProvider.GetService<IVsUIShellOpenDocument, SVsUIShellOpenDocument>();
@@ -2468,7 +2470,7 @@ namespace DPackRx.Services
 			if (windowFrame.Show() != VSConstants.S_OK)
 				return null;
 
-			var textView = VsShellUtilities.GetTextView(windowFrame);
+			var textView = Microsoft.VisualStudio.Shell.VsShellUtilities.GetTextView(windowFrame);
 			return textView;
 		}
 
@@ -2477,7 +2479,7 @@ namespace DPackRx.Services
 		/// </summary>
 		private string GetGlobalScopeName(DTE dte)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
+			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
 			var scopeCommand = dte.Commands.Item("File.Exit", 1);
 			if (scopeCommand == null)

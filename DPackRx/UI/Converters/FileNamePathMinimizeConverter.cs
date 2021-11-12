@@ -103,7 +103,7 @@ namespace DPackRx.UI.Converters
 			return new FormattedText(text,
 				CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
 				new Typeface((FontFamily)values[2], (FontStyle)values[3], (FontWeight)values[4], (FontStretch)values[5]),
-				(double)values[6], Brushes.Black).Width;
+				(double)values[6], Brushes.Black, 1).Width;
 		}
 
 		#endregion

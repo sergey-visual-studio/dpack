@@ -202,7 +202,7 @@ namespace DPackRx.Services
 		private IVsImageService2 GetImageService()
 		{
 			if (_imageService == null)
-				_imageService = _packageService.GetService<IVsImageService2, SVsImageService>();
+				_imageService = _packageService.GetService<SVsImageService, IVsImageService2>();
 
 			return _imageService;
 		}
@@ -212,6 +212,8 @@ namespace DPackRx.Services
 		/// </summary>
 		private IGlyphService GetGlyphService()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+
 			if (_glyphService == null)
 				this.SatisfyImportsOnce();
 

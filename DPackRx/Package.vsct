@@ -70,7 +70,7 @@
 			</Menu>
 		</Menus>
 
-		<!-- Menu groups: A menu group is a container for other menus or buttons (commands); 
+		<!-- Menu groups: A menu group is a container for other menus or buttons (commands);
          The parent of a group must be a menu -->
 		<Groups>
 			<Group guid="guidDPackMenu" id="gidBrowsers" priority="0x0001">
@@ -707,7 +707,8 @@
 			</Button>
 			<Button guid="CommandSet" id="cidCollapseSolCtxt" priority="0x0001" type="Button">
 				<Parent guid="guidSolutionExplorerMenu" id="gidMiscSolution" />
-				<Icon guid="guidMiscBmp" id="bmpMiscSolution" />
+				<Icon guid="ImageCatalogGuid" id="Collapse" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
 				<CommandFlag>DefaultInvisible</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
 				<Strings>

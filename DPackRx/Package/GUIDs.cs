@@ -8,7 +8,7 @@ namespace DPackRx.Package
 	public static class GUIDs
 	{
 		/// <summary>
-		/// Must match VSIX manifest Product ID.
+		/// Must match VSCT Product ID.
 		/// </summary>
 		public const string PRODUCT_ID = "EE57E48A-8422-4CEC-B415-3E3BA31F1199";
 
