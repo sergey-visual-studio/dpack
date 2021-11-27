@@ -220,6 +220,10 @@ namespace DPackRx.Language
 					if (!_languageFromId.ContainsKey(language.Language))
 						_languageFromId.Add(language.Language, language);
 
+					// Support for newer project that don't expose project language type via DTE in the conventional form
+					if (!string.IsNullOrEmpty(language.ProjectGuid) && !_languageFromId.ContainsKey(language.ProjectGuid))
+						_languageFromId.Add(language.ProjectGuid, language);
+
 					if (!_languageFromFriendlyName.ContainsKey(language.FriendlyName))
 						_languageFromFriendlyName.Add(language.FriendlyName, language);
 

@@ -8,7 +8,9 @@ using DPackRx.Language;
 using DPackRx.Services;
 
 using EnvDTE;
-using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell.Interop;
+using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
 
 namespace DPackRx.CodeModel
 {
@@ -65,7 +67,30 @@ namespace DPackRx.CodeModel
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
+			_log.LogMessage("Collecting solution projects", LOG_CATEGORY);
+
 			var dte = _shellProjectService.GetDTE() as DTE;
+			var serviceProvider = new Microsoft.VisualStudio.Shell.ServiceProvider(dte as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
+			var solutionService = serviceProvider.GetService<IVsSolution, SVsSolution>(false);
+
+			Guid guid = Guid.Empty;
+			if (solutionService.GetProjectEnum((uint)__VSENUMPROJFLAGS.EPF_LOADEDINSOLUTION, ref guid, out IEnumHierarchies enumHierarchies) != VSConstants.S_OK)
+				return;
+
+			IVsHierarchy[] hierarchy = new IVsHierarchy[1];
+			List<Project> projects = new List<Project>();
+			while ((enumHierarchies.Next((uint)hierarchy.Length, hierarchy, out uint fetched) == VSConstants.S_OK) && (fetched == hierarchy.Length))
+			{
+				if ((hierarchy.Length > 0) && (hierarchy[0] != null))
+				{
+					IVsHierarchy projectHierarchy = hierarchy[0];
+
+					if ((projectHierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out object project) == VSConstants.S_OK) &&
+							(project is Project dteProject) &&
+							_shellProjectService.IsProject(project))
+						projects.Add(dteProject);
+				}
+			}
 
 			_log.LogMessage("Resolving solution name", LOG_CATEGORY);
 
@@ -74,19 +99,12 @@ namespace DPackRx.CodeModel
 				solution = Path.GetFileNameWithoutExtension(solution);
 			model.SolutionName = solution;
 
-			_log.LogMessage("Collecting solution projects", LOG_CATEGORY);
+			_log.LogMessage($"Processing {projects.Count} collected solution projects", LOG_CATEGORY);
 
-			var projects = dte.Solution.Projects;
-			for (int index = 1; index <= projects.Count; index++)
+			foreach (Project project in projects)
 			{
-				Project project = projects.Item(index);
-
-				if (_shellProjectService.IsProjectLoadDeferred(project, out bool loaded))
+				if (_shellProjectService.IsProjectLoadDeferred(project, out _))
 					continue;
-
-				// Reacquire project reference if it's been reloaded
-				if (loaded)
-					project = projects.Item(index);
 
 				if (ProcessProject(project, model.Projects, flags, filter))
 					ProcessProjectRecursively(project, model.Projects, flags, filter);
@@ -116,7 +134,7 @@ namespace DPackRx.CodeModel
 				}
 			}
 
-			_log.LogMessage($"Collected {model.Projects.Count} solution projects", LOG_CATEGORY);
+			_log.LogMessage($"Processed {model.Projects.Count} qualified solution projects", LOG_CATEGORY);
 		}
 
 		/// <summary>

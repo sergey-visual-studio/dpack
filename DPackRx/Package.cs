@@ -21,6 +21,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Threading;
+using VSLangProj;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 using SystemIMenuCommandService = System.ComponentModel.Design.IMenuCommandService;
 using Task = System.Threading.Tasks.Task;
@@ -44,11 +45,11 @@ namespace DPackRx
 	[ProvideOptionPage(typeof(OptionsFileBrowser), "DPack Rx", "Browsers\\File Browser", 0, 0, false)]
 	// Languages
 	[ProvideLanguage(
-		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp, "C#", new[] { "cs" },
+		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp, PrjKind.prjKindCSharpProject, "C#", new[] { "cs" },
 		WebName = "Visual C#", WebLanguage = "CSharpCodeProvider", Comments = new[] { "//", "/*" }, XmlDoc = "/doc/summary",
 		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported, SurroundWith = true)]
 	[ProvideLanguage(
-		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB, "VB", new[] { "bas", "vb", "frm" },
+		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB, PrjKind.prjKindVBProject, "VB", new[] { "bas", "vb", "frm" },
 		WebName = "Visual Basic", WebLanguage = "VBCodeProvider", Comments = new[] { "'" }, XmlDoc = "/summary", XmlDocSurround = true,
 		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported)]
 	[ProvideLanguage(

@@ -20,6 +20,7 @@ namespace DPackRx.Language
 		private const string LANGUAGES_KEY = "Languages";
 		private const string EXTENSIONS_KEY = "Extensions";
 		private const string COMMENTS_KEY = "Comments";
+		private const string PROJECT_GUID_VALUE = "ProjectGuid";
 		private const string WEB_NAME_VALUE = "WebName";
 		private const string WEB_LANGUAGE_VALUE = "WebLanguage";
 		private const string SMART_FORMAT_VALUE = "SmartFormat";
@@ -74,6 +75,7 @@ namespace DPackRx.Language
 					var id = languageKeys[index];
 
 					var friendlyName = string.Empty;
+					var projectGuid = string.Empty;
 					var webName = string.Empty;
 					var webLanguage = string.Empty;
 					var smartFormat = true;
@@ -92,6 +94,7 @@ namespace DPackRx.Language
 						using (langKey)
 						{
 							friendlyName = (string)langKey.GetValue(string.Empty, friendlyName);
+							projectGuid = (string)langKey.GetValue(PROJECT_GUID_VALUE, projectGuid);
 							webName = (string)langKey.GetValue(WEB_NAME_VALUE, webName);
 							webLanguage = (string)langKey.GetValue(WEB_LANGUAGE_VALUE, webLanguage);
 							smartFormat = Convert.ToBoolean(
@@ -120,6 +123,7 @@ namespace DPackRx.Language
 
 					var language = new LanguageSettings(id, friendlyName, xmlDoc)
 					{
+						ProjectGuid = projectGuid,
 						WebNames = webNames,
 						WebLanguage = webLanguage,
 						SmartFormat = smartFormat,

@@ -9,6 +9,7 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
+using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
 
 namespace DPackRx.Services
 {
@@ -49,7 +50,7 @@ namespace DPackRx.Services
 
 		public void Dispose()
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (_solutionEvents != null)
 			{
@@ -105,7 +106,7 @@ namespace DPackRx.Services
 		/// <remarks>Solution may or may not be actually open.</remarks>
 		public void NotifySolutionOpened()
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			_shellStatusBarService.SetStatusBarText($"{_packageService.ProductName} {_packageService.Version} initialized");
 
@@ -126,7 +127,7 @@ namespace DPackRx.Services
 			if (subscriber == null)
 				throw new ArgumentNullException(nameof(subscriber));
 
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!_initialized)
 				Initialize();
@@ -157,7 +158,7 @@ namespace DPackRx.Services
 			if (subscriber == null)
 				throw new ArgumentNullException(nameof(subscriber));
 
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!_initialized)
 				Initialize();
@@ -365,7 +366,7 @@ namespace DPackRx.Services
 
 		public int OnAfterSave(uint docCookie)
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			if (!IsSolutionOpen())
 				return VSConstants.S_OK;
@@ -564,7 +565,7 @@ namespace DPackRx.Services
 			if (_initialized)
 				return;
 
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			try
 			{
@@ -614,7 +615,7 @@ namespace DPackRx.Services
 
 		private bool IsSolutionOpen()
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dte = _shellProjectService.GetDTE() as DTE;
 			return (dte != null) && (dte.Solution != null) && dte.Solution.IsOpen;
@@ -622,7 +623,7 @@ namespace DPackRx.Services
 
 		private void SolutionEvents_Renamed(string oldName)
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			var dte = _shellProjectService.GetDTE() as DTE;
 			var newName = (dte != null) && (dte.Solution != null) ? dte.Solution.FileName : null;
@@ -633,7 +634,7 @@ namespace DPackRx.Services
 
 		private void DocumentEvents_DocumentOpened(Document document)
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			if ((document != null) && IsSolutionOpen())
 			{
@@ -649,7 +650,7 @@ namespace DPackRx.Services
 
 		private void DocumentEvents_DocumentClosing(Document document)
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			// Work around for file's code model changed event not being raised for web project
 			// when file is closed w/o saving changes. Thus, FileChanged change type needs to be
@@ -675,7 +676,7 @@ namespace DPackRx.Services
 
 		private void DocumentEvents_DocumentSaved(Document document)
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			ThreadHelper.ThrowIfNotOnUIThread();
 
 			// Work around for file's code model changed event not being raised when
 			// code member line # is changed. Thus, FileChanged change type needs to be

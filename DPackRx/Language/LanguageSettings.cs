@@ -77,6 +77,11 @@ namespace DPackRx.Language
 		public string FriendlyName { get; set; } = string.Empty;
 
 		/// <summary>
+		/// Optional project language type Guid.
+		/// </summary>
+		public string ProjectGuid { get; set; } = string.Empty;
+
+		/// <summary>
 		/// Language web names.
 		/// </summary>
 		public string[] WebNames { get; set; } = new string[0];
@@ -103,7 +108,7 @@ namespace DPackRx.Language
 		public bool SmartFormat { get; set; }
 
 		/// <summary>
-		/// Non-null value indicates that languages supports Xml documentation. 
+		/// Non-null value indicates that languages supports Xml documentation.
 		/// Empty value indicates that documentation doesn't require any Xml processing.
 		/// </summary>
 		public string[] XmlDocs { get; set; }
