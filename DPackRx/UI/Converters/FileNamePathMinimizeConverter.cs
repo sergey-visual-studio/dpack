@@ -33,7 +33,7 @@ namespace DPackRx.UI.Converters
 
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (values?.Length != 7)
+			if (values?.Length != 8)
 				return null;
 
 			var fileName = values[0] as string;
@@ -103,7 +103,7 @@ namespace DPackRx.UI.Converters
 			return new FormattedText(text,
 				CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
 				new Typeface((FontFamily)values[2], (FontStyle)values[3], (FontWeight)values[4], (FontStretch)values[5]),
-				(double)values[6], Brushes.Black, 1).Width;
+				(double)values[6], Brushes.Black, VisualTreeHelper.GetDpi(values[7] as Visual).PixelsPerDip).Width;
 		}
 
 		#endregion

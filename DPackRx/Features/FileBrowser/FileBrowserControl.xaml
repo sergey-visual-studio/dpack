@@ -110,7 +110,7 @@
             </DockPanel>
         </Border>
 
-        <StatusBar DockPanel.Dock="Bottom" Focusable="False">
+        <StatusBar x:Name="status" DockPanel.Dock="Bottom" Focusable="False">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -138,6 +138,7 @@
                             <Binding Path="FontWeight" ElementName="statusText" />
                             <Binding Path="FontStretch" ElementName="statusText" />
                             <Binding Path="FontSize" ElementName="statusText" />
+                            <Binding ElementName="status" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
