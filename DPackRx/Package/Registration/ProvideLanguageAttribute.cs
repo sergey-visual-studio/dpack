@@ -22,18 +22,18 @@ namespace DPackRx.Package.Registration
 
 		#endregion
 
-		public ProvideLanguageAttribute(string productName, string guid, string name, string[] extensions)
+		public ProvideLanguageAttribute(string productName, string languageGuid, string name, string[] extensions)
 		{
 			if (string.IsNullOrEmpty(productName))
 				throw new ArgumentNullException(nameof(productName));
 
-			if (string.IsNullOrEmpty(guid))
-				throw new ArgumentNullException(nameof(guid));
+			if (string.IsNullOrEmpty(languageGuid))
+				throw new ArgumentNullException(nameof(languageGuid));
 
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException(nameof(name));
 
-			_languageGuid = guid;
+			_languageGuid = languageGuid;
 			_name = name;
 			_extensions = extensions;
 
@@ -56,7 +56,19 @@ namespace DPackRx.Package.Registration
 			}
 		}
 
+		public ProvideLanguageAttribute(string productName, string languageGuid, string projectGuid, string name, string[] extensions) :
+			this(productName, languageGuid, name, extensions)
+		{
+
+			if (string.IsNullOrEmpty(projectGuid))
+				throw new ArgumentNullException(nameof(projectGuid));
+
+			this.ProjectGuid = projectGuid;
+		}
+
 		#region Properties
+
+		public string ProjectGuid { get; set; }
 
 		public string WebName { get; set; }
 
@@ -107,6 +119,8 @@ namespace DPackRx.Package.Registration
 			{
 				key.SetValue("", _name);
 
+				if (!string.IsNullOrEmpty(this.ProjectGuid))
+					key.SetValue(nameof(this.ProjectGuid), this.ProjectGuid);
 				if (!string.IsNullOrEmpty(this.WebName))
 					key.SetValue(nameof(this.WebName), this.WebName);
 				if (!string.IsNullOrEmpty(this.WebLanguage))

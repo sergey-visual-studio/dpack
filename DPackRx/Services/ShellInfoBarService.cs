@@ -67,7 +67,7 @@ namespace DPackRx.Services
 				return;
 			}
 
-			var shell = _serviceProvider.GetService<IVsShell, SVsShell>();
+			var shell = _serviceProvider.GetService<SVsShell, IVsShell>();
 
 			shell.GetProperty((int)__VSSPROPID7.VSSPROPID_MainWindowInfoBarHost, out var obj);
 			var host = obj as IVsInfoBarHost;
@@ -88,7 +88,7 @@ namespace DPackRx.Services
 			var textSpans = new List<InfoBarTextSpan> { textSpan };
 			var infoBarModel = new InfoBarModel(textSpans, actions, KnownMonikers.StatusInformation, true);
 
-			var factory = _serviceProvider.GetService<IVsInfoBarUIFactory, SVsInfoBarUIFactory>();
+			var factory = _serviceProvider.GetService<SVsInfoBarUIFactory, IVsInfoBarUIFactory>();
 			var element = factory.CreateInfoBar(infoBarModel);
 			element.Advise(this, out _cookie);
 			host.AddInfoBar(element);

@@ -70,7 +70,7 @@
 			</Menu>
 		</Menus>
 
-		<!-- Menu groups: A menu group is a container for other menus or buttons (commands); 
+		<!-- Menu groups: A menu group is a container for other menus or buttons (commands);
          The parent of a group must be a menu -->
 		<Groups>
 			<Group guid="guidDPackMenu" id="gidBrowsers" priority="0x0001">
@@ -707,7 +707,8 @@
 			</Button>
 			<Button guid="CommandSet" id="cidCollapseSolCtxt" priority="0x0001" type="Button">
 				<Parent guid="guidSolutionExplorerMenu" id="gidMiscSolution" />
-				<Icon guid="guidMiscBmp" id="bmpMiscSolution" />
+				<Icon guid="ImageCatalogGuid" id="Collapse" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
 				<CommandFlag>DefaultInvisible</CommandFlag>
 				<CommandFlag>DynamicVisibility</CommandFlag>
 				<Strings>
@@ -784,7 +785,7 @@
 			<Bitmap guid="CommandSet" resID="IDB_MENU_IMAGES" usedList="bmpDPack,bmpCodeBr,bmpFileBr,bmpSolBr,bmpStats,bmpBackup" />
 			<Bitmap guid="guidBkmrkBmp" resID="IDB_BKMRK_MENU_IMAGES" usedList="bmpBkmrk0,bmpBkmrk1,bmpBkmrk2,bmpBkmrk3,bmpBkmrk4,bmpBkmrk5,bmpBkmrk6,bmpBkmrk7,bmpBkmrk8,bmpBkmrk9" />
 			<Bitmap guid="guidBkmrkGlbBmp" resID="IDB_BKMRK_G_MENU_IMAGES" usedList="bmpBkmrkGlb0,bmpBkmrkGlb1,bmpBkmrkGlb2,bmpBkmrkGlb3,bmpBkmrkGlb4,bmpBkmrkGlb5,bmpBkmrkGlb6,bmpBkmrkGlb7,bmpBkmrkGlb8,bmpBkmrkGlb9" />
-			<Bitmap guid="guidMiscBmp" resID="IDB_MISC_MENU_IMAGES" usedList="bmpMiscSolution,bmpMiscCommandPrompt" />
+			<Bitmap guid="guidMiscBmp" resID="IDB_MISC_MENU_IMAGES" usedList="bmpMiscCommandPrompt" />
 		</Bitmaps>
 
 	</Commands>
@@ -1148,8 +1149,7 @@
 			<IDSymbol name="IDB_BKMRK_G_MENU_IMAGES" value="501" />
 		</GuidSymbol>
 		<GuidSymbol name="guidMiscBmp" value="{8B0E08A7-8C2C-4AFB-9A99-ADAD3DC0B921}">
-			<IDSymbol name="bmpMiscSolution" value="0x0001" />
-			<IDSymbol name="bmpMiscCommandPrompt" value="0x0002" />
+			<IDSymbol name="bmpMiscCommandPrompt" value="0x0001" />
 			<IDSymbol name="IDB_MISC_MENU_IMAGES" value="503" />
 		</GuidSymbol>
 		<GuidSymbol name="guidToolsMenu" value="{AB0626A5-EE63-4347-A85C-3A95E37F83B4}">

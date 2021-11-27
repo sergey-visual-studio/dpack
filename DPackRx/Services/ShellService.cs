@@ -17,12 +17,12 @@ using EnvDTE;
 using EnvDTE80;
 
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.VCProjectEngine;
 using VSLangProj;
 using VsWebSite;
+using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
 using VSPackage = Microsoft.VisualStudio.Shell.Package;
 
 namespace DPackRx.Services
@@ -815,6 +815,8 @@ namespace DPackRx.Services
 			return _webInteropAvailable && IsWebProjectItemInternal(GetProjectItemInternal(projectItem));
 		}
 
+		// TODO: re-evaluate for removal as deffered loading's been deprecated and it's obsolete now
+#pragma warning disable CS0618
 		/// <summary>
 		/// Checks whether untyped Project instance project load's deferred, ie project hasn't been fully loaded yet.
 		/// </summary>
@@ -833,7 +835,7 @@ namespace DPackRx.Services
 			if (dteProject.Kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 				return false;
 
-			var serviceProvider = new ServiceProvider(GetDTEInternal() as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
+			var serviceProvider = new Microsoft.VisualStudio.Shell.ServiceProvider(GetDTEInternal() as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
 			if (serviceProvider == null)
 				return false;
 
@@ -872,6 +874,7 @@ namespace DPackRx.Services
 
 			return false;
 		}
+#pragma warning restore CS0618
 
 		/// <summary>
 		/// Checks whether untyped ProjectItem instance is a qualified C++ project item.
@@ -1908,7 +1911,7 @@ namespace DPackRx.Services
 
 			if (project != null)
 			{
-				var serviceProvider = new ServiceProvider(project.DTE as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
+				var serviceProvider = new Microsoft.VisualStudio.Shell.ServiceProvider(project.DTE as Microsoft.VisualStudio.OLE.Interop.IServiceProvider);
 				if (serviceProvider != null)
 				{
 					var solution = serviceProvider.GetService<IVsSolution>(false);
@@ -2468,7 +2471,7 @@ namespace DPackRx.Services
 			if (windowFrame.Show() != VSConstants.S_OK)
 				return null;
 
-			var textView = VsShellUtilities.GetTextView(windowFrame);
+			var textView = Microsoft.VisualStudio.Shell.VsShellUtilities.GetTextView(windowFrame);
 			return textView;
 		}
 

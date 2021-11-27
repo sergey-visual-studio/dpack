@@ -59,7 +59,7 @@ namespace DPackRx.Package
 				var version = string.Empty;
 				try
 				{
-					var shell = _serviceProvider.GetService<IVsShell, SVsShell>();
+					var shell = _serviceProvider.GetService<SVsShell, IVsShell>();
 					var result = shell.GetProperty((int)__VSSPROPID5.VSSPROPID_ReleaseVersion, out object var);
 					if ((result == VSConstants.S_OK) && (var != null) && (var is string))
 						version = ((string)var).Trim();
@@ -96,11 +96,8 @@ namespace DPackRx.Package
 
 				switch (version)
 				{
-					case "15":
-						version = "2017";
-						break;
-					case "16":
-						version = "2019";
+					case "17":
+						version = "2022";
 						break;
 					default:
 						Debug.WriteLine($"Unknown or unsupported Visual Studio version {version}");
@@ -123,7 +120,7 @@ namespace DPackRx.Package
 
 				try
 				{
-					var shell = _serviceProvider.GetService<IVsShell, SVsShell>();
+					var shell = _serviceProvider.GetService<SVsShell, IVsShell>();
 					var result = shell.GetProperty((int)__VSSPROPID2.VSSPROPID_InstallRootDir, out object var);
 					if ((result == VSConstants.S_OK) && (var is string))
 						return (string)var;

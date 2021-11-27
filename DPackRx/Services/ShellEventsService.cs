@@ -8,8 +8,8 @@ using DPackRx.Package;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
 
 namespace DPackRx.Services
 {
