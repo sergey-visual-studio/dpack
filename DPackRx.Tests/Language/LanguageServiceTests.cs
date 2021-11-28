@@ -34,7 +34,7 @@ namespace DPackRx.Tests.Language
 			_languageSet = new LanguageSettings("test", "test") { WebNames = new string[] { "webtest" }, WebLanguage = "web", Extensions = new Dictionary<string, bool> { { "test", true }, { "test2", false } } };
 			var languages = new List<LanguageSettings> {
 				_languageSet,
-				new LanguageSettings("test2", "test2")
+				new LanguageSettings("test2", "test2") { ProjectGuid = "test-guid", Type = LanguageType.CSharp }
 			};
 
 			_languageRegistrationServiceMock = new Mock<ILanguageRegistrationService>();
@@ -74,6 +74,20 @@ namespace DPackRx.Tests.Language
 			Assert.That(language, Is.Not.Null);
 			Assert.That(language.Language, Is.EqualTo("test"));
 			Assert.That(language.Type, Is.EqualTo(LanguageType.Unknown));
+			_languageRegistrationServiceMock.Verify(l => l.GetLanguages());
+		}
+
+		[Test]
+		public void GetLanguage_ProjectGuid()
+		{
+			var service = GetService();
+
+			var language = service.GetLanguage("test-guid");
+
+			Assert.That(language, Is.Not.Null);
+			Assert.That(language.Language, Is.EqualTo("test2"));
+			Assert.That(language.ProjectGuid, Is.EqualTo("test-guid"));
+			Assert.That(language.Type, Is.EqualTo(LanguageType.CSharp));
 			_languageRegistrationServiceMock.Verify(l => l.GetLanguages());
 		}
 
