@@ -4,7 +4,7 @@
 
 ### DPack Rx (former DPack)
 
-FREE tools collection designed to greatly increase developer's productivity, automate repetitive processes and expand upon some of Microsoft Visual Studio features. Visual Studio 2017 and 2019 are supported.
+FREE tools collection designed to greatly increase developer's productivity, automate repetitive processes and expand upon some of Microsoft Visual Studio features. Supported Visual Studio versions: 2022.
 
 ### What is DPack Rx?
 
