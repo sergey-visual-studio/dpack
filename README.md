@@ -8,7 +8,7 @@ FREE tools collection designed to greatly increase developer's productivity, aut
 
 ### What is DPack Rx?
 
-[DPack Rx](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPackRx) is an effort to remedy former [DPack](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPack-16348) limitations: bring it under OSS umbrella, upgrade it for more modern Visual Studio integration, and apply more modern technology and development practices. I also felt the effort needed a new product name.
+[DPack Rx](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPackRx2022) is an effort to remedy former [DPack](https://marketplace.visualstudio.com/items?itemName=SergeyM.DPack-16348) limitations: bring it under OSS umbrella, upgrade it for more modern Visual Studio integration, and apply more modern technology and development practices. I also felt the effort needed a new product name.
 
 Driving principal behind DPack design is fire-and-forget user experience with minimal impact on the development environment. To adhere to that principal most of the major features are invoked on demand, present a dialog (if applicable), which goes away once user interaction ends. Little to no impact on the development environment is expected from thereafter. Taking all that into account, features such as ToolWindow support don't fit well into that design paradigm.
 

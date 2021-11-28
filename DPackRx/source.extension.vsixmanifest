@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="3D22E261-32E5-46CE-A4B0-B884FA49A9A2.2022" Version="4.5.0.1" Language="en-US" Publisher="Sergey M" />
+        <Identity Id="3D22E261-32E5-46CE-A4B0-B884FA49A9A2.2022" Version="4.5.0.3" Language="en-US" Publisher="Sergey M" />
         <DisplayName>DPack Rx 2022</DisplayName>
         <Description xml:space="preserve">FREE tools collection designed to greatly increase developer's productivity, automate repetitive processes and expand upon some of Microsoft Visual Studio features.</Description>
         <MoreInfo>https://github.com/sergey-visual-studio/dpack</MoreInfo>
