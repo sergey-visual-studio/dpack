@@ -176,7 +176,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- File name -->
-                    <GridViewColumn DisplayMemberBinding="{Binding FileName, Mode=OneTime}" Width="200">
+                    <GridViewColumn DisplayMemberBinding="{Binding FileNameWithPath, Mode=OneTime}" Width="200">
                         <GridViewColumn.Header>
                             <TextBlock Text="File" Style="{StaticResource SearchResultsHeader}" />
                         </GridViewColumn.Header>
