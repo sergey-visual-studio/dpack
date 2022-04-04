@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("DPack Rx")]
-[assembly: AssemblyCopyright("Copyright © 2004-2021 Sergey Mishkovskiy")]
+[assembly: AssemblyCopyright("Copyright © 2004-2022 Sergey Mishkovskiy")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyProduct("DPack Rx")]
 [assembly: AssemblyDescription("DPack Rx for Visual Studio")]
