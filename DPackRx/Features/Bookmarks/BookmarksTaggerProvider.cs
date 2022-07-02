@@ -25,7 +25,7 @@ namespace DPackRx.Features.Bookmarks
 		internal ISharedServiceProvider _serviceProvider = null;
 #pragma warning restore CS0414
 
-		#region IViewTaggerProvider Members
+		#region ITaggerProvider Members
 
 		public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
 		{
