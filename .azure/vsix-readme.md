@@ -11,14 +11,3 @@ Major features can be found under Tools|DPack Rx and Edit menus and include:
 ### Compatibility
 
 All features support C#, VB and C++ based projects.
-
-### Donate
-
-If you wish to express your appreciation 
-for the time and resources the authors have expended developing and supporting 
-the original DPack over the years, we do accept and appreciate donations.
-You can contribute via PayPal donate button below.
-
-Thank you for your support!
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DXDC8CEJZRQLE&source=url)
