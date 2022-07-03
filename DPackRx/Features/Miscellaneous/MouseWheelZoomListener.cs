@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.Composition;
 
+using DPackRx.Options;
 using DPackRx.Services;
+using DPackRx.Extensions;
 
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
@@ -21,7 +23,10 @@ namespace DPackRx.Features.Miscellaneous
 
 		public void TextViewCreated(IWpfTextView textView)
 		{
-			textView.Options.SetOptionValue<bool>(DefaultWpfViewOptions.EnableMouseWheelZoomId, false);
+			var optionsService = _serviceProvider?.GetService<IOptionsService>(false);
+			var mouseWheelZoom = optionsService != null && optionsService.GetBoolOption(KnownFeature.Miscellaneous, "MouseWheelZoom", false);
+
+			textView.Options.SetOptionValue<bool>(DefaultWpfViewOptions.EnableMouseWheelZoomId, mouseWheelZoom);
 		}
 
 		#endregion

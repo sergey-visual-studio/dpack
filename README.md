@@ -1,6 +1,6 @@
 [![Build Status](https://dev.azure.com/sergey-visual-studio/dpack/_apis/build/status/sergey-visual-studio.dpack?branchName=master)](https://dev.azure.com/sergey-visual-studio/dpack/_build/latest?definitionId=1&branchName=master)
 
-[[What is DPack Rx]](#what-is-dpack-rx) [[What's included]](#what-features-are-included-so-far) [[Major changes]](#major-changes) [[Future plans]](#future-plans) [[Contribute]](#help-needed) [[Donate]](#donate)
+[[What is DPack Rx]](#what-is-dpack-rx) [[What's included]](#what-features-are-included-so-far) [[Major changes]](#major-changes) [[Future plans]](#future-plans) [[Contribute]](#help-needed)
 
 ### DPack Rx (former DPack)
 
@@ -51,14 +51,3 @@ Driving principal behind DPack design is fire-and-forget user experience with mi
 Thanks and enjoy.
 
 Sergey Mishkovskiy
-
-### Donate
-
-If you wish to express your appreciation 
-for the time and resources the authors have expended developing and supporting 
-DPack over the years, we do accept and appreciate donations.
-You can contribute via PayPal donate button below.
-
-Thank you for your support!
-
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif "Donate")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DXDC8CEJZRQLE&source=url)
