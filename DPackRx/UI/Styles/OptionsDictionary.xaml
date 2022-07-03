@@ -2,12 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:DPackRx.UI">
 
-    <Style x:Key="BorderDiv" TargetType="Border">
-        <Setter Property="Height" Value="1" />
-        <Setter Property="Background" Value="Gray" />
-        <Setter Property="Margin" Value="0,12,0,0" />
-    </Style>
-
     <Style TargetType="CheckBox">
         <Setter Property="Margin" Value="0,12,0,0" />
     </Style>

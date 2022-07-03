@@ -26,6 +26,7 @@ namespace DPackRx.Options
 		#region Fields
 
 		private bool _logging;
+		private bool _mouseWheelZoom;
 		private ICommand _assignShortcutsCommand;
 		private ICommand _loggingCommand;
 		private ICommand _logFolderCommand;
@@ -58,6 +59,16 @@ namespace DPackRx.Options
 			{
 				_logging = value;
 				RaisePropertyChanged(nameof(this.Logging));
+			}
+		}
+
+		public bool MouseWheelZoom
+		{
+			get { return _mouseWheelZoom; }
+			set
+			{
+				_mouseWheelZoom = value;
+				RaisePropertyChanged(nameof(this.MouseWheelZoom));
 			}
 		}
 
@@ -132,6 +143,7 @@ namespace DPackRx.Options
 			if (!this.Logging)
 				_logging = true;
 #endif
+			_mouseWheelZoom = this.OptionsService.GetBoolOption(KnownFeature.Miscellaneous, "MouseWheelZoom", false);
 
 			Refresh();
 		}
@@ -145,6 +157,8 @@ namespace DPackRx.Options
 
 			var log = this.ServiceProvider.GetService<ILog>();
 			log.Enabled = _logging;
+
+			this.OptionsService.SetBoolOption(KnownFeature.Miscellaneous, "MouseWheelZoom", _mouseWheelZoom);
 		}
 
 		#endregion
@@ -154,6 +168,7 @@ namespace DPackRx.Options
 		private void Refresh()
 		{
 			RaisePropertyChanged(nameof(this.Logging));
+			RaisePropertyChanged(nameof(this.MouseWheelZoom));
 		}
 
 		private void OnAssignShortcuts(object parameter)

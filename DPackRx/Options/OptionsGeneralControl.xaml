@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DPackRx.Options"
              xmlns:ui="clr-namespace:DPackRx.UI"
              mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="400">
+             d:DesignHeight="260" d:DesignWidth="400">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,24 +17,36 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel LastChildFill="False">
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource TextBlockTop}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight="70" />
+            <RowDefinition MaxHeight="70" />
+            <RowDefinition MaxHeight="110" />
+        </Grid.RowDefinitions>
 
-        <Button DockPanel.Dock="Top" Content="Keyboard Shortcuts" ToolTip="Assign keyboard shortcuts" Style="{StaticResource ButtonRegular}" Margin="0"
-                Command="{Binding AssignShortcutsCommand}" />
+        <GroupBox Header="Shortcuts">
+            <Button Content="Keyboard shortcuts" ToolTip="Assign keyboard shortcuts" Style="{StaticResource ButtonRegular}" Margin="4,4,0,0"
+                    Command="{Binding AssignShortcutsCommand}" />
+        </GroupBox>
 
-        <Border DockPanel.Dock="Top" Style="{StaticResource BorderDiv}" />
+        <GroupBox Grid.Row="1" Header="Logging" Margin="0,16,0,0">
+            <CheckBox Content="Enable logging" Margin="4,12,0,0"
+                      IsEnabled="{Binding LoggingEnabled}"
+                      IsChecked="{Binding Logging}" Command="{Binding LoggingCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" />
+        </GroupBox>
 
-        <CheckBox DockPanel.Dock="Top" Content="Enable Logging"
-                  IsEnabled="{Binding LoggingEnabled}"
-                  IsChecked="{Binding Logging}" Command="{Binding LoggingCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" />
+        <GroupBox Grid.Row="2" Header="Miscellaneous" Margin="0,16,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-        <Button DockPanel.Dock="Top" Content="Open Log Folder" Style="{StaticResource ButtonRegular}"
-                Command="{Binding LogFolderCommand}" />
-
-        <Border DockPanel.Dock="Top" Style="{StaticResource BorderDiv}" />
-
-        <Button DockPanel.Dock="Top" Content="Reset All" ToolTip="Reset all settings" Style="{StaticResource ButtonRegular}"
-                Command="{Binding ResetAllCommand}" />
-    </DockPanel>
+                <CheckBox Content="Editor mouse wheel zoom" Margin="4,12,0,12"
+                          IsChecked="{Binding MouseWheelZoom}" />
+                <Button Grid.Row="1" Content="Reset all" ToolTip="Reset all settings" Style="{StaticResource ButtonRegular}" Margin="4,0,0,0"
+                        Command="{Binding ResetAllCommand}" />
+            </Grid>
+        </GroupBox>
+    </Grid>
 </UserControl>
