@@ -790,7 +790,7 @@ namespace DPackRx.Services
 			var dteProject = GetProjectInternal(project, false);
 
 			return (dteProject != null) &&
-				(dteProject.Kind != EnvDTE.Constants.vsProjectKindSolutionItems) &&
+				//(dteProject.Kind != EnvDTE.Constants.vsProjectKindSolutionItems) && // this prevented misc files from showing up in File Broweser
 				(dteProject.Kind != EnvDTE.Constants.vsProjectKindUnmodeled) &&
 				(dteProject.Kind != EnvDTE.Constants.vsProjectKindMisc);
 		}
@@ -1017,7 +1017,10 @@ namespace DPackRx.Services
 					if (dteProject.Kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 					{
 						projectFullName = dteProject.Name;
-						projectPath = string.Empty;
+
+						var dte = GetDTEInternal();
+						var solutionPath = dte.Solution.FullName;
+						projectPath = string.IsNullOrEmpty(solutionPath) ? string.Empty : Path.GetDirectoryName(solutionPath);
 					}
 					else if (string.IsNullOrEmpty(projectFullName))
 						projectPath = string.Empty;
