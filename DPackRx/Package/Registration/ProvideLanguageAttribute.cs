@@ -70,8 +70,6 @@ namespace DPackRx.Package.Registration
 
 		public string ProjectGuid { get; set; }
 
-		public string WebName { get; set; }
-
 		public string WebLanguage { get; set; }
 
 		public string[] Comments { get; set; }
@@ -93,6 +91,8 @@ namespace DPackRx.Package.Registration
 		public bool ParentlessFullName { get; set; }
 
 		public bool SurroundWith { get; set; }
+
+		public string SurroundWithLanguageName { get; set; }
 
 		internal string RegKeyName
 		{
@@ -121,8 +121,6 @@ namespace DPackRx.Package.Registration
 
 				if (!string.IsNullOrEmpty(this.ProjectGuid))
 					key.SetValue(nameof(this.ProjectGuid), this.ProjectGuid);
-				if (!string.IsNullOrEmpty(this.WebName))
-					key.SetValue(nameof(this.WebName), this.WebName);
 				if (!string.IsNullOrEmpty(this.WebLanguage))
 					key.SetValue(nameof(this.WebLanguage), this.WebLanguage);
 				if (!string.IsNullOrEmpty(this.XmlDoc))
@@ -143,6 +141,8 @@ namespace DPackRx.Package.Registration
 					key.SetValue(nameof(this.ParentlessFullName), Convert.ToInt32(this.ParentlessFullName));
 				if (this.SurroundWith)
 					key.SetValue(nameof(this.SurroundWith), Convert.ToInt32(this.SurroundWith));
+				if (!string.IsNullOrEmpty(this.SurroundWithLanguageName))
+					key.SetValue(nameof(this.SurroundWithLanguageName), this.SurroundWithLanguageName);
 
 				if ((_extensions != null) && (_extensions.Length > 0))
 				{

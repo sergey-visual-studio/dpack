@@ -163,6 +163,11 @@ namespace DPackRx.Language
 		/// </summary>
 		public bool SurroundWith { get; set; }
 
+		/// <summary>
+		/// Language optional surround with name.
+		/// </summary>
+		public string SurroundWithLanguageName { get; set; } = string.Empty;
+
 		#endregion
 	}
 

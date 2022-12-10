@@ -25,6 +25,7 @@ namespace DPackRx.Features.SurroundWith
 		private readonly IKeyboardService _keyboardService;
 
 		protected internal const string SURROUND_WITH_COMMAND = "Edit.SurroundWith";
+		protected internal const string ISERT_SNIPPET_COMMAND = "Edit.InsertSnippet";
 		protected internal const string SNIPPET_TRY_CATCH = "try";
 		protected internal const string SNIPPET_TRY_FINALLY = "tryf";
 		protected internal const string SNIPPET_FOR = "for";
@@ -79,6 +80,11 @@ namespace DPackRx.Features.SurroundWith
 				case CommandIDs.SW_FOR:
 				case CommandIDs.SW_FOR_EACH:
 				case CommandIDs.SW_REGION:
+					var project = _shellSelectionService.GetActiveProject();
+					var languageSet = _fileTypeResolver.GetCurrentLanguage(project, out _);
+					if ((languageSet?.Type == LanguageType.Unknown) || !languageSet.SurroundWith)
+						return false;
+
 					return
 						_shellSelectionService.IsContextActive(ContextType.SolutionExists) && (
 						_shellSelectionService.IsContextActive(ContextType.TextEditor) ||
@@ -127,10 +133,17 @@ namespace DPackRx.Features.SurroundWith
 		{
 			var project = _shellSelectionService.GetActiveProject();
 			var languageSet = _fileTypeResolver.GetCurrentLanguage(project, out _);
-			if ((languageSet?.Type == LanguageType.Unknown) || !languageSet.SurroundWith)
-				return true;
 
-			_shellHelperService.ExecuteCommand(SURROUND_WITH_COMMAND);
+			if (string.IsNullOrEmpty(languageSet.SurroundWithLanguageName))
+			{
+				_shellHelperService.ExecuteCommand(SURROUND_WITH_COMMAND);
+			}
+			else
+			{
+				_shellHelperService.ExecuteCommand(ISERT_SNIPPET_COMMAND);
+				_keyboardService.Type(languageSet.SurroundWithLanguageName);
+				_keyboardService.Type(Key.Enter);
+			}
 			_keyboardService.Type(snippet);
 			_keyboardService.Type(Key.Enter);
 			return true;

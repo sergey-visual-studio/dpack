@@ -21,7 +21,6 @@ namespace DPackRx.Language
 		private const string EXTENSIONS_KEY = "Extensions";
 		private const string COMMENTS_KEY = "Comments";
 		private const string PROJECT_GUID_VALUE = "ProjectGuid";
-		private const string WEB_NAME_VALUE = "WebName";
 		private const string WEB_LANGUAGE_VALUE = "WebLanguage";
 		private const string SMART_FORMAT_VALUE = "SmartFormat";
 		private const string XML_DOC = "XmlDoc";
@@ -32,6 +31,7 @@ namespace DPackRx.Language
 		private const string CHECK_DUPLICATE_NAMES = "CheckDuplicateNames";
 		private const string PARENTLESS_FULL_NAME = "ParentlessFullName";
 		private const string SURROUND_WITH_NAME = "SurroundWith";
+		private const string SURROUND_WITH_LANGUAGE_NAME_VALUE = "SurroundWithLanguageName";
 
 		private const string LOG_CATEGORY = "Language Registry";
 
@@ -76,7 +76,7 @@ namespace DPackRx.Language
 
 					var friendlyName = string.Empty;
 					var projectGuid = string.Empty;
-					var webName = string.Empty;
+					var surroundWithLanguageName = string.Empty;
 					var webLanguage = string.Empty;
 					var smartFormat = true;
 					var xmlDoc = (string)null;
@@ -95,7 +95,7 @@ namespace DPackRx.Language
 						{
 							friendlyName = (string)langKey.GetValue(string.Empty, friendlyName);
 							projectGuid = (string)langKey.GetValue(PROJECT_GUID_VALUE, projectGuid);
-							webName = (string)langKey.GetValue(WEB_NAME_VALUE, webName);
+							surroundWithLanguageName = (string)langKey.GetValue(SURROUND_WITH_LANGUAGE_NAME_VALUE, surroundWithLanguageName);
 							webLanguage = (string)langKey.GetValue(WEB_LANGUAGE_VALUE, webLanguage);
 							smartFormat = Convert.ToBoolean(
 								(int)langKey.GetValue(SMART_FORMAT_VALUE, Convert.ToInt32(smartFormat)));
@@ -119,7 +119,7 @@ namespace DPackRx.Language
 						_log.LogMessage($"Skipped language {id} definition w/o a friendly name", LOG_CATEGORY);
 						continue;
 					}
-					var webNames = !string.IsNullOrEmpty(webName) ? webName.Split(',') : new string[0];
+					var webNames = !string.IsNullOrEmpty(surroundWithLanguageName) ? surroundWithLanguageName.Split(',') : new string[0];
 
 					var language = new LanguageSettings(id, friendlyName, xmlDoc)
 					{
@@ -133,7 +133,8 @@ namespace DPackRx.Language
 						IgnoreCodeType = ignoreCodeType,
 						CheckDuplicateNames = checkDuplicateNames,
 						ParentlessFullName = parentlessFullName,
-						SurroundWith = surroundWith
+						SurroundWith = surroundWith,
+						SurroundWithLanguageName = surroundWithLanguageName,
 					};
 
 					var extKey = dpackKey.OpenSubKey(id + "\\" + EXTENSIONS_KEY);

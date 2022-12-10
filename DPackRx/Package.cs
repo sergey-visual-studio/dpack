@@ -46,16 +46,18 @@ namespace DPackRx
 	// Languages
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp, PrjKind.prjKindCSharpProject, "C#", new[] { "cs" },
-		WebName = "Visual C#", WebLanguage = "CSharpCodeProvider", Comments = new[] { "//", "/*" }, XmlDoc = "/doc/summary",
-		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported, SurroundWith = true)]
+		WebLanguage = "CSharpCodeProvider", Comments = new[] { "//", "/*" }, XmlDoc = "/doc/summary",
+		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported,
+		SurroundWith = true, SurroundWithLanguageName = "Visual C#")]
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB, PrjKind.prjKindVBProject, "VB", new[] { "bas", "vb", "frm" },
-		WebName = "Visual Basic", WebLanguage = "VBCodeProvider", Comments = new[] { "'" }, XmlDoc = "/summary", XmlDocSurround = true,
+		WebLanguage = "VBCodeProvider", Comments = new[] { "'" }, XmlDoc = "/summary", XmlDocSurround = true,
 		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported)]
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVC, "C++", new[] { "c", "cpp", "h", "hpp", "inl", "cc", "hxx", "hh" },
 		Comments = new[] { "//", "/*" }, XmlDoc = "/summary,", XmlDocSurround = true,
-		CheckDuplicateNames = true, IgnoreCodeType = true, ParentlessFullName = true, SurroundWith = true)]
+		CheckDuplicateNames = true, IgnoreCodeType = true, ParentlessFullName = true,
+		SurroundWith = true)]
 	[ProvideLanguage(
 		"#101", LanguageConsts.VS_LANGUAGE_JAVA_SCRIPT, "JavaScript", new[] { "js", "aspx", "ascx", "html", "htm", "asp", "master", "cshtml", "vbhtml" },
 		Comments = new[] { "//", "/*" }, SmartFormat = false)]
