@@ -1129,9 +1129,12 @@ namespace DPackRx.Services
 
 			var dteProject = GetProjectInternal(project);
 
-			// Solution items project has no code model
-			if (dteProject.Kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
+			// Solution items project has no code model; workaround for other project types - should come up with more generic way of handling that
+			var kind = dteProject.Kind;
+			if (kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 				return _languageService.GetLanguage(LanguageType.SolutionItems)?.Language;
+			else if (kind.Equals(LanguageConsts.VS_LANGUAGE_SQL, StringComparison.OrdinalIgnoreCase))
+				return _languageService.GetLanguage(LanguageType.Sql)?.Language;
 
 			if (IsKnownNoCodeModelProject(dteProject))
 				return string.Empty;

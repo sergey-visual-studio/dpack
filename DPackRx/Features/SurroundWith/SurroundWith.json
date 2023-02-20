@@ -1,0 +1,95 @@
+{
+  "Models": [
+    {
+      "Language": "CSharp",
+      "Type": "TryCatch",
+      "StartingCode": "try\r\n{",
+      "EndingCode": "}\r\ncatch (Exception ex)\r\n{\r\n}",
+      "WordOffset": 0
+    },
+    {
+      "Language": "CSharp",
+      "Type": "TryFinally",
+      "StartingCode": "try\r\n{",
+      "EndingCode": "}\r\nfinally\r\n{\r\n}",
+      "WordOffset": 0
+    },
+    {
+      "Language": "CSharp",
+      "Type": "For",
+      "StartingCode": "for (int index = 0; index < count; index++)\r\n{",
+      "EndingCode": "}",
+      "WordOffset": 9
+    },
+    {
+      "Language": "CSharp",
+      "Type": "ForEach",
+      "StartingCode": "foreach (var element in container)\r\n{",
+      "EndingCode": "}",
+      "WordOffset": 2
+    },
+    {
+      "Language": "CSharp",
+      "Type": "Region",
+      "StartingCode": "#region Name",
+      "EndingCode": "#endregion",
+      "WordOffset": 2
+    },
+    {
+      "Language": "VB",
+      "Type": "TryCatch",
+      "StartingCode": "Try\r\n",
+      "EndingCode": "Catch ex As Exception\r\nEnd Try",
+      "WordOffset": 0
+    },
+    {
+      "Language": "VB",
+      "Type": "TryFinally",
+      "StartingCode": "Try\r\n",
+      "EndingCode": "Finally\r\nEnd Try",
+      "WordOffset": 0
+    },
+    {
+      "Language": "VB",
+      "Type": "For",
+      "StartingCode": "For index As Integer = 1 To 1\r\n",
+      "EndingCode": "Next",
+      "WordOffset": 7
+    },
+    {
+      "Language": "VB",
+      "Type": "ForEach",
+      "StartingCode": "For Each element In container\r\n",
+      "EndingCode": "Next",
+      "WordOffset": 2
+    },
+    {
+      "Language": "VB",
+      "Type": "Region",
+      "StartingCode": "#Region \"Name\"",
+      "EndingCode": "#End Region",
+      "WordOffset": 3
+    },
+    {
+      "Language": "CPP",
+      "Type": "TryCatch",
+      "StartingCode": "try\r\n{",
+      "EndingCode": "}\r\ncatch (char *str)\r\n{\r\n}",
+      "WordOffset": 0
+    },
+    {
+      "Language": "CPP",
+      "Type": "TryFinally",
+      "StartingCode": "try\r\n{",
+      "EndingCode": "}\r\n__finally\r\n{\r\n}",
+      "WordOffset": 0
+    },
+    {
+      "Language": "CPP",
+      "Type": "For",
+      "StartingCode": "for (int index = 0; index < count; index++)\r\n{",
+      "EndingCode": "}",
+      "WordOffset": 9
+    }
+  ]
+}

@@ -48,6 +48,9 @@ namespace DPackRx.Language
 				case LanguageConsts.VS_LANGUAGE_SOLUTION_ITEMS:
 					this.Type = LanguageType.SolutionItems;
 					break;
+				case LanguageConsts.VS_LANGUAGE_SQL:
+					this.Type = LanguageType.Sql;
+					break;
 				default:
 					this.Type = LanguageType.Unknown;
 					break;
@@ -139,7 +142,7 @@ namespace DPackRx.Language
 		public bool CheckDuplicateNames { get; set; }
 
 		/// <summary>
-		/// Whether parentless code elements should use their full names in place of parent full names.
+		/// Whether parent-less code elements should use their full names in place of parent full names.
 		/// </summary>
 		public bool ParentlessFullName { get; set; }
 
@@ -163,11 +166,6 @@ namespace DPackRx.Language
 		/// </summary>
 		public bool SurroundWith { get; set; }
 
-		/// <summary>
-		/// Language optional surround with name.
-		/// </summary>
-		public string SurroundWithLanguageName { get; set; } = string.Empty;
-
 		#endregion
 	}
 
@@ -185,7 +183,8 @@ namespace DPackRx.Language
 		CPP,
 		JavaScript,
 		Xml,
-		SolutionItems
+		SolutionItems,
+		Sql
 	}
 
 	#endregion

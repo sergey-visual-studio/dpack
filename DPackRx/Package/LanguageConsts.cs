@@ -34,5 +34,10 @@
 		/// Fake solution items project language Guid.
 		/// </summary>
 		public const string VS_LANGUAGE_SOLUTION_ITEMS = "{FFFFFFFF-0000-FFFF-FFFF-FFFFFFFFFFFF}";
+
+		/// <summary>
+		/// VS Sql project language Guid.
+		/// </summary>
+		public const string VS_LANGUAGE_SQL = "{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}";
 	}
 }
