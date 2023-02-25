@@ -94,8 +94,6 @@ namespace DPackRx.Package.Registration
 
 		public bool SurroundWith { get; set; }
 
-		public string SurroundWithLanguageName { get; set; }
-
 		internal string RegKeyName
 		{
 			get { return string.Format(@"{0}\Languages\{1}", _productName, _languageGuid); }
@@ -145,8 +143,6 @@ namespace DPackRx.Package.Registration
 					key.SetValue(nameof(this.ParentlessFullName), Convert.ToInt32(this.ParentlessFullName));
 				if (this.SurroundWith)
 					key.SetValue(nameof(this.SurroundWith), Convert.ToInt32(this.SurroundWith));
-				if (!string.IsNullOrEmpty(this.SurroundWithLanguageName))
-					key.SetValue(nameof(this.SurroundWithLanguageName), this.SurroundWithLanguageName);
 
 				if ((_extensions != null) && (_extensions.Length > 0))
 				{

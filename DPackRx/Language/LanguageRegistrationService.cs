@@ -31,6 +31,7 @@ namespace DPackRx.Language
 		private const string IGNORE_CODE_TYPE = "IgnoreCodeType";
 		private const string CHECK_DUPLICATE_NAMES = "CheckDuplicateNames";
 		private const string PARENTLESS_FULL_NAME = "ParentlessFullName";
+		private const string SURROUND_WITH = "SurroundWith";
 		private const string LOG_CATEGORY = "Language Registry";
 
 		#endregion
@@ -84,6 +85,7 @@ namespace DPackRx.Language
 					var parentlessFullName = false;
 					var designerFiles = LanguageDesignerFiles.NotSupported;
 					var imports = LanguageImports.NotSupported;
+					var surroundWith = false;
 
 					var langKey = dpackKey.OpenSubKey(id);
 					if (langKey != null)
@@ -107,6 +109,8 @@ namespace DPackRx.Language
 								(int)langKey.GetValue(CHECK_DUPLICATE_NAMES, Convert.ToInt32(checkDuplicateNames)));
 							parentlessFullName = Convert.ToBoolean(
 								(int)langKey.GetValue(PARENTLESS_FULL_NAME, Convert.ToInt32(parentlessFullName)));
+							surroundWith = Convert.ToBoolean(
+								(int)langKey.GetValue(SURROUND_WITH, Convert.ToInt32(surroundWith)));
 						}
 					}
 					if (string.IsNullOrEmpty(friendlyName))
@@ -126,7 +130,8 @@ namespace DPackRx.Language
 						Imports = imports,
 						IgnoreCodeType = ignoreCodeType,
 						CheckDuplicateNames = checkDuplicateNames,
-						ParentlessFullName = parentlessFullName
+						ParentlessFullName = parentlessFullName,
+						SurroundWith = surroundWith,
 					};
 
 					var extKey = dpackKey.OpenSubKey(id + "\\" + EXTENSIONS_KEY);

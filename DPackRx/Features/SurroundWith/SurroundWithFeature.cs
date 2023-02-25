@@ -79,7 +79,7 @@ namespace DPackRx.Features.SurroundWith
 					if ((languageSet?.Type == LanguageType.Unknown) || !languageSet.SurroundWith)
 						return false;
 
-					return
+					var result =
 						_shellSelectionService.IsContextActive(ContextType.SolutionExists) && (
 						_shellSelectionService.IsContextActive(ContextType.TextEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.XMLTextEditor) ||
@@ -87,6 +87,7 @@ namespace DPackRx.Features.SurroundWith
 						_shellSelectionService.IsContextActive(ContextType.NewXamlEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.HTMLSourceEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.CSSTextEditor));
+					return result;
 				default:
 					return base.IsValidContext(commandId);
 			}
