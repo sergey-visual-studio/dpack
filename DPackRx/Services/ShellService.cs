@@ -790,7 +790,7 @@ namespace DPackRx.Services
 			var dteProject = GetProjectInternal(project, false);
 
 			return (dteProject != null) &&
-				//(dteProject.Kind != EnvDTE.Constants.vsProjectKindSolutionItems) && // this prevented misc files from showing up in File Broweser
+				//(dteProject.Kind != EnvDTE.Constants.vsProjectKindSolutionItems) && // commented out because it prevented misc files from showing up in File Browser
 				(dteProject.Kind != EnvDTE.Constants.vsProjectKindUnmodeled) &&
 				(dteProject.Kind != EnvDTE.Constants.vsProjectKindMisc);
 		}
@@ -1129,7 +1129,7 @@ namespace DPackRx.Services
 
 			var dteProject = GetProjectInternal(project);
 
-			// Solution items project has no code model; workaround for other project types - should come up with more generic way of handling that
+			// Solution items project has no code model; workaround for other project types - need to come up with more generic way of handling that
 			var kind = dteProject.Kind;
 			if (kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 				return _languageService.GetLanguage(LanguageType.SolutionItems)?.Language;
