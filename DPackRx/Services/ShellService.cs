@@ -790,7 +790,7 @@ namespace DPackRx.Services
 			var dteProject = GetProjectInternal(project, false);
 
 			return (dteProject != null) &&
-				(dteProject.Kind != EnvDTE.Constants.vsProjectKindSolutionItems) &&
+				//(dteProject.Kind != EnvDTE.Constants.vsProjectKindSolutionItems) && // commented out because it prevented misc files from showing up in File Browser
 				(dteProject.Kind != EnvDTE.Constants.vsProjectKindUnmodeled) &&
 				(dteProject.Kind != EnvDTE.Constants.vsProjectKindMisc);
 		}
@@ -1017,7 +1017,10 @@ namespace DPackRx.Services
 					if (dteProject.Kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 					{
 						projectFullName = dteProject.Name;
-						projectPath = string.Empty;
+
+						var dte = GetDTEInternal();
+						var solutionPath = dte.Solution.FullName;
+						projectPath = string.IsNullOrEmpty(solutionPath) ? string.Empty : Path.GetDirectoryName(solutionPath);
 					}
 					else if (string.IsNullOrEmpty(projectFullName))
 						projectPath = string.Empty;
@@ -1126,9 +1129,12 @@ namespace DPackRx.Services
 
 			var dteProject = GetProjectInternal(project);
 
-			// Solution items project has no code model
-			if (dteProject.Kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
+			// Solution items project has no code model; workaround for other project types - need to come up with more generic way of handling that
+			var kind = dteProject.Kind;
+			if (kind.Equals(EnvDTE.Constants.vsProjectKindSolutionItems, StringComparison.OrdinalIgnoreCase))
 				return _languageService.GetLanguage(LanguageType.SolutionItems)?.Language;
+			else if (kind.Equals(LanguageConsts.VS_LANGUAGE_SQL, StringComparison.OrdinalIgnoreCase))
+				return _languageService.GetLanguage(LanguageType.Sql)?.Language;
 
 			if (IsKnownNoCodeModelProject(dteProject))
 				return string.Empty;

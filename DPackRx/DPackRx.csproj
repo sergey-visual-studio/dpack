@@ -75,7 +75,7 @@
     <Compile Include="Features\Miscellaneous\MouseWheelZoomListener.cs" />
     <Compile Include="Features\SupportOptions\SupportOptionsFirstTimeUse.cs" />
     <Compile Include="Features\SurroundWith\SurroundWithFeature.cs" />
-    <Compile Include="Helpers\KeyboardHelper.cs" />
+    <Compile Include="Features\SurroundWith\SurroundWithModel.cs" />
     <Compile Include="Language\ILanguageRegistrationService.cs" />
     <Compile Include="Language\LanguageRegistrationService.cs" />
     <Compile Include="Options\IOptionsPersistenceService.cs" />
@@ -85,7 +85,8 @@
     <Compile Include="Features\Bookmarks\IBookmarksService.cs" />
     <Compile Include="Services\ICodeModelEvents.cs" />
     <Compile Include="Options\IOptionsService.cs" />
-    <Compile Include="Services\IKeyboardService.cs" />
+    <Compile Include="Services\SurroundWithFormatterService.cs" />
+    <Compile Include="Services\ISurroundWithFormatterService.cs" />
     <Compile Include="Services\ISharedServiceProvider.cs" />
     <Compile Include="Services\IShellEventsService.cs" />
     <Compile Include="Services\IShellCodeModelService.cs" />
@@ -144,7 +145,6 @@
     <Compile Include="CodeModel\ISolutionProcessor.cs" />
     <Compile Include="CodeModel\ProjectProcessor.cs" />
     <Compile Include="Services\IWildcardMatch.cs" />
-    <Compile Include="Services\KeyboardService.cs" />
     <Compile Include="Services\SearchToken.cs" />
     <Compile Include="Services\SharedServiceProvider.cs" />
     <Compile Include="Services\IImageService.cs" />
@@ -215,6 +215,7 @@
     <Compile Include="UI\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Features\SurroundWith\SurroundWith.json" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -330,15 +331,17 @@
       <Version>6.4.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>17.0.31902.203</Version>
+      <Version>17.4.33103.184</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.VCProjectEngine">
-      <Version>17.0.31902.203</Version>
+      <Version>17.4.33103.184</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>17.0.5232</Version>
+      <Version>17.4.2120</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -350,8 +353,9 @@
       <Version>2.0.20525</Version>
     </PackageReference>
     <PackageReference Include="VsWebSite.Interop90">
-      <Version>17.0.31902.203</Version>
+      <Version>17.4.33103.184</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

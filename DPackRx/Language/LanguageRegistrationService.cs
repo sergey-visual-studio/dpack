@@ -21,8 +21,8 @@ namespace DPackRx.Language
 		private const string EXTENSIONS_KEY = "Extensions";
 		private const string COMMENTS_KEY = "Comments";
 		private const string PROJECT_GUID_VALUE = "ProjectGuid";
-		private const string WEB_NAME_VALUE = "WebName";
 		private const string WEB_LANGUAGE_VALUE = "WebLanguage";
+		private const string LANGUAGES_VALUE = "Languages";
 		private const string SMART_FORMAT_VALUE = "SmartFormat";
 		private const string XML_DOC = "XmlDoc";
 		private const string XML_DOC_SURROUND = "XmlDocSurround";
@@ -31,8 +31,7 @@ namespace DPackRx.Language
 		private const string IGNORE_CODE_TYPE = "IgnoreCodeType";
 		private const string CHECK_DUPLICATE_NAMES = "CheckDuplicateNames";
 		private const string PARENTLESS_FULL_NAME = "ParentlessFullName";
-		private const string SURROUND_WITH_NAME = "SurroundWith";
-
+		private const string SURROUND_WITH = "SurroundWith";
 		private const string LOG_CATEGORY = "Language Registry";
 
 		#endregion
@@ -51,7 +50,7 @@ namespace DPackRx.Language
 		/// <returns>Languages.</returns>
 		public ICollection<LanguageSettings> GetLanguages()
 		{
-			List<LanguageSettings> languages = new List<LanguageSettings>(10);
+			List<LanguageSettings> languageSettings = new List<LanguageSettings>(10);
 
 			RegistryKey dpackKey;
 			try
@@ -76,8 +75,8 @@ namespace DPackRx.Language
 
 					var friendlyName = string.Empty;
 					var projectGuid = string.Empty;
-					var webName = string.Empty;
 					var webLanguage = string.Empty;
+					var languages = string.Empty;
 					var smartFormat = true;
 					var xmlDoc = (string)null;
 					var xmlDocSurround = false;
@@ -95,8 +94,8 @@ namespace DPackRx.Language
 						{
 							friendlyName = (string)langKey.GetValue(string.Empty, friendlyName);
 							projectGuid = (string)langKey.GetValue(PROJECT_GUID_VALUE, projectGuid);
-							webName = (string)langKey.GetValue(WEB_NAME_VALUE, webName);
 							webLanguage = (string)langKey.GetValue(WEB_LANGUAGE_VALUE, webLanguage);
+							languages = (string)langKey.GetValue(LANGUAGES_VALUE, languages);
 							smartFormat = Convert.ToBoolean(
 								(int)langKey.GetValue(SMART_FORMAT_VALUE, Convert.ToInt32(smartFormat)));
 							xmlDoc = (string)langKey.GetValue(XML_DOC, xmlDoc);
@@ -111,7 +110,7 @@ namespace DPackRx.Language
 							parentlessFullName = Convert.ToBoolean(
 								(int)langKey.GetValue(PARENTLESS_FULL_NAME, Convert.ToInt32(parentlessFullName)));
 							surroundWith = Convert.ToBoolean(
-								(int)langKey.GetValue(SURROUND_WITH_NAME, Convert.ToInt32(surroundWith)));
+								(int)langKey.GetValue(SURROUND_WITH, Convert.ToInt32(surroundWith)));
 						}
 					}
 					if (string.IsNullOrEmpty(friendlyName))
@@ -119,12 +118,11 @@ namespace DPackRx.Language
 						_log.LogMessage($"Skipped language {id} definition w/o a friendly name", LOG_CATEGORY);
 						continue;
 					}
-					var webNames = !string.IsNullOrEmpty(webName) ? webName.Split(',') : new string[0];
 
-					var language = new LanguageSettings(id, friendlyName, xmlDoc)
+					 var language = new LanguageSettings(id, friendlyName, xmlDoc)
 					{
 						ProjectGuid = projectGuid,
-						WebNames = webNames,
+						WebNames = !string.IsNullOrEmpty(languages) ? languages.Split(',') : new string[0],
 						WebLanguage = webLanguage,
 						SmartFormat = smartFormat,
 						XmlDocSurround = xmlDocSurround,
@@ -133,7 +131,7 @@ namespace DPackRx.Language
 						IgnoreCodeType = ignoreCodeType,
 						CheckDuplicateNames = checkDuplicateNames,
 						ParentlessFullName = parentlessFullName,
-						SurroundWith = surroundWith
+						SurroundWith = surroundWith,
 					};
 
 					var extKey = dpackKey.OpenSubKey(id + "\\" + EXTENSIONS_KEY);
@@ -168,11 +166,11 @@ namespace DPackRx.Language
 						}
 					}
 
-					languages.Add(language);
+					languageSettings.Add(language);
 				} // for (index)
 			} // using
 
-			return languages;
+			return languageSettings;
 		}
 
 		#endregion

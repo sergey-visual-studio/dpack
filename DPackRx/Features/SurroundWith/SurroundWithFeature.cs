@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
+using System.IO;
+using System.Linq;
 
 using DPackRx.CodeModel;
 using DPackRx.Language;
 using DPackRx.Options;
 using DPackRx.Package;
 using DPackRx.Services;
+
+using Newtonsoft.Json;
 
 namespace DPackRx.Features.SurroundWith
 {
@@ -19,28 +22,20 @@ namespace DPackRx.Features.SurroundWith
 	{
 		#region Fields
 
-		private readonly IShellHelperService _shellHelperService;
 		private readonly IShellSelectionService _shellSelectionService;
 		private readonly IFileTypeResolver _fileTypeResolver;
-		private readonly IKeyboardService _keyboardService;
-
-		protected internal const string SURROUND_WITH_COMMAND = "Edit.SurroundWith";
-		protected internal const string SNIPPET_TRY_CATCH = "try";
-		protected internal const string SNIPPET_TRY_FINALLY = "tryf";
-		protected internal const string SNIPPET_FOR = "for";
-		protected internal const string SNIPPET_FOR_EACH = "foreach";
-		protected internal const string SNIPPET_REGION = "#region";
+		private readonly ISurroundWithFormatterService _surroundWithFormatterService;
+		private SurroundWithModel _model;
 
 		#endregion
 
 		public SurroundWithFeature(IServiceProvider serviceProvider, ILog log, IOptionsService optionsService,
-			IShellHelperService shellHelperService, IShellSelectionService shellSelectionService,
-			IFileTypeResolver fileTypeResolver, IKeyboardService keyboardService) : base(serviceProvider, log, optionsService)
+			IShellSelectionService shellSelectionService, IFileTypeResolver fileTypeResolver,
+			ISurroundWithFormatterService surroundWithFormatterService) : base(serviceProvider, log, optionsService)
 		{
-			_shellHelperService = shellHelperService;
 			_shellSelectionService = shellSelectionService;
 			_fileTypeResolver = fileTypeResolver;
-			_keyboardService = keyboardService;
+			_surroundWithFormatterService = surroundWithFormatterService;
 		}
 
 		// Test constructor
@@ -79,7 +74,12 @@ namespace DPackRx.Features.SurroundWith
 				case CommandIDs.SW_FOR:
 				case CommandIDs.SW_FOR_EACH:
 				case CommandIDs.SW_REGION:
-					return
+					var project = _shellSelectionService.GetActiveProject();
+					var languageSet = _fileTypeResolver.GetCurrentLanguage(project, out _);
+					if ((languageSet?.Type == LanguageType.Unknown) || !languageSet.SurroundWith)
+						return false;
+
+					var result =
 						_shellSelectionService.IsContextActive(ContextType.SolutionExists) && (
 						_shellSelectionService.IsContextActive(ContextType.TextEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.XMLTextEditor) ||
@@ -87,6 +87,7 @@ namespace DPackRx.Features.SurroundWith
 						_shellSelectionService.IsContextActive(ContextType.NewXamlEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.HTMLSourceEditor) ||
 						_shellSelectionService.IsContextActive(ContextType.CSSTextEditor));
+					return result;
 				default:
 					return base.IsValidContext(commandId);
 			}
@@ -99,41 +100,78 @@ namespace DPackRx.Features.SurroundWith
 		/// <returns>Execution status.</returns>
 		public override bool Execute(int commandId)
 		{
+			SurroundWithLanguage language = GetSurroundWithLanguage();
+			IEnumerable<SurroundWithLanguageModel> langugeModels = GetSurroundWithModel(language);
+			if (langugeModels == null)
+				return false;
+
+			SurroundWithType type;
 			switch (commandId)
 			{
 				case CommandIDs.SW_TRY_CATCH:
-					return ExecuteSnippet(SNIPPET_TRY_CATCH);
+					type = SurroundWithType.TryCatch;
+					break;
 				case CommandIDs.SW_TRY_FINALLY:
-					return ExecuteSnippet(SNIPPET_TRY_FINALLY);
+					type = SurroundWithType.TryFinally;
+					break;
 				case CommandIDs.SW_FOR:
-					return ExecuteSnippet(SNIPPET_FOR);
+					type = SurroundWithType.For;
+					break;
 				case CommandIDs.SW_FOR_EACH:
-					return ExecuteSnippet(SNIPPET_FOR_EACH);
+					type = SurroundWithType.ForEach;
+					break;
 				case CommandIDs.SW_REGION:
-					return ExecuteSnippet(SNIPPET_REGION);
+					type = SurroundWithType.Region;
+					break;
 				default:
 					return base.Execute(commandId);
 			}
+
+			SurroundWithLanguageModel model = langugeModels.FirstOrDefault(m => m.Type == type);
+			if (model == null)
+				return base.Execute(commandId);
+
+			_surroundWithFormatterService.Format(model);
+			return true;
 		}
 
 		#endregion
 
 		#region Private Methods
 
-		/// <summary>
-		/// Executes a given surround with snippet.
-		/// </summary>
-		private bool ExecuteSnippet(string snippet)
+		private SurroundWithLanguage GetSurroundWithLanguage()
 		{
 			var project = _shellSelectionService.GetActiveProject();
 			var languageSet = _fileTypeResolver.GetCurrentLanguage(project, out _);
-			if ((languageSet?.Type == LanguageType.Unknown) || !languageSet.SurroundWith)
-				return true;
 
-			_shellHelperService.ExecuteCommand(SURROUND_WITH_COMMAND);
-			_keyboardService.Type(snippet);
-			_keyboardService.Type(Key.Enter);
-			return true;
+			switch (languageSet.Type)
+			{
+				case LanguageType.CSharp:
+					return SurroundWithLanguage.CSharp;
+				case LanguageType.VB:
+					return SurroundWithLanguage.VB;
+				case LanguageType.CPP:
+					return SurroundWithLanguage.CPP;
+				default:
+					return SurroundWithLanguage.None;
+			}
+		}
+
+		private IEnumerable<SurroundWithLanguageModel> GetSurroundWithModel(SurroundWithLanguage language)
+		{
+			if (_model == null)
+			{
+				using (Stream stream = GetType().Assembly.GetManifestResourceStream($"{GetType().Namespace}.SurroundWith.json"))
+				{
+					using (StreamReader reader = new StreamReader(stream))
+					{
+						string content = reader.ReadToEnd();
+						_model = JsonConvert.DeserializeObject<SurroundWithModel>(content);
+					}
+				}
+			}
+
+			return _model?.Models.Where(m => m.Language == language);
 		}
 
 		#endregion

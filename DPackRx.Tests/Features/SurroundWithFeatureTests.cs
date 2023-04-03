@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
-
-using Moq;
-using NUnit.Framework;
 
 using DPackRx.CodeModel;
 using DPackRx.Features;
@@ -11,6 +7,10 @@ using DPackRx.Language;
 using DPackRx.Options;
 using DPackRx.Package;
 using DPackRx.Services;
+
+using Moq;
+
+using NUnit.Framework;
 
 namespace DPackRx.Tests.Features
 {
@@ -25,10 +25,10 @@ namespace DPackRx.Tests.Features
 		private Mock<IServiceProvider> _serviceProviderMock;
 		private Mock<ILog> _logMock;
 		private Mock<IOptionsService> _optionsServiceMock;
-		private Mock<IShellHelperService> _shellHelperServiceMock;
 		private Mock<IShellSelectionService> _shellSelectionServiceMock;
 		private Mock<IFileTypeResolver> _fileTypeResolverMock;
-		private Mock<IKeyboardService> _keyboardServiceMock;
+		private Mock<ISurroundWithFormatterService> _surroundWithFormatterServiceMock;
+		private LanguageSettings _settings;
 
 		#endregion
 
@@ -44,21 +44,17 @@ namespace DPackRx.Tests.Features
 
 			_optionsServiceMock = new Mock<IOptionsService>();
 
-			_shellHelperServiceMock = new Mock<IShellHelperService>();
-			_shellHelperServiceMock.Setup(s => s.ExecuteCommand(It.IsNotNull<string>(), null)).Verifiable();
-
 			_shellSelectionServiceMock = new Mock<IShellSelectionService>();
 			_shellSelectionServiceMock.Setup(s => s.IsContextActive(It.IsAny<ContextType>())).Returns(true).Verifiable();
 			_shellSelectionServiceMock.Setup(s => s.GetActiveProject()).Returns(new object()).Verifiable();
 
+			_settings = new LanguageSettings("C#", "C#") { Type = LanguageType.CSharp, SurroundWith = true };
 			var webProject = false;
 			_fileTypeResolverMock = new Mock<IFileTypeResolver>();
-			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject))
-				.Returns(new LanguageSettings("C#", "C#") { Type = LanguageType.CSharp, SurroundWith = true }).Verifiable();
+			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject)).Returns(_settings).Verifiable();
 
-			_keyboardServiceMock = new Mock<IKeyboardService>();
-			_keyboardServiceMock.Setup(k => k.Type(It.IsAny<Key>())).Verifiable();
-			_keyboardServiceMock.Setup(k => k.Type(It.IsAny<string>())).Verifiable();
+			_surroundWithFormatterServiceMock = new Mock<ISurroundWithFormatterService>();
+			_surroundWithFormatterServiceMock.Setup(s => s.Format(It.IsAny<SurroundWithLanguageModel>())).Verifiable();
 		}
 
 		[TearDown]
@@ -67,10 +63,10 @@ namespace DPackRx.Tests.Features
 			_serviceProviderMock = null;
 			_logMock = null;
 			_optionsServiceMock = null;
-			_shellHelperServiceMock = null;
 			_shellSelectionServiceMock = null;
 			_fileTypeResolverMock = null;
-			_keyboardServiceMock = null;
+			_surroundWithFormatterServiceMock = null;
+			_settings = null;
 		}
 
 		#endregion
@@ -83,8 +79,7 @@ namespace DPackRx.Tests.Features
 		private IFeature GetFeature()
 		{
 			return new SurroundWithFeature(_serviceProviderMock.Object, _logMock.Object, _optionsServiceMock.Object,
-				_shellHelperServiceMock.Object, _shellSelectionServiceMock.Object, _fileTypeResolverMock.Object,
-				_keyboardServiceMock.Object);
+				_shellSelectionServiceMock.Object, _fileTypeResolverMock.Object, _surroundWithFormatterServiceMock.Object);
 		}
 
 		#endregion
@@ -126,12 +121,44 @@ namespace DPackRx.Tests.Features
 				_shellSelectionServiceMock.Verify(s => s.IsContextActive(It.IsAny<ContextType>()), Times.Never);
 		}
 
-		[TestCase(CommandIDs.SW_TRY_CATCH, SurroundWithFeature.SNIPPET_TRY_CATCH)]
-		[TestCase(CommandIDs.SW_TRY_FINALLY, SurroundWithFeature.SNIPPET_TRY_FINALLY)]
-		[TestCase(CommandIDs.SW_FOR, SurroundWithFeature.SNIPPET_FOR)]
-		[TestCase(CommandIDs.SW_FOR_EACH, SurroundWithFeature.SNIPPET_FOR_EACH)]
-		[TestCase(CommandIDs.SW_REGION, SurroundWithFeature.SNIPPET_REGION)]
-		public void Execute(int commandId, string command)
+		[Test]
+		public void IsValidContext_UnknownLanguage()
+		{
+			var feature = GetFeature();
+			var webProject = false;
+			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject))
+				.Returns(LanguageSettings.UnknownLanguage).Verifiable();
+
+			var result = feature.IsValidContext(CommandIDs.SW_REGION);
+
+			Assert.That(result, Is.False);
+			_shellSelectionServiceMock.Verify(s => s.GetActiveProject());
+			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject));
+			_shellSelectionServiceMock.Verify(s => s.IsContextActive(It.IsAny<ContextType>()), Times.Never);
+		}
+
+		[Test]
+		public void IsValidContext_UnsupportedLanguage()
+		{
+			var feature = GetFeature();
+			var webProject = false;
+			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject))
+				.Returns(new LanguageSettings("C#", "C#") { Type = LanguageType.CSharp, SurroundWith = false }).Verifiable();
+
+			var result = feature.IsValidContext(CommandIDs.SW_REGION);
+
+			Assert.That(result, Is.False);
+			_shellSelectionServiceMock.Verify(s => s.GetActiveProject());
+			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject));
+			_shellSelectionServiceMock.Verify(s => s.IsContextActive(It.IsAny<ContextType>()), Times.Never);
+		}
+
+		[TestCase(CommandIDs.SW_TRY_CATCH)]
+		[TestCase(CommandIDs.SW_TRY_FINALLY)]
+		[TestCase(CommandIDs.SW_FOR)]
+		[TestCase(CommandIDs.SW_FOR_EACH)]
+		[TestCase(CommandIDs.SW_REGION)]
+		public void Execute(int commandId)
 		{
 			var feature = GetFeature();
 			var webProject = false;
@@ -139,11 +166,25 @@ namespace DPackRx.Tests.Features
 			var result = feature.Execute(commandId);
 
 			Assert.That(result, Is.True);
-			_shellSelectionServiceMock.Verify(s => s.GetActiveProject());
-			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject));
-			_shellHelperServiceMock.Verify(s => s.ExecuteCommand(SurroundWithFeature.SURROUND_WITH_COMMAND, null));
-			_keyboardServiceMock.Verify(k => k.Type(command));
-			_keyboardServiceMock.Verify(k => k.Type(Key.Enter));
+			_shellSelectionServiceMock.Verify(s => s.GetActiveProject(), Times.Once);
+			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject), Times.Once);
+			_surroundWithFormatterServiceMock.Verify(s => s.Format(It.IsNotNull<SurroundWithLanguageModel>()), Times.Once);
+		}
+
+		[Test]
+		public void Execute_UnsupportedLanguage()
+		{
+			var feature = GetFeature();
+			var webProject = false;
+			_settings = new LanguageSettings("Xml", "Xml") { Type = LanguageType.Xml, SurroundWith = true };
+			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject)).Returns(_settings).Verifiable();
+
+			var result = feature.Execute(CommandIDs.SW_REGION);
+
+			Assert.That(result, Is.False);
+			_shellSelectionServiceMock.Verify(s => s.GetActiveProject(), Times.Once);
+			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject), Times.Once);
+			_surroundWithFormatterServiceMock.Verify(s => s.Format(It.IsAny<SurroundWithLanguageModel>()), Times.Never);
 		}
 
 		[Test]
@@ -154,42 +195,6 @@ namespace DPackRx.Tests.Features
 			var result = feature.Execute(0);
 
 			Assert.That(result, Is.False);
-		}
-
-		[Test]
-		public void Execute_UnknownLanguage()
-		{
-			var feature = GetFeature();
-			var webProject = false;
-			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject))
-				.Returns(LanguageSettings.UnknownLanguage).Verifiable();
-
-			var result = feature.Execute(CommandIDs.SW_REGION);
-
-			Assert.That(result, Is.True);
-			_shellSelectionServiceMock.Verify(s => s.GetActiveProject());
-			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject));
-			_shellHelperServiceMock.Verify(s => s.ExecuteCommand(SurroundWithFeature.SURROUND_WITH_COMMAND, null), Times.Never);
-			_keyboardServiceMock.Verify(k => k.Type(It.IsAny<string>()), Times.Never);
-			_keyboardServiceMock.Verify(k => k.Type(Key.Enter), Times.Never);
-		}
-
-		[Test]
-		public void Execute_UnsupportedLanguage()
-		{
-			var feature = GetFeature();
-			var webProject = false;
-			_fileTypeResolverMock.Setup(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject))
-				.Returns(new LanguageSettings("C#", "C#") { Type = LanguageType.CSharp, SurroundWith = false }).Verifiable();
-
-			var result = feature.Execute(CommandIDs.SW_REGION);
-
-			Assert.That(result, Is.True);
-			_shellSelectionServiceMock.Verify(s => s.GetActiveProject());
-			_fileTypeResolverMock.Verify(f => f.GetCurrentLanguage(It.IsAny<object>(), out webProject));
-			_shellHelperServiceMock.Verify(s => s.ExecuteCommand(SurroundWithFeature.SURROUND_WITH_COMMAND, null), Times.Never);
-			_keyboardServiceMock.Verify(k => k.Type(It.IsAny<string>()), Times.Never);
-			_keyboardServiceMock.Verify(k => k.Type(Key.Enter), Times.Never);
 		}
 
 		#endregion

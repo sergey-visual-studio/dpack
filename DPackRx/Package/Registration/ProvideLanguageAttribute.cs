@@ -70,9 +70,9 @@ namespace DPackRx.Package.Registration
 
 		public string ProjectGuid { get; set; }
 
-		public string WebName { get; set; }
-
 		public string WebLanguage { get; set; }
+
+		public string Languages { get; set; }
 
 		public string[] Comments { get; set; }
 
@@ -121,10 +121,10 @@ namespace DPackRx.Package.Registration
 
 				if (!string.IsNullOrEmpty(this.ProjectGuid))
 					key.SetValue(nameof(this.ProjectGuid), this.ProjectGuid);
-				if (!string.IsNullOrEmpty(this.WebName))
-					key.SetValue(nameof(this.WebName), this.WebName);
 				if (!string.IsNullOrEmpty(this.WebLanguage))
 					key.SetValue(nameof(this.WebLanguage), this.WebLanguage);
+				if ((this.Languages != null) && (this.Languages.Length > 0))
+					key.SetValue(nameof(this.Languages), string.Join(",", this.Languages));
 				if (!string.IsNullOrEmpty(this.XmlDoc))
 					key.SetValue(nameof(this.XmlDoc), this.XmlDoc);
 				if (this.XmlDocSurround)

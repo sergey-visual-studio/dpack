@@ -46,12 +46,12 @@ namespace DPackRx
 	// Languages
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp, PrjKind.prjKindCSharpProject, "C#", new[] { "cs" },
-		WebName = "Visual C#", WebLanguage = "CSharpCodeProvider", Comments = new[] { "//", "/*" }, XmlDoc = "/doc/summary",
+		WebLanguage = "CSharpCodeProvider", Languages = "Visual C#", Comments = new[] { "//", "/*" }, XmlDoc = "/doc/summary",
 		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported, SurroundWith = true)]
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB, PrjKind.prjKindVBProject, "VB", new[] { "bas", "vb", "frm" },
-		WebName = "Visual Basic", WebLanguage = "VBCodeProvider", Comments = new[] { "'" }, XmlDoc = "/summary", XmlDocSurround = true,
-		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported)]
+		WebLanguage = "VBCodeProvider", Comments = new[] { "'" }, XmlDoc = "/summary", XmlDocSurround = true,
+		DesignerFiles = LanguageDesignerFiles.FullySupported, Imports = LanguageImports.Supported, SurroundWith = true)]
 	[ProvideLanguage(
 		"#101", EnvDTE.CodeModelLanguageConstants.vsCMLanguageVC, "C++", new[] { "c", "cpp", "h", "hpp", "inl", "cc", "hxx", "hh" },
 		Comments = new[] { "//", "/*" }, XmlDoc = "/summary,", XmlDocSurround = true,
@@ -61,6 +61,7 @@ namespace DPackRx
 		Comments = new[] { "//", "/*" }, SmartFormat = false)]
 	[ProvideLanguage("#101", LanguageConsts.VS_LANGUAGE_XML, "Xml", new[] { "xml", "config", "targets", "vsct" }, Comments = new[] { "!--" })]
 	[ProvideLanguage("#101", LanguageConsts.VS_LANGUAGE_SOLUTION_ITEMS, "Solution Items", new string[0])]
+	[ProvideLanguage("#101", LanguageConsts.VS_LANGUAGE_SQL, "SQL", new[] { "sql" })]
 	#endregion
 	public sealed class DPackRx : AsyncPackage
 	{
@@ -222,7 +223,7 @@ namespace DPackRx
 				_container.Register<IAsyncTaskService, AsyncTaskService>(new PerContainerLifetime());
 				_container.Register<IOptionsService, OptionsService>(new PerContainerLifetime());
 				_container.Register<IOptionsPersistenceService, OptionsPersistenceService>(new PerContainerLifetime());
-				_container.Register<IKeyboardService, KeyboardService>(new PerContainerLifetime());
+				_container.Register<ISurroundWithFormatterService, SurroundWithFormatterService>(new PerContainerLifetime());
 				// Per request services
 				_container.Register<IFeatureCommand, FeatureCommand>();
 				_container.Register<IFeatureCommandFactory, FeatureCommandFactory>();

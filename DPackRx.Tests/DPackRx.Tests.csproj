@@ -52,9 +52,11 @@
     <Compile Include="Features\MiscellaneousFeatureTests.cs" />
     <Compile Include="Features\BookmarksServiceTests.cs" />
     <Compile Include="Features\FileBrowserFeatureTests.cs" />
+    <Compile Include="Features\SurroundWithModelTests.cs" />
     <Compile Include="Features\SurroundWithFeatureTests.cs" />
     <Compile Include="Features\SupportOptionsFirstTimeUseTests.cs" />
     <Compile Include="Features\SupportOptionsFeatureTests.cs" />
+    <Compile Include="Language\LanguageSettingsTests.cs" />
     <Compile Include="Language\LanguageServiceTests.cs" />
     <Compile Include="Options\OptionsPersistenceServiceTests.cs" />
     <Compile Include="Options\OptionsServiceTests.cs" />
@@ -81,10 +83,10 @@
       <Version>6.4.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>17.0.31902.203</Version>
+      <Version>17.4.33103.184</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.VCProjectEngine">
-      <Version>17.0.31902.203</Version>
+      <Version>17.4.33103.184</Version>
     </PackageReference>
     <PackageReference Include="Moq">
       <Version>4.16.1</Version>
@@ -93,13 +95,13 @@
       <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="NUnit">
-      <Version>3.13.2</Version>
+      <Version>3.13.3</Version>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter">
-      <Version>4.1.0</Version>
+      <Version>4.3.1</Version>
     </PackageReference>
     <PackageReference Include="VsWebSite.Interop90">
-      <Version>17.0.31902.203</Version>
+      <Version>17.4.33103.184</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
