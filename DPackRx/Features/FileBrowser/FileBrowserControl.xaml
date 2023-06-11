@@ -10,6 +10,7 @@
              xmlns:behaviors="clr-namespace:DPackRx.UI.Behaviors"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance Type=local:FileBrowserViewModel, IsDesignTimeCreatable=True}"
              behaviors:UserControlFocusOnLoad.Enabled="True">
 
     <UserControl.Resources>
@@ -154,7 +155,7 @@
         <ListView behaviors:ListViewAutoSizeColumn.Column="1"
                   behaviors:ListViewMatchItemComparer.Enabled="True"
                   VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
-                  ItemsSource="{Binding Files, Mode=OneTime}" IsSynchronizedWithCurrentItem="True" x:Name="items"
+                  ItemsSource="{Binding Files}" IsSynchronizedWithCurrentItem="True" x:Name="items"
                   Style="{StaticResource SearchResults}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">

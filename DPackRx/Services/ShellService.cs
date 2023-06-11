@@ -1274,7 +1274,7 @@ namespace DPackRx.Services
 					return true;
 
 				var value = buildActionProp.Value;
-				return (value is int) && ((int)value == (int)prjBuildAction.prjBuildActionCompile);
+				return (value is int) && (((int)value == (int)vsBuildAction.vsBuildActionBuild) || ((int)value == (int)vsBuildAction.vsBuildActionRebuildAll));
 			}
 			catch (Exception ex)
 			{

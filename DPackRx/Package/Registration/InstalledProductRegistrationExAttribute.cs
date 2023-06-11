@@ -53,7 +53,10 @@ namespace DPackRx.Package.Registration
 			var productId = version.Revision == 0 ? version.ToString(3) : version.ToString(4);
 
 #if BETA
-			productId = $"{productId} - Beta expires on {Beta.ExpirationDate:d}";
+			if (version.Major == 0)
+				productId = $"Beta expires on {Beta.ExpirationDate:d}";
+			else
+				productId = $"{productId} - Beta expires on {Beta.ExpirationDate:d}";
 #endif
 
 			var attrib = new InstalledProductRegistrationAttribute(_productName, _productDetails, productId)

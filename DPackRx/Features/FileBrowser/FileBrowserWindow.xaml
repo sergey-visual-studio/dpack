@@ -1,19 +1,18 @@
 ﻿<platformUI:DialogWindow x:Class="DPackRx.Features.FileBrowser.FileBrowserWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DPackRx.Features.FileBrowser"
         xmlns:behaviors="clr-namespace:DPackRx.UI.Behaviors"
-        xmlns:ui="clr-namespace:DPackRx.UI"
         xmlns:platformUI="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
-        mc:Ignorable="d" 
-        d:DataContext="{d:DesignInstance Type=local:FileBrowserViewModel, IsDesignTimeCreatable=True}"
+        mc:Ignorable="d"
         Icon="Images/FileBrowser.ico"
         Height="400" Width="600" MinHeight="200" MinWidth="400"
         Title="File Browser" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False"
         behaviors:WindowCloseOnEsc.Enabled="True"
-        behaviors:WindowClose.DialogResult="{Binding CloseWindow}">
+        behaviors:WindowClose.DialogResult="{Binding CloseWindow}"
+        d:DataContext="{d:DesignInstance Type=local:FileBrowserViewModel, IsDesignTimeCreatable=True}">
 
     <local:FileBrowserControl />
 </platformUI:DialogWindow>

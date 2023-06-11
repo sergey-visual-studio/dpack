@@ -9,8 +9,9 @@
              xmlns:converters="clr-namespace:DPackRx.UI.Converters"
              xmlns:behaviors="clr-namespace:DPackRx.UI.Behaviors"
              mc:Ignorable="d"
+             behaviors:UserControlFocusOnLoad.Enabled="True"
              d:DesignHeight="300" d:DesignWidth="600"
-             behaviors:UserControlFocusOnLoad.Enabled="True">
+             d:DataContext="{d:DesignInstance Type=local:CodeBrowserViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
         <ResourceDictionary>

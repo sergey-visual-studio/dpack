@@ -31,8 +31,8 @@
     {
       "Language": "CSharp",
       "Type": "Region",
-      "StartingCode": "#region Name",
-      "EndingCode": "#endregion",
+      "StartingCode": "#region Name\r\n\r\n",
+      "EndingCode": "\r\n#endregion",
       "WordOffset": 2
     },
     {
@@ -66,8 +66,8 @@
     {
       "Language": "VB",
       "Type": "Region",
-      "StartingCode": "#Region \"Name\"",
-      "EndingCode": "#End Region",
+      "StartingCode": "#Region \"Name\"\r\n\r\n",
+      "EndingCode": "\r\n#End Region",
       "WordOffset": 3
     },
     {
