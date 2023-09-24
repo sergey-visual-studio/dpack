@@ -39,5 +39,10 @@
 		/// VS Sql project language Guid.
 		/// </summary>
 		public const string VS_LANGUAGE_SQL = "{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}";
+
+		/// <summary>
+		/// Solution folder language Guid.
+		/// </summary>
+		public const string VS_MISC_FOLDER = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
 	}
 }
