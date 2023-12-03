@@ -85,6 +85,7 @@
     <Compile Include="Features\Bookmarks\IBookmarksService.cs" />
     <Compile Include="Services\ICodeModelEvents.cs" />
     <Compile Include="Options\IOptionsService.cs" />
+    <Compile Include="Services\IModalDialogResult.cs" />
     <Compile Include="Services\SurroundWithFormatterService.cs" />
     <Compile Include="Services\ISurroundWithFormatterService.cs" />
     <Compile Include="Services\ISharedServiceProvider.cs" />

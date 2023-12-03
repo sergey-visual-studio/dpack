@@ -49,6 +49,7 @@ namespace DPackRx.Tests.Features
 
 			_logMock = new Mock<ILog>();
 			_logMock.Setup(l => l.LogMessage(It.IsAny<string>(), It.IsAny<string>())).Verifiable();
+			_logMock.Setup(l => l.LogMessage(It.IsAny<string>(), It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
 
 			_messageServiceMock = new Mock<IMessageService>();
 
@@ -197,6 +198,19 @@ namespace DPackRx.Tests.Features
 			Assert.That(viewModel.SolutionName, Is.EqualTo("test"));
 		}
 
+		[Test]
+		public void OnInitialize_SolutionModelCache()
+		{
+			var viewModel = GetViewModel();
+
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Solution", string.Empty)).Returns("something else").Verifiable();
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty)).Returns("hello").Verifiable();
+
+			viewModel.OnInitialize(new SolutionModel());
+
+			_logMock.Verify(l => l.LogMessage(It.IsNotNull<string>(), null, It.IsNotNull<string>()), Times.Exactly(3));
+		}
+
 		[TestCase(true, true)]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
@@ -207,6 +221,8 @@ namespace DPackRx.Tests.Features
 			_optionsServiceMock.Setup(o => o.SetStringOption(viewModel.Feature, "Solution", string.Empty)).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetStringOption(viewModel.Feature, "Search", string.Empty)).Verifiable();
 			_optionsServiceMock.Setup(o => o.SetBoolOption(viewModel.Feature, "AllFiles", false)).Verifiable();
+			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "Search", string.Empty)).Verifiable();
+			_optionsServiceMock.Setup(o => o.GetBoolOption(viewModel.Feature, "AllFiles", false)).Verifiable();
 
 			_shellHelperServiceMock.Setup(s => s.OpenFiles(It.IsAny<IEnumerable<IExtensibilityItem>>())).Verifiable();
 			_shellHelperServiceMock.Setup(s => s.OpenDesignerFiles(It.IsAny<IEnumerable<IExtensibilityItem>>())).Verifiable();
@@ -214,13 +230,16 @@ namespace DPackRx.Tests.Features
 			viewModel.SelectionCode = selectCode;
 			viewModel.Selection = _files;
 
+			viewModel.OnInitialize(new SolutionModel { SolutionName = string.Empty });
 			viewModel.OnClose(apply);
 
+			Assert.That(viewModel.Cache, Is.Not.Null);
 			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "Solution", string.Empty));
-			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "Search", string.Empty));
+			_optionsServiceMock.Verify(o => o.SetStringOption(viewModel.Feature, "Search", null));
 			_optionsServiceMock.Verify(o => o.SetBoolOption(viewModel.Feature, "AllFiles", false));
 			if (apply)
 			{
+				Assert.That(viewModel.Result, Is.Not.Null);
 				if (selectCode)
 				{
 					_shellHelperServiceMock.Verify(s => s.OpenFiles(It.IsAny<IEnumerable<IExtensibilityItem>>()), Times.Once);

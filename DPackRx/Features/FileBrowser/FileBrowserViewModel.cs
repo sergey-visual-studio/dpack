@@ -22,7 +22,7 @@ namespace DPackRx.Features.FileBrowser
 	/// <summary>
 	/// File Browser feature ViewModel.
 	/// </summary>
-	public class FileBrowserViewModel : FeatureViewModelBase
+	public class FileBrowserViewModel : FeatureViewModelBase, IModalDialogResult<SolutionModel>
 	{
 		#region Fields
 
@@ -88,10 +88,17 @@ namespace DPackRx.Features.FileBrowser
 		{
 			_log.LogMessage(this.Feature, "Initializing...");
 
-			var model = _solutionProcessor.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles);
-			var files = model.Files;
-			var solutionName = model.SolutionName;
-			files = ApplyOptions(files);
+			if (argument is SolutionModel cache)
+			{
+				this.Cache = cache;
+
+				_log.LogMessage(this.Feature, "Use cached solution model");
+			}
+
+			if (this.Cache == null)
+				this.Cache = _solutionProcessor.GetProjects(ProcessorFlags.IncludeFiles | ProcessorFlags.GroupLinkedFiles);
+			var solutionName = this.Cache.SolutionName;
+			var files = ApplyOptions(this.Cache.Files);
 
 			this.SolutionName = _optionsService.GetStringOption(this.Feature, "Solution", this.SolutionName);
 			_search = _optionsService.GetStringOption(this.Feature, "Search", _search);
@@ -125,6 +132,8 @@ namespace DPackRx.Features.FileBrowser
 			_optionsService.SetStringOption(this.Feature, "Search", _search);
 			_optionsService.SetBoolOption(this.Feature, "AllFiles", _allFiles);
 
+			this.Result = this.Cache;
+
 			if (!apply)
 				return;
 
@@ -146,6 +155,15 @@ namespace DPackRx.Features.FileBrowser
 				_shellHelperService.OpenDesignerFiles(this.Selection);
 			}
 		}
+
+		#endregion
+
+		#region IModalDialogResult<SolutionModel>
+
+		/// <summary>
+		/// Result.
+		/// </summary>
+		public SolutionModel Result { get; private set; }
 
 		#endregion
 
@@ -311,6 +329,11 @@ namespace DPackRx.Features.FileBrowser
 		/// </summary>
 		/// <remarks>Exposed for testing purposes only.</remarks>
 		protected internal string SolutionName { get; private set; } = string.Empty;
+
+		/// <summary>
+		/// Solution model cache.
+		/// </summary>
+		protected internal SolutionModel Cache { get; set; }
 
 		#endregion
 
