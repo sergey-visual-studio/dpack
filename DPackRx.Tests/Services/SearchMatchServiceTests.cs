@@ -59,8 +59,8 @@ namespace DPackRx.Tests.Services
 		public void Setup()
 		{
 			_fileTypeResolverMock = new Mock<IFileTypeResolver>();
-			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(It.IsAny<FileSubType>(), true)).Returns(false).Verifiable();
-			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.Code, true)).Returns(true).Verifiable();
+			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(It.IsAny<FileSubType>())).Returns(false).Verifiable();
+			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.Code)).Returns(true).Verifiable();
 
 			_wildcardMatchMock = new Mock<IWildcardMatch>();
 		}
@@ -136,7 +136,7 @@ namespace DPackRx.Tests.Services
 			Assert.That(codeItem.Rank, Is.EqualTo(codeRank), $"Code item: {error}");
 			Assert.That(nonCodeItem.Rank, Is.EqualTo(nonCodeRank), $"Non-code item: {error}");
 
-			_fileTypeResolverMock.Verify(r => r.IsCodeSubType(It.IsAny<FileSubType>(), true), Times.Exactly(items.Count));
+			_fileTypeResolverMock.Verify(r => r.IsCodeSubType(It.IsAny<FileSubType>()), Times.Exactly(items.Count));
 		}
 
 		[TestCase("test", false)]

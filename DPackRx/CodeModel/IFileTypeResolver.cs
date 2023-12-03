@@ -37,9 +37,8 @@ namespace DPackRx.CodeModel
 		/// Checks whether a given file sub-type is a code one.
 		/// </summary>
 		/// <param name="itemSubType">File sub-type.</param>
-		/// <param name="miscFilesAsCode">Treat miscellaneous files as code ones.</param>
 		/// <returns>File sub-type status.</returns>
-		bool IsCodeSubType(FileSubType itemSubType, bool miscFilesAsCode = true);
+		bool IsCodeSubType(FileSubType itemSubType);
 
 		/// <summary>
 		/// Checks whether a given file sub-type is a web one with both design and code views.

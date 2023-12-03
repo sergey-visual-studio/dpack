@@ -149,9 +149,9 @@ namespace DPackRx.Tests.Features
 			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "ShowFiles", null)).Returns(showFiles).Verifiable();
 			_optionsServiceMock.Setup(o => o.GetStringOption(viewModel.Feature, "IgnoreFolders", null)).Returns(ignoreFolders).Verifiable();
 
-			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.Code, true)).Returns(true).Verifiable();
-			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.None, true)).Returns(false).Verifiable();
-			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.ImageFile, true)).Returns(false).Verifiable();
+			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.Code)).Returns(true).Verifiable();
+			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.None)).Returns(false).Verifiable();
+			_fileTypeResolverMock.Setup(r => r.IsCodeSubType(FileSubType.ImageFile)).Returns(false).Verifiable();
 
 			viewModel.OnInitialize(null);
 
@@ -170,15 +170,15 @@ namespace DPackRx.Tests.Features
 			_optionsServiceMock.Verify(o => o.GetStringOption(viewModel.Feature, "IgnoreFolders", null), Times.Once);
 			if (allFiles)
 			{
-				_fileTypeResolverMock.Verify(r => r.IsCodeSubType(FileSubType.Code, true), Times.Never);
-				_fileTypeResolverMock.Verify(r => r.IsCodeSubType(FileSubType.None, true), Times.Never);
+				_fileTypeResolverMock.Verify(r => r.IsCodeSubType(FileSubType.Code), Times.Never);
+				_fileTypeResolverMock.Verify(r => r.IsCodeSubType(FileSubType.None), Times.Never);
 			}
 			else
 			{
 				if (expectedCodeFileCount > 0)
-					_fileTypeResolverMock.Verify(r => r.IsCodeSubType(FileSubType.Code, true), Times.AtLeast(expectedCodeFileCount));
+					_fileTypeResolverMock.Verify(r => r.IsCodeSubType(FileSubType.Code), Times.AtLeast(expectedCodeFileCount));
 				if (expectedNoneCodeFileCount > 0)
-					_fileTypeResolverMock.Verify(r => r.IsCodeSubType(It.IsNotIn(FileSubType.Code), true), Times.AtLeast(expectedNoneCodeFileCount));
+					_fileTypeResolverMock.Verify(r => r.IsCodeSubType(It.IsNotIn(FileSubType.Code)), Times.AtLeast(expectedNoneCodeFileCount));
 			}
 			_searchMatchServiceMock.Verify(s => s.MatchItems(search, It.IsAny<IEnumerable<IMatchItem>>()), Times.Once);
 		}

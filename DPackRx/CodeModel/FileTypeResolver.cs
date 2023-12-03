@@ -156,7 +156,7 @@ namespace DPackRx.CodeModel
 		/// <param name="itemSubType">File sub-type.</param>
 		/// <param name="miscFilesAsCode">Treat miscellaneous files as code ones.</param>
 		/// <returns>File sub-type status.</returns>
-		public bool IsCodeSubType(FileSubType itemSubType, bool miscFilesAsCode = true)
+		public bool IsCodeSubType(FileSubType itemSubType)
 		{
 			switch (itemSubType)
 			{
@@ -173,8 +173,9 @@ namespace DPackRx.CodeModel
 					return true;
 				case FileSubType.JScript:
 				case FileSubType.XmlFile:
+					return true;
 				case FileSubType.ConfigFile:
-					return miscFilesAsCode;
+					return false;
 				default:
 					return false;
 			}

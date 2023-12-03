@@ -190,6 +190,13 @@ namespace DPackRx.CodeModel
 				}
 			}
 
+			// Duplicate project check
+			if (process)
+			{
+				if (model.FirstOrDefault(p => p.FileName.Equals(projectFullName, StringComparison.OrdinalIgnoreCase)) != null)
+					process = false;
+			}
+
 			if (process)
 			{
 				var projectModel = new ProjectModel

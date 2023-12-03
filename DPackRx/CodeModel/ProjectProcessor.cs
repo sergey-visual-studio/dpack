@@ -189,6 +189,16 @@ namespace DPackRx.CodeModel
 						add = false;
 					}
 
+					// Check for nested duplicate files
+					if (add)
+					{
+						if ((parentItem != null) &&
+								(parentItem.FileCount > 0) &&
+								(projectItem.FileCount > 0) &&
+								parentItem.FileNames[0].Equals(projectItem.FileNames[0], StringComparison.OrdinalIgnoreCase))
+							add = false;
+					}
+
 					// Used to collect skipped files here as well... something to keep an eye out out for
 					if (add)
 					{
