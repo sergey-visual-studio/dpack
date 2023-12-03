@@ -49,6 +49,9 @@ dotnet_style_prefer_compound_assignment = false:none
 # IDE0055: Fix formatting
 dotnet_diagnostic.IDE0055.severity = none
 
+# VSSpell001: spelling
+dotnet_diagnostic.VSSpell001.severity = none
+
 # define "Constants" symbols specifications
 dotnet_naming_symbols.constants.applicable_kinds = field
 dotnet_naming_symbols.constants.applicable_accessibilities = public,private,protected,internal,protected_internal,local

@@ -27,5 +27,16 @@ namespace DPackRx.Services
 		/// <param name="argument">Optional wait argument.</param>
 		/// <returns>Returns true if dialog's been successfully shown, or False if wait cancellation's been requested.</returns>
 		bool ShowDialog<TWindow, TViewModel>(string message, object argument) where TWindow : Window where TViewModel : ViewModelBase;
+
+		/// <summary>
+		/// Display modal dialog.
+		/// </summary>
+		/// <typeparam name="TWindow">Dialog type.</typeparam>
+		/// <typeparam name="TViewModel">View model type.</typeparam>
+		/// <typeparam name="TResult">Result type.</typeparam>
+		/// <param name="message">Wait message.</param>
+		/// <param name="argument">Optional wait argument.</param>
+		/// <returns>Returns true if dialog's been successfully shown, or False if wait cancellation's been requested.</returns>
+		TResult ShowDialog<TWindow, TViewModel, TResult>(string message, object argument) where TWindow : Window where TViewModel : ViewModelBase;
 	}
 }

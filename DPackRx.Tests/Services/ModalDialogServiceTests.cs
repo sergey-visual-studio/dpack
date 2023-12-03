@@ -7,6 +7,8 @@ using NUnit.Framework;
 
 using DPackRx.Services;
 using DPackRx.UI;
+using DPackRx.CodeModel;
+using System.Runtime.InteropServices;
 
 namespace DPackRx.Tests.Services
 {
@@ -47,6 +49,27 @@ namespace DPackRx.Tests.Services
 
 		#endregion
 
+		#region ResultTestViewModel class
+
+		private class ResultTestViewModel : ViewModelBase, IModalDialogResult<SolutionModel>
+		{
+			public ResultTestViewModel(IServiceProvider serviceProvider) : base(serviceProvider)
+			{
+			}
+
+			public SolutionModel Result { get; set; }
+
+			public override void OnClose(bool apply)
+			{
+			}
+
+			public override void OnInitialize(object argument)
+			{
+			}
+		}
+
+		#endregion
+
 		#region TestWindow class
 
 		private class TestWindow : Window
@@ -81,7 +104,9 @@ namespace DPackRx.Tests.Services
 			_serviceProviderMock = new Mock<IServiceProvider>();
 			_testViewModel = new TestViewModel(_serviceProviderMock.Object);
 
+			var resultViewModel = new ResultTestViewModel(_serviceProviderMock.Object) { Result = new SolutionModel() };
 			_serviceProviderMock.Setup(p => p.GetService(typeof(TestViewModel))).Returns(_testViewModel).Verifiable();
+			_serviceProviderMock.Setup(p => p.GetService(typeof(ResultTestViewModel))).Returns(resultViewModel).Verifiable();
 			_serviceProviderMock.Setup(p => p.GetService(typeof(TestWindow))).Returns(new TestWindow()).Verifiable();
 
 			_asyncTaskServiceMock = new Mock<IAsyncTaskService>();
@@ -136,6 +161,23 @@ namespace DPackRx.Tests.Services
 			Assert.That(result, Is.False);
 			Assert.That(_testViewModel.Closed, Is.False);
 			_serviceProviderMock.Verify(p => p.GetService(typeof(TestViewModel)));
+			_asyncTaskServiceMock.Verify(a => a.RunOnMainThread(It.IsAny<Action<object>>(), It.IsAny<object>(), It.IsAny<string>()));
+		}
+
+		[Test]
+		public void ShowDialog_SolutionModelCache([Values] bool isResult)
+		{
+			var service = GetService();
+			var argument = isResult ? new SolutionModel() : null;
+
+			var result = service.ShowDialog<TestWindow, ResultTestViewModel, SolutionModel>("test", argument);
+
+			if (isResult)
+			{
+				Assert.That(result, Is.Not.Null);
+				Assert.That(result, Is.InstanceOf<SolutionModel>());
+			}
+			_serviceProviderMock.Verify(p => p.GetService(typeof(ResultTestViewModel)));
 			_asyncTaskServiceMock.Verify(a => a.RunOnMainThread(It.IsAny<Action<object>>(), It.IsAny<object>(), It.IsAny<string>()));
 		}
 
